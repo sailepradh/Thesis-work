@@ -3,8 +3,10 @@ pheno[c("LOG_TPK","LOG_Lpk","LOG_neu")] <- c(log(pheno$Nadir_TPK), log(pheno$Nad
 pheo_out <- pheno[, c(1,8,9,10,25,26,27)]
 write.table(pheo_out,"Pheno.txt", sep=",", quote = F, row.names = F)
 
-pheno_Low_tox<-pheno[which(((pheno$CTC_TPK =="0") | (pheno$CTC_TPK =="1")) & ((pheno$CTC_Neutrophiles =="0") | (pheno$CTC_Neutrophiles =="1"))) ,]
-pheno_High_tox<-pheno[which(((pheno$CTC_TPK =="3") | (pheno$CTC_TPK =="4")) & ((pheno$CTC_Neutrophiles =="3") | (pheno$CTC_Neutrophiles =="4"))) ,]
+pheno_Low_tox<-pheno[which(((pheno$CTC_TPK =="0") | (pheno$CTC_TPK =="1")) 
+                           & ((pheno$CTC_Neutrophiles =="0") | (pheno$CTC_Neutrophiles =="1"))) ,]
+pheno_High_tox<-pheno[which(((pheno$CTC_TPK =="3") | (pheno$CTC_TPK =="4")) 
+                           & ((pheno$CTC_Neutrophiles =="3") | (pheno$CTC_Neutrophiles =="4"))) ,]
 
 
 
@@ -37,11 +39,20 @@ s3d$points3d(pheno_Low_tox_test$LOG_TPK,
              col="darkgreen",cex=0.5,pch=20)
 
 ##############################################################################
-
-plot(pheno_Low_tox_test$Nadir_TPK, pheno_Low_tox_test$Nadir_Neutrophiles, col= "Green", pch = 19, xlab = "Nadir TPK", 
-     ylab ="Nadir Neutophile", main= "Distribution of Nadir values in Different phenotypes", xlim = c(0,700) , ylim=c(0,25), cex =0.5,frame.plot=FALSE)
-points(pheno_High_tox_test$Nadir_TPK, pheno_High_tox_test$Nadir_Neutrophiles, col= "red", pch = 19, xlab = "Nadir TPK", 
-       ylab ="Nadir Neutophile", main= "Distribution of Nadir values in different phenotypes",xlim = c(0,700) , ylim=c(0,25), cex =0.5,frame.plot=FALSE)
+plot(pheno_Low_tox_test$Nadir_TPK, pheno_Low_tox_test$Nadir_Neutrophiles,
+                           col= "Green", pch = 19, 
+                           xlab = "Nadir TPK", 
+                           ylab ="Nadir Neutophile", 
+                           main= "Distribution of Nadir values in Different phenotypes", 
+                           xlim = c(0,700) , ylim=c(0,25), cex =0.5,frame.plot=FALSE)
+                           
+points(pheno_High_tox_test$Nadir_TPK, pheno_High_tox_test$Nadir_Neutrophiles,
+                           col= "red", pch = 19,
+                           xlab = "Nadir TPK", 
+                           ylab ="Nadir Neutophile", 
+                           main= "Distribution of Nadir values in different phenotypes",
+                           xlim = c(0,700) , ylim=c(0,25), cex =0.5,frame.plot=FALSE)
+                           
 legend(0,22, c("Extreme", "Normal"), col =c("Red", "Green"), pch=c(19,19), cex = 0.8)
 
 ## plot(pheno_normal$LOG_TPK, pheno_normal$LOG_neu, col= "Green", pch = 19, xlab = "LOG Nadir TPK", 
@@ -101,10 +112,6 @@ Pheno_Low_tox_Qual<-pheno_Low_tox [,c(1,2)]
 ## Quantitative classification of the toxicity phenotypes
 Pheno_Hig_tox_Quan <- pheno_High_tox[,c(2,9,10,11,12,13,14)]
 Pheno_Low_tox_Quan <- pheno_Low_tox[,c(2,9,10,11,12,13,14)]
-
-
-
-
 #########
 s3d <-scatterplot3d(pheno_High_tox$LOG_TPK,
                     pheno_High_tox$LOG_neu,
