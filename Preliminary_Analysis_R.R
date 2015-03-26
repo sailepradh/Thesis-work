@@ -10,6 +10,8 @@ pheno_High_tox<-pheno[which(((pheno$CTC_TPK =="3") | (pheno$CTC_TPK =="4")) & ((
 
 ################################################################################
 ### in case to test whether there is different result when considering the LPK values as well
+### This has to be asked with the sipervisor and advisor whether it is good to go thie way as
+### the sample size will be substantialy decreases after this.
 
 pheno_Low_tox_test<-pheno[which(((pheno$CTC_TPK =="0") | (pheno$CTC_TPK =="1"))
                            & ((pheno$CTC_Neutrophiles =="0") | (pheno$CTC_Neutrophiles =="1"))
