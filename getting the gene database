@@ -1,0 +1,17 @@
+
+## Doing the manipulation to get the gene for the testing of the genes
+Nelson_Science_data_table_S1 <- read.delim("~/Downloads/Nelson_Science_data_table_S1.txt")
+unique(Nelson_Science_data_table_S1$Gene)
+unique(Nelson_Science_data_table_S1$Entrez.Gene.ID)
+Nelson_data <- as.factor(unique(Nelson_Science_data_table_S1$Gene))
+write.table(Nelson_Science_data_table_S1$Entrez.Gene.ID, "Nelson_Entrez.txt", sep="\t", quote = F, row.names = F) 
+
+
+Genen.colloected.from.the.previous.thesis.and.DMET.gene.list <- read.table("~/Desktop/THESIS_R FILES/Genen colloected from the previous thesis and DMET gene list.txt", quote="\"")
+colnames(Genen.colloected.from.the.previous.thesis.and.DMET.gene.list)<- "Genes"
+sort(Genen.colloected.from.the.previous.thesis.and.DMET.gene.list$Genes)
+DMET_Thesis<-sort(Genen.colloected.from.the.previous.thesis.and.DMET.gene.list$Genes)
+unique(DMET_Thesis)
+GENE_Database <- union(DMET_Thesis,Nelson_data)
+unique(GENE_Database)
+length(GENE_Database)
