@@ -30,4 +30,13 @@ tail(d.result)
 install.packages("data.table")
 require(data.table)
 system.time(Skat_processed <- rbindlist(d.result))
+write.table (Skat_processed,"~/Dropbox/Skat_processed.txt", sep=","
+             , quote = F, row.names = F)
+
+p.adjust.M <- p.adjust.methods[p.adjust.methods != "fdr"]
+p.adj    <- sapply(p.adjust.M, function(meth) p.adjust(Skat_processed$P, meth))
+
+
+
+             
 
