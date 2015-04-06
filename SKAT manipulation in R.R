@@ -15,7 +15,6 @@ test$GENES<- sapply(strsplit(SKAT_real$ALIAS, ","), "[", 2)
 
 test.split<-split (test,test$GENES)
 
-
 mergeData <- function(x){
   tmp.LOCUS <- paste(x$LOCUS, collapse = " | ")
   y <- x[1,]
@@ -30,4 +29,5 @@ head(d.result)
 tail(d.result)
 install.packages("data.table")
 require(data.table)
-Skat_processed- rbindlist(d.result)
+system.time(Skat_processed <- rbindlist(d.result))
+
