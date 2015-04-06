@@ -1,0 +1,33 @@
+Skattest_rareVariant <- read.delim("~/Desktop/Skattest_rareVariant.txt")
+dim (Skattest_rareVariant)
+unique(Skattest_rareVariant$LOCUS)
+length(unique(Skattest_rareVariant$LOCUS))
+SKAT_real<-Skattest_rareVariant[complete.cases(Skattest_rareVariant),]
+rownames(SKAT_real)<- NULL
+SKAT_real<- SKAT_real[order(SKAT_real$P),]
+rownames(SKAT_real)<- NULL
+test<- SKAT_real[order(SKAT_real$P),]
+rownames(test)<-NULL
+SKAT_real$ALIAS<-as.character(SKAT_real$ALIAS)
+str(SKAT_real)
+test$ALIAS<- sapply(strsplit(SKAT_real$ALIAS, ","), "[", 1)
+test$GENES<- sapply(strsplit(SKAT_real$ALIAS, ","), "[", 2)
+
+test.split<-split (test,test$GENES)
+
+
+mergeData <- function(x){
+  tmp.LOCUS <- paste(x$LOCUS, collapse = " | ")
+  y <- x[1,]
+  y$LOCUS <- tmp.LOCUS
+  return(y)
+}
+
+
+source("merge.R")
+d.result<-lapply(test.split,function(x) mergeData(x))
+head(d.result)
+tail(d.result)
+install.packages("data.table")
+require(data.table)
+Skat_processed- rbindlist(d.result)
