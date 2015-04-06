@@ -1,0 +1,47 @@
+
+ Pharmacogenomics conceptualizes the interaction between the human genetic components and the drug that are affected in various drug uptake mechanisms such as pharmacokinetics and pharmodymanics. Pharmacogenomics research aims at identifying genes and the gene variants involved in the interaction between the drugs and body. Genetic variants can greatly influence the nature of the effects a drug will  have on an individual as well as the amount of the drug required to produce the desired effect. In regards with the pharmacogenomics the genome wide association studies considers the traits as the drug dose dependent responses or the adverse event profiles.Association methods are used to discover novel associations between the drugs and genes on the cases and control samples. /paper1/ Pharmacogenomics study goal to identify the genetic variants and the underlying biology of the associated genes, /cite2 /
+ 
+ The main aim of the pharmacogenomics is to faciliatate the physicians witht the optimal drug selection, dose and treatment duration. /paper 5/
+ 
+\section{Cancer Pharmacogenomics}
+
+Cancer genetics take in account the both somatic and inherited germline variations, both of which impacts the drug efficacy and safety. /Paper 2/ Somatic mutations in the cancer are related to the drug efficacy while the germline mutations are responsible for the adverse drug reactions within in the patients. In the current study we were focused on the understanding of the germline mutations in causing adverse toxicity within the cancer patients.
+
+Mutations associated with the pharmacokinetics and pharmcodynamics affects the drug metabolisma and causes the adverse reaction in the patients. Germline pharmacogenomics can identify the patients at the highest risk of developing drug adverse response mechanisms. example TCL1A gene mutations are associated with the musculoskeletal adverse reaction with the patients receving aromatase inhibiotor /paper 3/.
+ Another example is the thiopurine-S- methytransferase (TPMT ) and mercaptopurine (6-mercaptopurine).Variant in mercapthopurine reduces the enzyme function that are associated with the risk of severe mylosupressin / cite paper 4/
+ Interested in the discovery of the genetic markers that are responsible for the drug response or toxicity as the chemotherapeutic drugs are have high toxicity indeces .  
+
+Cancer drugs have many toxic effects and in many cases of advanced cancers, physicians guess and test medications by prescribing and monitoring them.
+
+Pharmacogenomics provides the opportunity to predict the outcomes of the drugs usage in the treatment regimen of the cancer patients which helps in the individualized tailored oncology treatment of the patients.
+
+The germline variation within the patient influences the pharmacokinetics and pharmacodynamics properties of the drugs. Pharmacokinetics - efffect if the body on the drug: process by which the drug is absorbed, distributed, metabolized and eliminated in the body. Pharmacodynamics- the effect of the drugs on the body that is the drug targets and mechanism of action.
+
+New genomic technology and statistical methods are influencing the pharmacogenomic marker discovery
+
+ 
+\section{Statistical Association studies of genotype and phenotype}
+
+Single Site Case/Control tests
+Linear and Logistic regression model for single variant
+Gene-based tests 
+
+
+Statistical Analysis strategies for association studies involving rare variants
+
+
+
+Burden- based statistical tests : the test for the association between the variants and the continuous phenotype  consider a liner model given as:
+
+ \begin{equation*}
+  Y_i = \alpha_0+ {a}^{'} X_i + {\beta}^{'} G_i+ {\epsilon}_{i}
+  \end{equation*}
+ 
+ where  
+${\epsilon}_{i} \sim  N(O, {\sigma} ^2)$  and $\alpha_0$ is an intercept term , $\alpha = {[  {\alpha}_{1}, {\alpha}_{2},\dotsc,{\alpha}_{N} ]} ^ {'}$ is the vector of regression coefficient of the $m$ covariates and $\beta = [{\beta}_{1}, {\beta}_{2},\dotsc,{\beta}_{N}] ^{'}$
+
+An adaptation of CMC burden test that collapses genotype information by counting the number of the variants in the region before applying logistic regression to the collapsed statistic.
+
+ 
+
+  
