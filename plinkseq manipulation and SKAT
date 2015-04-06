@@ -1,0 +1,71 @@
+## Doing the plinkseq in the local computer
+## Making the project and doing the manipulation as follows
+
+plinkseq-0.10/pseq proj new-project --resources hg19
+plinkseq-0.10/pseq proj load-vcf --vcf data/*.vcf
+
+plinkseq-0.10/pseq proj tag-file --id 1 --name HighTox
+plinkseq-0.10/pseq proj tag-file --id 2 --name LowTox
+pseq proj var-summary 
+
+## Result 
+##---Variant DB summary---
+
+## 67390 unique variants
+## File tag : HighTox (67390 variants, 49 individuals)
+## File tag : LowTox (67390 variants, 49 individuals)
+
+## Doing the elementary maniupulation in the project with the sample data
+plinkseq-0.10/pseq proj v-view
+plinkseq-0.10/pseq proj v-view --samples --vmeta | head
+
+## Loading the phenotypic information in the project file
+head data/pop.phe 
+plinkseq-0.10/pseq proj load-pheno --file data/pop.phe 
+plinkseq-0.10/pseq proj i-view
+
+## Linking the project proj with the reference databases in the 
+## folder hg19
+## Firstly the contents of the reference databases with the 
+## Locus specific database
+
+plinkseq-0.10/pseq proj loc-summary
+## ---Locus DB summary---
+## Group : refseq (41880 entries) n/a
+## Group : ccds (27429 entries) n/a
+## Group : gencode (94378 entries) n/a
+## Group : ensembl (165825 entries) n/a
+
+## the dbSNP 
+plinkseq-0.10/pseq proj ref-summary 
+##---Reference DB summary---
+## Group : dbsnp (52054804 entries) : dbsnp (default name)
+
+pseq proj seq-summary 
+
+## Doing the extra manipulation of the files in the proj
+## Viewing only the rare variant in the data 
+plinkseq-0.10/pseq proj rv-view | head -100
+
+## There are a number of variations on the basic v-view command that are designed to look at individual level 
+## genotype data (the examples below use --mask to select two particular sites for illustration.) 
+## The rv-view only lists the rarer genotypes per site
+
+## Deriving the summary statistics of the all the sample files
+
+plinkseq-0.10/pseq proj v-stats > whole_project_summary.txt
+
+## using the project individual stat command to see the output of the individual 
+
+plinkseq-0.10/pseq proj i-stats  > individual_summary_stat.txt
+ 
+plinkseq-0.10/pseq proj v-view --mask ref.ex=dbsnp > Not_in_DbSNP.txt
+
+## This command might give us regions that are enriched in the gene segment of the individuals.
+
+ plinkseq-0.10/pseq proj counts --phenotype phe1 --mask case.control=8-15,0-1 > HighTox_Enriched.txt
+
+plinkseq-0.10/pseq proj counts --phenotype phe1 --mask case.uniq > present_in_highTox.txt
+
+plinkseq-0.10/pseq proj counts --phenotype phe1 --mask control.uniq > Present_in_lowTox.txt
+
