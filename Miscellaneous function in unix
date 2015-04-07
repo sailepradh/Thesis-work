@@ -1,0 +1,4 @@
+## Doing some elemetary analysis from the awk
+awk -F[:/] '{print $1,$2,$3}' present_in_highTox.txt  > High_tox_processed.txt
+awk '{print $1,$2,$3,$4}' High_tox_processed.txt > Upload.txt
+sed 's/chr//g' Upload.txt > Upload2.txt
