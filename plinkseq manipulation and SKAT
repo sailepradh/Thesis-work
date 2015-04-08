@@ -69,3 +69,5 @@ plinkseq-0.10/pseq proj counts --phenotype phe1 --mask case.uniq > present_in_hi
 
 plinkseq-0.10/pseq proj counts --phenotype phe1 --mask control.uniq > Present_in_lowTox.txt
 
+plinkseq-0.10/pseq proj assoc --tests skat --phenotype phe1 --mask loc.group=refseq  mac=1-10 > Skattest_rareVariant.txt
+
