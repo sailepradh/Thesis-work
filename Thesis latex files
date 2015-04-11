@@ -1,13 +1,64 @@
 
-Lung cancer is the most lethal of the cancer. With the survival rate of $34\% $ , it causes the death of the around  $34\% $ death annually in  The USA alone . Thus chemotherapy are the frequently administered to the patients with the advanced lung cancer . Chemotherapy are provided to the patients in various regimen and doses. The chemotherapy regimen are administered based ion the somatic cancer profiles and are aimed stopping the cell growth and genomic DNA in the cancer cells. However, based on the genetic make of the individuals these chemotherapeutic drugs have reported to induce various adverse reaction mechanism , sometimes causing the death of the individuals.  
+\chapter{Introduction}
+\label{chapter: /Literature review on pharmacogenomics approaches, exome sequencing technolgy and variamt calling, Rare and common variant association tests, Quantitative and Qualitative association of the variants, Pathway based studies}
 
- Pharmacogenomics conceptualizes the interaction between the human genetic components and the drug that are affected in various drug uptake mechanisms such as pharmacokinetics and pharmodymanics. Pharmacogenomics research aims at identifying genes and the gene variants involved in the interaction between the drugs and body. Genetic variants can greatly influence the nature of the effects a drug will  have on an individual as well as the amount of the drug required to produce the desired effect. In regards with the pharmacogenomics the genome wide association studies considers the traits as the drug dose dependent responses or the adverse event profiles.Association methods are used to discover novel associations between the drugs and genes on the cases and control samples. /paper1/ Pharmacogenomics study goal to identify the genetic variants and the underlying biology of the associated genes, /cite2 /
- 
- The main aim of the pharmacogenomics is to faciliatate the physicians witht the optimal drug selection, dose and treatment duration. /paper 5/
- 
-\section{Cancer Pharmacogenomics}
+\section{Pharmacogenomics and Lung Cancer}
+Lung cancer is the most lethal of all the cancer types. According to World Heath Organization (WHO) \cite{WHO} fact sheet of 2015, lung cancer caused 1.56 million death worldwide in 2012. With the overall survival rate of $18\% $, it was estimated $26\%$ of the all cancer deaths in 2014 and thus the leading cause of cancer death in the USA.\cite{siegel2014cancer}.
 
-Cancer genetics take in account the both somatic and inherited germline variations, both of which impacts the drug efficacy and safety. /Paper 2/ Somatic mutations in the cancer are related to the drug efficacy while the germline mutations are responsible for the adverse drug reactions within in the patients. In the current study we were focused on the understanding of the germline mutations in causing adverse toxicity within the cancer patients.
+Thus chemotherapy with the standard platinum agents are the frequently administered to the patients with the advanced lung cancer.\cite{shiraishi2010association} Platinum based drugs such as  cisplatin, carboplatin and oxaliplatin are widely used. platimium based agents forms the DNA adducts that thwarts cellular process and lead to apotosis. \cite {chen2013platinum}.The standard chemotherapeutic treatment for lung cancer are based on using platinum based agents with other another agents.  \cite{goffin2010first}. Microtubule - targeting agents such as paclitaxel, docetaxel,or vinorelbine and DNA-damaging agents such as gemcitabine or irinotecan are paired with the platinium-based agents in chemotherapeutic treatment.\cite{shiraishi2010association} 
+
+Chemotherapy are provided to the patients in various regimen and doses. The chemotherapy regimen are administered based on the somatic  mutation cancer profiles and are aimed thwarting the cell growth and genomic integrity in the cancer cells. However, based on the genetic make of the individuals these chemotherapeutic drugs have reported to induce various adverse reaction mechanism , sometimes causing the death of the individuals.  
+
+Pharmacogenomics conceptualizes the interaction between the human genetic components and the drug that are affected in various drug uptake mechanisms such as pharmacokinetics and pharmodymanics. Pharmacogenomics research aims at identifying genes and the gene variants involved in the interaction between the drugs and body. Genetic variants can greatly influence the nature of the effects a drug will  have on an individual as well as the amount of the drug required to produce the desired effect. In regards with the pharmacogenomics the genome wide association studies considers the traits as the drug dose dependent responses or the adverse event profiles.Association methods are used to discover novel associations between the drugs and genes on the cases and control samples. /paper1/ Pharmacogenomics study goal to identify the genetic variants and the underlying biology of the associated genes, /cite2 /
+
+The main aim of the pharmacogenomics is to faciliatate the physicians witht the optimal drug selection, dose and treatment duration. /paper 5/
+
+Pharmacogenomics have the potential to elucidate the adverse as well as positive effect of a drug have, based on the genetic make-up of an individuals. This understanding will help in the correct dosing, effective treatment strategies for various human diseases. Specifically these pharmacogenomics approaches are taken towards cancer and neurological disorders. In cancer, chemotherapeutic drugs targets the cellular mechanisms that halts the cancer growth, these could also have adverse reaction towards the other normal cells as well. With the advanced of the modern genotyping technologies from microarray based genotyping to massively parallel DNA sequencing provides the unprecedented potential to interrogate the nucleotide to single base-pair level.
+
+\begin{itemize}
+\item Lung cancer and pharmacogenomics
+\item Genome-wide association studies using exome-sequencing approach
+\item Mapping and variant calling of the sequenced data $-$GATK pipeline
+\item Candidate gene based association studies
+\item Single variant bases association studies
+\item Gene$-$based association studies
+\item Network based functional assignment of the associated genes
+\end{itemize}
+
+
+Methods
+The phenotype information of the patients
+GATK pipeline 
+Assocaition methods used
+
+Results
+
+Discussion
+
+Future works 
+
+Reference
+
+
+
+
+
+\section{Helpful hints}
+
+Read the information from the university master's thesis
+pages~\cite{ThesisInstructions} before starting the thesis.  You
+should also go through the thesis grading
+instructions~\cite{ThesisGrading} together with your instructor and/or
+supervisor in the beginning of your work.
+
+\section{Structure of the Thesis}
+\label{section:structure} Introduction
+
+
+
+You should use transition in your text, meaning that you should help
+the reader follow the thesis outline. Here, you tell what will be in
+each chapter of your thesis. 
 
 Mutations associated with the pharmacokinetics and pharmcodynamics affects the drug metabolisma and causes the adverse reaction in the patients. Germline pharmacogenomics can identify the patients at the highest risk of developing drug adverse response mechanisms. example TCL1A gene mutations are associated with the musculoskeletal adverse reaction with the patients receving aromatase inhibiotor /paper 3/.
  Another example is the thiopurine-S- methytransferase (TPMT ) and mercaptopurine (6-mercaptopurine).Variant in mercapthopurine reduces the enzyme function that are associated with the risk of severe mylosupressin / cite paper 4/
