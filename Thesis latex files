@@ -1,4 +1,6 @@
 
+Lung cancer is the most lethal of the cancer. With the survival rate of $34\% $ , it causes the death of the around  $34\% $ death annually in  The USA alone . Thus chemotherapy are the frequently administered to the patients with the advanced lung cancer . Chemotherapy are provided to the patients in various regimen and doses. The chemotherapy regimen are administered based ion the somatic cancer profiles and are aimed stopping the cell growth and genomic DNA in the cancer cells. However, based on the genetic make of the individuals these chemotherapeutic drugs have reported to induce various adverse reaction mechanism , sometimes causing the death of the individuals.  
+
  Pharmacogenomics conceptualizes the interaction between the human genetic components and the drug that are affected in various drug uptake mechanisms such as pharmacokinetics and pharmodymanics. Pharmacogenomics research aims at identifying genes and the gene variants involved in the interaction between the drugs and body. Genetic variants can greatly influence the nature of the effects a drug will  have on an individual as well as the amount of the drug required to produce the desired effect. In regards with the pharmacogenomics the genome wide association studies considers the traits as the drug dose dependent responses or the adverse event profiles.Association methods are used to discover novel associations between the drugs and genes on the cases and control samples. /paper1/ Pharmacogenomics study goal to identify the genetic variants and the underlying biology of the associated genes, /cite2 /
  
  The main aim of the pharmacogenomics is to faciliatate the physicians witht the optimal drug selection, dose and treatment duration. /paper 5/
@@ -24,6 +26,15 @@ New genomic technology and statistical methods are influencing the pharmacogenom
 
 Single Site Case/Control tests
 Linear and Logistic regression model for single variant
+Gene-based tests 
+
+
+Statistical Analysis strategies for association studies involving rare variants
+
+
+
+Burden- based statistical tests : the test for the association between the variants and the continuous phenotype  consider a liner model given as:
+
 Gene-based tests 
 
 
