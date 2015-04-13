@@ -48,7 +48,9 @@ Making the proj files helps in the manipulation and managment of the vcf tools. 
  cp -r /Fom_Previous_File/hg19 /proj/b2012058/nobackup/private/sailen/Common_rare
  cp -r /From_Previos_File/data /proj/b2012058/nobackup/private/sailen/Common_rare
  
- However we needed the phenotype information and the phenotypic information was manipulated using R and the unix command lines to get the file TPK.phe which had 
+ However we needed the phenotype information and the phenotypic information was manipulated using R and the unix command lines  and stored in the data files such that
+ 
+head data/TPK.phe 
  
 ##phe1,Float,-9,” Log modified Thrombopenia”
 #ID	phe1
@@ -61,5 +63,29 @@ S0170	4.48
 S0172	5.49
 S0174	4.83
  
+Now making the project file in plinkseq
+
+pseq proj new-project --resources hg19
+
+## loading the file Common.recode.vcf in the plinkseq
+pseq proj load-vcf --vcf Common.recode.vcf 
+pseq proj tag-file --id 1 --name Common
+pseq proj var-summary
+pseq proj v-view
+
+## Adding the phenotype information into the project
+pseq proj load-pheno --file data/TPK.phe 
+pseq proj i-view
+
+## Doing the basic mandatory summary of the locus, database and seqbase
+
+pseq proj loc-summary
+pseq proj ref-summary 
+pseq proj seq-summary
+
+ pseq proj i-stats > Proj_istats
  
+ ## Now after doing the preliminary analysis we wanted to do the  
+
+
  
