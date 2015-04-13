@@ -1,0 +1,3 @@
+For doing the rare and common variant association study, we first used the master VCF files called as Raw.Vcf 
+For this original file we divided the variaint files into 2 groups called as common and rare vcf files and did the manipulation for the single variant assocaiation for the common variant and subsequenty planned to do the gene based test on the rare variant of the gene sets. 
+
