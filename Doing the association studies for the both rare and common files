@@ -22,8 +22,9 @@ S1056
 For the common variants I selected the MAF 0.01 as the base line above which all the variants are selected while for the rare or
 in my opinion to take into the complete mutation profile such that even 1 allele has the variant, I took the MAF as 0.005. Now using the vcfools commands we get the following rare and common list variants from the raw vcf master files
 
- vcftools --vcf raw.vcf --remove-filtered-all --maf 0.01 --max-missing 0.95 --recode --out Common
- vcftools --vcf raw.vcf --remove-filtered-all --maf 0.005 --max-missing 0.95 --recode --out Rare  ## THIS command did take a lot of time 
+ vcftools --vcf raw.vcf --remove sample_remove --remove-filtered-all --maf 0.01 --max-missing 0.95 --recode --out Common
+ vcftools --vcf raw.vcf --remove sample_remove --remove-filtered-all --maf 0.005 --max-missing 0.95 --recode --out Rare
+ ## THIS command did take a lot of time 
  
 Now we have the vcf file as Common.recode.vcf and Rare.recode.vcf and using the wc -l command in the each vcf file I get the following count of the vcf files
 
@@ -31,6 +32,16 @@ Common = 74525 out of a possible 211467 Sites , 211 samples
 Rare = 87477 out of a possible 211467 Sites, 211 sample
 
 (See log files for the more information about the command and the output)
+
+Now having the two VCF files we proceed with the Single variant association and rare variant assocaition. For this I thought to use single variant association SNPs with the p value < 10-4 and mapping these variants into genes. These genes are then tested for the rare varaiant association. Does that make sense???
+
+## Part -2
+ module load plinkseq
+ 
+ Making the proj files helps in the manipulation and managment of the vcf tools. Hence I created the project file into the plinkseq
+ 
+
+
 
 
 
