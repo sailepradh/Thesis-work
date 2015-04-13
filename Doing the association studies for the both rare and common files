@@ -1,3 +1,13 @@
 For doing the rare and common variant association study, we first used the master VCF files called as Raw.Vcf 
 For this original file we divided the variaint files into 2 groups called as common and rare vcf files and did the manipulation for the single variant assocaiation for the common variant and subsequenty planned to do the gene based test on the rare variant of the gene sets. 
 
+## Part 1: Extracting the VCF files from the orignal raw files
+First I made a new folder called Common_rare in the path 
+
+/proj/b2012058/nobackup/private/sailen/
+
+And copied the file raw.vcf into it
+
+cp raw.vcf Common_rare/
+
+Now we the master VCF files contain samples that were unusable as from the mapping and subsequent preprocessing steps. We knew that there were some samples that had some problem with either the variants being low thorughput or with the samples are out of cluster from IBS plot (Contact Benjamin with the clustering plot). Thus, we only took the samples that had the high basecalls and grouped together so as to make their ethinic background same. For this we used the tools VCFtools. For the removal of the samples 
