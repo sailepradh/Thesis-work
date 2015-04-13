@@ -10,4 +10,28 @@ And copied the file raw.vcf into it
 
 cp raw.vcf Common_rare/
 
-Now we the master VCF files contain samples that were unusable as from the mapping and subsequent preprocessing steps. We knew that there were some samples that had some problem with either the variants being low thorughput or with the samples are out of cluster from IBS plot (Contact Benjamin with the clustering plot). Thus, we only took the samples that had the high basecalls and grouped together so as to make their ethinic background same. For this we used the tools VCFtools. For the removal of the samples 
+Now we the master VCF files contain samples that were unusable as from the mapping and subsequent preprocessing steps. We knew that there were some samples that had some problem with either the variants being low thorughput or with the samples are out of cluster from IBS plot (Contact Benjamin with the clustering plot). Thus, we only took the samples that had the high basecalls and grouped together so as to make their ethinic background same. For this we used the tools VCFtools. The samples in consideration were given a file name sample_remove and contains the sample names in the new files as
+ 
+head sample_remove
+S0328
+S0664
+S0580
+S0922
+S1056
+
+For the common variants I selected the MAF 0.01 as the base line above which all the variants are selected while for the rare or
+in my opinion to take into the complete mutation profile such that even 1 allele has the variant, I took the MAF as 0.005. Now using the vcfools commands we get the following rare and common list variants from the raw vcf master files
+
+ vcftools --vcf raw.vcf --remove-filtered-all --maf 0.01 --max-missing 0.95 --recode --out Common
+ vcftools --vcf raw.vcf --remove-filtered-all --maf 0.005 --max-missing 0.95 --recode --out Rare  ## THIS command did take a lot of time 
+ 
+Now we have the vcf file as Common.recode.vcf and Rare.recode.vcf and using the wc -l command in the each vcf file I get the following count of the vcf files
+
+Common = 74525 out of a possible 211467 Sites , 211 samples
+Rare = 87477 out of a possible 211467 Sites, 211 sample
+
+(See log files for the more information about the command and the output)
+
+
+
+
