@@ -1,5 +1,5 @@
-For doing the rare and common variant association study, we first used the master VCF files called as Raw.Vcf 
-For this original file we divided the variaint files into 2 groups called as common and rare vcf files and did the manipulation for the single variant assocaiation for the common variant and subsequenty planned to do the gene based test on the rare variant of the gene sets. 
+## For doing the rare and common variant association study, we first used the master VCF files called as Raw.Vcf 
+## For this original file we divided the variaint files into 2 groups called as common and rare vcf files and did the manipulat##ion for the single variant assocaiation for the common variant and subsequenty planned to do the gene based test on the rare ##variant of the gene sets. 
 
 ## Part 1: Extracting the VCF files from the orignal raw files
 First I made a new folder called Common_rare in the path 
@@ -10,7 +10,7 @@ And copied the file raw.vcf into it
 
 cp raw.vcf Common_rare/
 
-Now we the master VCF files contain samples that were unusable as from the mapping and subsequent preprocessing steps. We knew that there were some samples that had some problem with either the variants being low thorughput or with the samples are out of cluster from IBS plot (Contact Benjamin with the clustering plot). Thus, we only took the samples that had the high basecalls and grouped together so as to make their ethinic background same. For this we used the tools VCFtools. The samples in consideration were given a file name sample_remove and contains the sample names in the new files as
+## Now we the master VCF files contain samples that were unusable as from the mapping and subsequent preprocessing steps. We ## ##knew that there were some samples that had some problem with either the variants being low thorughput or with the samples are ##out of cluster from IBS plot (Contact Benjamin with the clustering plot). Thus, we only took the samples that had the high ##basecalls and grouped together so as to make their ethinic background same. For this we used the tools VCFtools. The samples ##in consideration were given a file name sample_remove and contains the sample names in the new files as
  
 head sample_remove
 S0328
@@ -19,36 +19,36 @@ S0580
 S0922
 S1056
 
-For the common variants I selected the MAF 0.01 as the base line above which all the variants are selected while for the rare or
-in my opinion to take into the complete mutation profile such that even 1 allele has the variant, I took the MAF as 0.005. Now using the vcfools commands we get the following rare and common list variants from the raw vcf master files
+##For the common variants I selected the MAF 0.01 as the base line above which all the variants are selected while for the rare ## or in my opinion to take into the complete mutation profile such that even 1 allele has the variant, I took the MAF as 0.005 ## Now using the vcfools commands we get the following rare and common list variants from the raw vcf master files
 
  vcftools --vcf raw.vcf --remove sample_remove --remove-filtered-all --maf 0.01 --max-missing 0.95 --recode --out Common
  vcftools --vcf raw.vcf --remove sample_remove --remove-filtered-all --maf 0.005 --max-missing 0.95 --recode --out Rare
  ## THIS command did take a lot of time 
  
-Now we have the vcf file as Common.recode.vcf and Rare.recode.vcf and using the wc -l command in the each vcf file I get the following count of the vcf files
+ ## Now we have the vcf file as Common.recode.vcf and Rare.recode.vcf and using the wc -l command in the each vcf file I get ##the following count of the vcf files
 
-Common = 74525 out of a possible 211467 Sites , 211 samples
-Rare = 87477 out of a possible 211467 Sites, 211 sample
+## Common = 74525 out of a possible 211467 Sites , 211 samples
+## Rare = 87477 out of a possible 211467 Sites, 211 sample
 
-(See log files for the more information about the command and the output)
+## (See log files for the more information about the command and the output)
 
-Now having the two VCF files we proceed with the Single variant association and rare variant assocaition. For this I thought to use single variant association SNPs with the p value < 10-4 and mapping these variants into genes. These genes are then tested for the rare varaiant association. Does that make sense???
+## Now having the two VCF files we proceed with the Single variant association and rare variant assocaition. For this I thought ## to use single variant association SNPs with the p value < 10-4 and mapping these variants into genes. These genes are then ## tested for the rare varaiant association. Does that make sense???
 
 ## Part -2 Associationg of the thrombopenia log nadir value with the variant using plinkseq linear regression model.
  
  module load plinkseq
- First I wanted to know the preliminary analysis of the individual variant calls: Hence I used the command
+ 
+ ## First I wanted to know the preliminary analysis of the individual variant calls: Hence I used the command
  
  pseq Common.recode.vcf i-stats | gcol ID NVAR SING TITV > Common_Individual_stat
  
- This showed me that the variant have the Ti/Tv ratio on average of 2.21 which I guess is not good but I will try to work with it and lets see if in the further downward process in case/Control there is improvement in the ratio.
+ ## This showed me that the variant have the Ti/Tv ratio on average of 2.21 which I guess is not good but I will try to work ##with it and lets see if in the further downward process in case/Control there is improvement in the ratio.
 
-Making the proj files helps in the manipulation and managment of the vcf tools. Hence I created the project file into the plinkseq. But for creating the proj we needed the database files f the dbSNP, locus and refseq. So I copied the all the hg files and the data files from the previous folder.
+##Making the proj files helps in the manipulation and managment of the vcf tools. Hence I created the project file into the ##plinkseq. But for creating the proj we needed the database files f the dbSNP, locus and refseq. So I copied the all the hg ##files and the data files from the previous folder.
  cp -r /Fom_Previous_File/hg19 /proj/b2012058/nobackup/private/sailen/Common_rare
  cp -r /From_Previos_File/data /proj/b2012058/nobackup/private/sailen/Common_rare
  
- However we needed the phenotype information and the phenotypic information was manipulated using R and the unix command lines  and stored in the data files such that
+## However we needed the phenotype information and the phenotypic information was manipulated using R and the unix command  #lines  and stored in the data files such that
  
 head data/TPK.phe 
  
@@ -63,7 +63,7 @@ S0170	4.48
 S0172	5.49
 S0174	4.83
  
-Now making the project file in plinkseq
+## Now making the project file in plinkseq
 
 pseq proj new-project --resources hg19
 
@@ -85,7 +85,22 @@ pseq proj seq-summary
 
  pseq proj i-stats > Proj_istats
  
- ## Now after doing the preliminary analysis we wanted to do the  
+ ## Now after doing the preliminary analysis in plinkseq we wanted to do the linear regression of the quantitative value of the ## thrombopenia. For this we used the command glm in the plinkseq
+ 
+ pseq proj glm --phenotype phe1 > Single_variant
+ sort -g -k9 Single_variant > Sorted_Single_variant
+ grep -v 'NA' Sorted_Single_variant > Final_Sorted_SNP
+ wc -l Final_Sorted_SNP
+
+## This is unadjusted linear regression of the quantitative endophenotype with the variants. We first did with the unajusted of ## the covariates as there may be compounding influence from the covariate. (See the paper "Including known covariates can  reduce #power to detect genetic effects in case-control studies")
+
+#Now we extract the SNPs with the values <10-4
+
+ sed -n "/VAR/,/0.000999356/p" Final_Sorted_SNP > Final_list_SNP
+ wc -l Final_List_SNP  ## 89
+ 
+ ##
+
 
 
  
