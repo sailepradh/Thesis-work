@@ -2,3 +2,12 @@
 awk -F[:/] '{print $1,$2,$3}' present_in_highTox.txt  > High_tox_processed.txt
 awk '{print $1,$2,$3,$4}' High_tox_processed.txt > Upload.txt
 sed 's/chr//g' Upload.txt > Upload2.txt
+
+
+## 13/04/2015 Doing the manipulation for the getting the list in the ENSEMBL for thrombopenia endophenotype
+awk '{print $1," ", $2, " ", $3}' Final_list_SNP > Final_list_2
+awk -F":" '{print $1,$2}' Final_list_2 > Final_list_3
+## Deleting the first line in list
+sed '1d' Final_list_3 > list.txt
+
+
