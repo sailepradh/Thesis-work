@@ -99,8 +99,7 @@ pseq proj seq-summary
  sed -n "/VAR/,/0.000999356/p" Final_Sorted_SNP > Final_list_SNP
  wc -l Final_List_SNP  ## 89
  
- ##
-
+ ## Now to map the Listed SNP to the genes or the near gene( because most of the genes are in the intronic region) I first uploaded the List into the Ensembl tool called as VEP. However here I noticed some discrepancy with the expected result. While slimming through the variant I had seen a gene SERPINC1 in the chromosome 1,which has seen function related to the thrombocytosis. However the ensembl shoed same position to be other gene so ask B about the tools or anything else that could map the variants to the REFSEQ because in the next phase of the association study we have database with the ref database. (See the miscellonous unix commands for the manipulation of the List to get to the final list.txt)
 
 
  
