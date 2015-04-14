@@ -22,13 +22,13 @@ S1056
 ##For the common variants I selected the MAF 0.01 as the base line above which all the variants are selected while for the rare ## or in my opinion to take into the complete mutation profile such that even 1 allele has the variant, I took the MAF as 0.005 ## Now using the vcfools commands we get the following rare and common list variants from the raw vcf master files
 
  vcftools --vcf raw.vcf --remove sample_remove --remove-filtered-all --maf 0.01 --max-missing 0.95 --recode --out Common
- vcftools --vcf raw.vcf --remove sample_remove --remove-filtered-all --maf 0.005 --max-missing 0.95 --recode --out Rare
+ vcftools --vcf raw.vcf --remove sample_remove --remove-filtered-all --maf 0.005 --max-missing 0.90 --recode --out Rare
  ## THIS command did take a lot of time 
  
  ## Now we have the vcf file as Common.recode.vcf and Rare.recode.vcf and using the wc -l command in the each vcf file I get ##the following count of the vcf files
 
 ## Common = 74525 out of a possible 211467 Sites , 211 samples
-## Rare = 87477 out of a possible 211467 Sites, 211 sample
+## Rare =  91564 out of a possible 211467 Sites, 211 sample
 
 ## (See log files for the more information about the command and the output)
 
@@ -108,6 +108,14 @@ And also there are genes ambigious symbols such as  AC015600.1, AL662800.2, C8or
  However I found this tool called as SNPNexus that helped out great deal in getting the reference Gene for the refseq as well as the Ensemble. It is a online tool and required the files in the specific fomat. For which I did some manipulation in unix for the file. Then using the unique function in R I derived the gene list that mapped in these SNPs. It is named as the Gene_Refseq_TPK.
  
  ## Part -3 Rare-variant association for these specific genes:
+ 
+ Doing some individual stats of the rare list
+ For this we first annotated the rare variant list with the snpEff tool and using the command
+ 
+ java -Xmx4g -jar /sw/apps/bioinfo/snpEff/4.1/milou/snpEff.jar -c /sw/apps/bioinfo/snpEff/4.1/milou/snpEff.config  -canon -hgvs -csvStats -s stats.test -d  GRCh37.75  /proj/b2012058/nobackup/private/sailen/Common_rare/Rare.recode.vcf  > /proj/b2012058/nobackup/private/sailen/Common_rare/Rare.Annotate.vcf
+ 
+ Now in the rare list we have to get the vcf files of the genes that are seen in Refseq genes list we got from the previous analysis.
+ 
  
  
 
