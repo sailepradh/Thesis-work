@@ -1,0 +1,94 @@
+BAsically, taking all the variant at the MAF of 0.01% and dividing the patients as high toxicity and low toxicity based on the CTC score Case 1 : Based on CTC score of Thrombopenia and Neutropennia only 
+          Case 2 : Based on the CTC score of Thrombopenia, Neutropenia and leukopenia.
+
+Rationale behind such study was to see whether the enriched single nucleotide variants give any significant association with the phenotype.
+
+#############
+#########Case 1) Taking into consideration Thrombopenia and leucopenia score in the considering and making cases as the HIGH TOX with CTC Score of greater than 3 and 4 and LOW TOX as score lesser than 0 or 1.
+
+## Part 1: Extracting the VCF files from the orignal raw files
+First I made a new folder called CASE_CONTROL in the path 
+
+/proj/b2012058/nobackup/private/sailen/
+
+And copied the file raw.vcf into it
+
+cp raw.vcf CASE_CONTROL/
+
+## Now we the master VCF files contain samples that were unusable as from the mapping and subsequent preprocessing steps. We ## knew that there were some samples that had some problem with either the variants being low thorughput or with the samples ## are out of cluster from IBS plot (Contact Benjamin with the clustering plot). Thus, we only took the samples that had the ## good basecalls and grouped together so as to make their ethinic background same. For this we used the tools VCFtools. The ## samples in consideration were given a file name sample_remove and contains the sample names in the new files as
+ 
+head sample_remove
+S0328
+S0664
+S0580
+S0922
+
+## Taking into consideration the Minor allele of 0.102 that corresponds to at least 1 in 100 individuals for the selection of the variants from the raw.vcf list such that it contained only the individual list of the Case and control seperately at the allele frequency of 0.01 in each group. for this we used the criteria defined by one of the paper that said that the MAF should be 1/sqr N But before  that doing the elementary analysis such that:
+
+vcftools --vcf raw.vcf --freq --out output
+vcftools --vcf raw.vcf --site-depth --max-missing 1.0 --out site_depth_summary 
+
+
+## See the R file Case_COntrol_1.R for the further manipulation of the pheonotype on the R to get the phenotypic information of the Case, High Tox and Control Low tox. Doing this turns the overall study into Qualitative trait study.
+
+Cases = 48
+Control = 48
+
+## Now deriving the individual file of case.vcf and control.vcf file from the original raw.vcf
+
+vcftools --vcf raw.vcf --keep Case1 --remove sample_remove --remove-filtered-all --maf 0.102 --max-missing 0.95 --recode --out HighTox
+
+vcftools --vcf raw.vcf --keep Control1 --remove sample_remove --remove-filtered-all --maf 0.102 --max-missing 0.95 --recode --out LowTox
+
+HighTox = 36921
+LowTox = 38086
+
+## Doing the Single variant association study with the case and control sample 
+ first installing the required database from the previous files then making a project and doing the neccessary analysis into it.  
+ 
+ pseq Case_Control new-project --resources hg19
+ cp -r HighTox.recode.vcf LowTox.recode.vcf data/
+ 
+ ## loading the data file that contain the .vcf from original high tox and low toxicity cases
+ 
+ pseq proj Case_Control load-vcf --vcf data/*.vcf
+ 
+ pseq Case_Control tag-file --id 1 --name HighTox
+ pseq Case_Control tag-file --id 2 --name LowTox
+ pseq Case_Control var-summary
+ pseq Case_Control v-view | head
+ pseq Case_Control v-view --samples --vmeta | head
+ 
+ After the transfer of the file into the data we get something like this when 
+
+head data/pop.phe 
+ 
+##phe1,Integer,-9,"1/2 = LowTox/HighTox"
+#ID	phe1
+1	S0143
+1	S0160
+1	S0170
+1	S0172
+1	S0225
+1	S0237
+1	S0243
+1	S0258
+ 
+pseq Case_Control load-pheno --file data/pop.phe 
+
+## sanity check
+pseq Case_Control i-view
+
+  pseq Case_Control v-view --geno --phenotype phe1 --mask limit=1
+  
+  Gave an error vies of the genotyping that could have been created due to max missing data 
+  This might give some error in the subsequent analysis
+
+  pseq Case_Control i-stats > individiual_stats
+  pseq Case_Control g-stats --mask loc.group=refseq > Summary_per_gene
+  pseq Case_Control counts --phenotype phe1 --annotate refseq  > Annotate_all
+  pseq Case_Control v-view --mask ref.ex=dbSNP > Not_in_dbSNP
+  
+  
+  Doing the individual identity 
+  pseq Case_Control ibs-matrix --mask mac=2-5 --long-format --two-counts
