@@ -12,5 +12,9 @@ sed '1d' Final_list_3 > list.txt
 
 grep -f Gene_TPK.txt Rare.Annotate.vcf > Rare_to_be_test.vcf 
 
+sed '1d' Case > Case1
+sed '1d' Control > Control1
+
+
 
 
