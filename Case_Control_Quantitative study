@@ -92,3 +92,14 @@ pseq Case_Control i-view
   
   Doing the individual identity 
   pseq Case_Control ibs-matrix --mask mac=2-5 --long-format --two-counts
+  pseq Case_Control counts --phenotype phe1 --mask case.control=8-10,0-1 >Case_only_variants
+  
+  
+  Single- Fischer assocation study
+  pseq Case_Control v-assoc --phenotype phe1 > Full_Fischer_extract
+  pseq Case_Control v-assoc --phenotype phe1 | gcol MINA MINU OBSA OBSU VAR OR P  > Partial_Fischer_exact
+  pseq Case_Control glm --phenotype phe1 > Logisitc
+  
+  
+  
+  
