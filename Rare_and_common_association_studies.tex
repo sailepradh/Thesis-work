@@ -174,8 +174,12 @@ plinkseq-0.10/pseq proj2 v-stats > whole_project_summary.txt
  plinkseq-0.10/pseq proj2 assoc --tests skat --phenotype phe1 --mask loc.group=refseq  mac=1-10 > Rare_test_Variant_refseq.txt
 
 ## may be can be done for the ENSEMBl database as well
- plinkseq-0.10/pseq proj2 assoc --tests skat --phenotype phe1 --mask loc.group=refseq  mac=1-10 > Rare_test_Variant_ensembl.txt
+ plinkseq-0.10/pseq proj2 assoc --tests skat --phenotype phe1 --mask loc.group=ensembl  mac=1-10 > Rare_test_Variant_ensembl.txt
 
+## now doing the manipulation with the derived files from the above 
  
- 
+## See the file Manipulation of SKAT_Quantitative to get the idea about the R 
+
+## Finally we get the Files R_test_Ensembl and R_Test_Refseq to get the genes that are enriched. However note that these are not multiple test corrected. So may be that must be done.
+
 
