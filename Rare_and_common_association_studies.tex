@@ -113,8 +113,69 @@ And also there are genes ambigious symbols such as  AC015600.1, AL662800.2, C8or
  
  java -Xmx4g -jar /sw/apps/bioinfo/snpEff/4.1/milou/snpEff.jar -c /sw/apps/bioinfo/snpEff/4.1/milou/snpEff.config  -canon -hgvs -csvStats -s stats.test -d  GRCh37.75  /proj/b2012058/nobackup/private/sailen/Common_rare/Rare.recode.vcf  > /proj/b2012058/nobackup/private/sailen/Common_rare/Rare.Annotate.vcf
  
- Now in the rare list we have to get the vcf files of the genes that are seen in Refseq genes list we got from the previous analysis.
+ Now in the rare list we have to get the vcf files of the genes that are seen in Refseq genes list we got from the previous analysis.To get the genes that are enriched with the gene variants with the genes we selected, I did the selection of the genes from the original Rare.Annoate.vcf file
  
+ grep -f Gene_TPK.txt Rare.Annotate.vcf > Rare_to_be_test.vcf
+ wc -l Rare_to_be_test.vcf 
+ 
+ The original vcf file missed the header so we have to first extract the header and do the subsequent analysis so
+ 
+ grep ^# Rare.Annotate.vcf > header.vcf
+ cat header.vcf Rare_to_be_test.vcf > New.Rarelist.vcf
+ 
+ 
+ ## 927 variant 
+ 
+ 
+ ## The resst of the analysis for the SKAT was done in the local machine. For that I used the scp command and downloaded the file into the local machine. The following codes are run in the path
+ 
+/Users/salendrapradh/Desktop 
+
+where I have the plinkseq program 
+
+## Creating the new project folder proj2 and doing he subsequent analysis in the project
+plinkseq-0.10/pseq proj2 new-project --resources hg19
+plinkseq-0.10/pseq proj2 load-vcf --vcf data/New.Rarelist.vcf 
+
+plinkseq-0.10/pseq proj2 tag-file --id 1  --name Rare
+plinkseq-0.10/pseq proj2 var-summary 
+
+## Linking the project with the phenotype information of the TPK from the data folder
+plinkseq-0.10/pseq proj2 load-pheno --file data/TPK.phe 
+plinkseq-0.10/pseq proj2 i-view
+
+
+## Doing the regular check ( sanity check) up of whether the databases are attached to the project or not
+
+plinkseq-0.10/pseq proj2 loc-summary
+
+## ---Locus DB summary---
+## Group : refseq (41880 entries) n/a
+## Group : ccds (27429 entries) n/a
+## Group : gencode (94378 entries) n/a
+## Group : ensembl (165825 entries) n/a
+
+doing the similar stuffs for dbSNP and seqdB
+plinkseq-0.10/pseq proj2 ref-summary 
+##---Reference DB summary---
+## Group : dbsnp (52054804 entries) : dbsnp (default name)
+
+plinkseq-0.10/pseq proj2 seq-summary 
+
+## Something like this should pop up
+chr1:1..249250621	MB=249
+chr2:1..243199373	MB=243
+chr3:1..198022430	MB=198
+
+## Deriving the summary statistics of the all the sample files
+plinkseq-0.10/pseq proj2 v-stats > whole_project_summary.txt
+
+## Trying the SKAT test for the refseq database 
+ plinkseq-0.10/pseq proj2 assoc --tests skat --phenotype phe1 --mask loc.group=refseq  mac=1-10 > Rare_test_Variant_refseq.txt
+
+## may be can be done for the ENSEMBl database as well
+ plinkseq-0.10/pseq proj2 assoc --tests skat --phenotype phe1 --mask loc.group=refseq  mac=1-10 > Rare_test_Variant_ensembl.txt
+
  
  
 
