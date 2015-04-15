@@ -10,4 +10,7 @@ awk -F":" '{print $1,$2}' Final_list_2 > Final_list_3
 ## Deleting the first line in list
 sed '1d' Final_list_3 > list.txt
 
+grep -f Gene_TPK.txt Rare.Annotate.vcf > Rare_to_be_test.vcf 
+
+
 
