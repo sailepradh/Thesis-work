@@ -1,4 +1,4 @@
-BAsically, taking all the variant at the MAF of 0.01% and dividing the patients as high toxicity and low toxicity based on the CTC score Case 1 : Based on CTC score of Thrombopenia and Neutropennia only 
+BAsically, taking all the variant at above a MAF and dividing the patients as high toxicity and low toxicity based on the CTC score Case 1 : Based on CTC score of Thrombopenia and Neutropennia only 
           Case 2 : Based on the CTC score of Thrombopenia, Neutropenia and leukopenia.
 
 Rationale behind such study was to see whether the enriched single nucleotide variants give any significant association with the phenotype.
@@ -52,7 +52,6 @@ LowTox = 38086
  ## loading the data file that contain the .vcf from original high tox and low toxicity cases
  
  pseq proj Case_Control load-vcf --vcf data/*.vcf
- 
  pseq Case_Control tag-file --id 1 --name HighTox
  pseq Case_Control tag-file --id 2 --name LowTox
  pseq Case_Control var-summary
@@ -99,6 +98,29 @@ pseq Case_Control i-view
   pseq Case_Control v-assoc --phenotype phe1 > Full_Fischer_extract
   pseq Case_Control v-assoc --phenotype phe1 | gcol MINA MINU OBSA OBSU VAR OR P  > Partial_Fischer_exact
   pseq Case_Control glm --phenotype phe1 > Logisitc
+  
+  Sorting adn exporting the file to the local machine 
+  sort -g -k7 Partial_Fischer_exact > Case_Control_Fischer.txt  
+  sort -g -k11 Logisitc > Case_Control_Logistic.txt
+  
+  Gene-Based Assiociation study 
+  At first doing the Burden test based on the all the genes from the Refseq with all the variants in question
+  pseq Case_Control assoc --phenotype phe1 --mask loc.group=refseq > Gene_based_test 
+  ## This has problem with taking all lot of time for computing so rather than tha this took the approach so tried in the local machineAnd yes the new version of the plinkseq was faster than the one in the uppmax
+   plinkseq-0.10/pseq Case_Control assoc --tests burden --phenotype phe1 --mask loc.group=refseq > GeneTest
+  
+Manipulation in R
+GeneTest <- read.delim("~/Desktop/GeneTest")
+dim (GeneTest)
+Genetest2<- na.omit(GeneTest)
+row.names(Genetest2)<- NULL
+Genetest2 <- Genetest2[order(Genetest2$P),] 
+write.table(Genetest2,"Gene_BURDEN_CASE_CONTROL.txt", sep="\t", quote = F, row.names = F)
+
+
+
+
+  
   
   
   
