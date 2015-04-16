@@ -1,0 +1,75 @@
+Following up with the study of the qualitative traits, I looked upon the all the three CTC scores and took into consideration all three scores and subsampled from the original samples provided.
+
+Rationale is that the enriched genes and variants in these extremes of the samples will give indication of the genetic signals we are looking for. And further analysis of these traits might gives much more insight.
+
+R codes for doing the maipulation of the phenotype data is done in the Rcode Case_CONTROL_extreme and getting the plot as seen in the visualization.
+
+The number of the individuals were as follows
+
+Extreme_HighToxicity= 24
+Extreme_LowToxicity= 41
+
+For the exome data I created yet another folder in the Uppmax and did the following manipulation.
+
+# Part 1: Extracting the VCF files from the orignal raw files
+First I made a new folder called Extreme in the path 
+
+/proj/b2012058/nobackup/private/sailen/
+
+And copied the file raw.vcf into it
+
+cp raw.vcf Extreme/
+
+## Now we the master VCF files contain samples that were unusable as from the mapping and subsequent preprocessing steps. We ## knew that there were some samples that had some problem with either the variants being low thorughput or with the samples ## are out of cluster from IBS plot (Contact Benjamin with the clustering plot). Thus, we only took the samples that had the ## good basecalls and grouped together so as to make their ethinic background same. For this we used the tools VCFtools. The ## samples in consideration were given a file name sample_remove and contains the sample names in the new files as
+ 
+head sample_remove
+S0328
+S0664
+S0580
+S0922
+
+vcftools --vcf raw.vcf --keep case.txt --remove sample_remove --remove-filtered-all  --max-missing 1 --recode --out ExtremeHighTox
+
+Number of variant = 144571
+
+vcftools --vcf raw.vcf --keep control.txt --remove sample_remove --remove-filtered-all  --max-missing 1 --recode --out ExtremLowTox
+
+Number of variants = 151956
+
+cp hg19/ ../Extreme/
+
+pseq ext new-project --resources hg19
+pseq ext load-vcf --vcf data/*.vcf
+pseq ext tag-file --id 1 --name HighTox
+pseq ext tag-file --id 2 --name LowTox
+pseq ext var-summary
+
+---Variant DB summary---
+
+154101 unique variants
+File tag : HighTox (144571 variants, 24 individuals)
+File tag : LowTox (151956 variants, 41 individuals)
+
+Trying to find the identity similaity in the 2 group of individuals
+
+For this we used the tool called in plinkseq 
+pseq ext ibs-matrix > test_identity
+less -Sx20 test_identity 
+
+Now further manipulation was done in the R program in local machine
+require (reshape2)
+ibsData <- read.table("~/Desktop/THESIS_R FILES/test_identity", header=TRUE, row.names=1, stringsAsFactors=FALSE)
+ibsMatrix <- data.matrix(ibsData)
+ibsPairs <- melt(ibsMatrix)
+mds <-cmdscale(as.dist(1-ibsMatrix))
+k <- c( rep("green",41) , rep("red",24) )
+plot(mds,pch=20,col=k)
+
+
+
+
+
+
+
+
+
