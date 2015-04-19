@@ -182,4 +182,8 @@ plinkseq-0.10/pseq ben loc-summary
 plinkseq-0.10/pseq ben ref-summary
 plinkseq-0.10/pseq ben seq-summary
 
+plinkseq-0.10/pseq ben assoc --tests skat --phenotype Thr --mask loc.group=ensembl > SKAT_THR_ENSEMBL
+plinkseq-0.10/pseq ben assoc --tests skat --phenotype Leu --mask loc.group=ensembl > SKAT_Leu_ENSEMBL
+
+
 
