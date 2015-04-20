@@ -292,7 +292,7 @@ plinkseq-0.10/pseq Common assoc --tests skat --phenotype Neu --mask loc.group=re
  
   awk -F"\t" -v OFS="\t" '{ for(N=1; N<=NF; N++) if($6=="") $6="NA" } 1' Common_SKAT_Neu_Refseq > Common_SKAT_Neu_Refseq_2 
  grep -v 'NA' Common_SKAT_Neu_Refseq_2 > Common_SKAT_Neu_Refseq_3
- sort -g -k6 Common_SKAT_Neu_Refseq_3 > SKAT_RESULTS/Common_Neu_THR_Ref
+ sort -g -k6 Common_SKAT_Neu_Refseq_3 > SKAT_RESULTS/Common_SKAT_THR_Ref
  
 
 
