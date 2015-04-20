@@ -182,6 +182,8 @@ plinkseq-0.10/pseq ben loc-summary
 plinkseq-0.10/pseq ben ref-summary
 plinkseq-0.10/pseq ben seq-summary
 
+
+### Doing the association studies undertaking the ensembl database
 plinkseq-0.10/pseq ben assoc --tests skat --phenotype Thr --mask loc.group=ensembl > SKAT_THR_ENSEMBL
 plinkseq-0.10/pseq ben assoc --tests skat --phenotype Leu --mask loc.group=ensembl > SKAT_Leu_ENSEMBL
 plinkseq-0.10/pseq ben assoc --tests skat --phenotype Neu --mask loc.group=ensembl > SKAT_Neu_ENSEMBL
@@ -190,17 +192,35 @@ plinkseq-0.10/pseq ben assoc --tests skat --phenotype Neu --mask loc.group=ensem
  sort -g -k6 SKAT_THR_ENSEMBL > SKAT_THR_ENSEMBL_2
  tail -1000 SKAT_THR_ENSEMBL_2
  sed -n -e '/LOCUS/,/ENST00000585134/ p' SKAT_THR_ENSEMBL_2 > SKAT_THR_ENSEMBL_3
- ## 106011
+
  
  sort -g -k6 SKAT_Leu_ENSEMBL > SKAT_Leu_ENSEMBL_2
  tail SKAT_Leu_ENSEMBL_2
  sed -n -e '/LOCUS/,/ENST00000585223/p' SKAT_Leu_ENSEMBL_2 > SKAT_Leu_ENSEMBL_3 
- ##106011
  
  salendrapradh$  sort -g -k6 SKAT_Neu_ENSEMBL > SKAT_Neu_ENSEMBL_2
  tail SKAT_Neu_ENSEMBL_2
  sed -n -e '/LOCUS/,/ENST00000585277/p' SKAT_Neu_ENSEMBL_2 > ./SKAT_RESULTS/Whole_Variant_Neu_ENSEMBL 
+
+### Doing the association using the REFSEQ database
+plinkseq-0.10/pseq ben assoc --tests skat --phenotype Thr --mask loc.group=refseq > SKAT_THR_Refseq
+plinkseq-0.10/pseq ben assoc --tests skat --phenotype Leu --mask loc.group=refseq > SKAT_Leu_Refseq
+plinkseq-0.10/pseq ben assoc --tests skat --phenotype Neu --mask loc.group=refseq > SKAT_Neu_Refseq
+
+
+## Further manipulation to get the desired result
+ awk -F"\t" -v OFS="\t" '{ for(N=1; N<=NF; N++) if($6=="") $6="NA" } 1' SKAT_THR_Refseq > SKAT_THR_Refseq_2 
+ grep -v 'NA' SKAT_THR_Refseq_2 > SKAT_THR_Refseq_3
+ sort -g -k6 SKAT_THR_Refseq_3 > SKAT_RESULTS/Whole_Variant_SKAT_THR_Ref
  
+ sort -g -k6 SKAT_Leu_ENSEMBL > SKAT_Leu_ENSEMBL_2
+ tail SKAT_Leu_ENSEMBL_2
+ sed -n -e '/LOCUS/,/ENST00000585223/p' SKAT_Leu_ENSEMBL_2 > SKAT_Leu_ENSEMBL_3 
+ 
+ salendrapradh$  sort -g -k6 SKAT_Neu_ENSEMBL > SKAT_Neu_ENSEMBL_2
+ tail SKAT_Neu_ENSEMBL_2
+ sed -n -e '/LOCUS/,/ENST00000585277/p' SKAT_Neu_ENSEMBL_2 > ./SKAT_RESULTS/Whole_Variant_Neu_ENSEMBL 
+
  ##############################################################################################################
  ###############################################################################################################
   For the variants with the MAF > 0.01 we first get the variants from the previously processed vcf files of maxmiss.filter.recode.vcf. 
