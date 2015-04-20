@@ -17,6 +17,7 @@ sed '1d' Control > Control1
 
 cp file /proj/b2012058/webexport
 
+grep -v 'NA' Sorted.Logistic.Regression | head
 
 
 
