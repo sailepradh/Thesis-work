@@ -192,6 +192,71 @@ plinkseq-0.10/pseq ben assoc --tests skat --phenotype Neu --mask loc.group=ensem
  sed -n -e '/LOCUS/,/ENST00000585134/ p' SKAT_THR_ENSEMBL_2 > SKAT_THR_ENSEMBL_3
  ## 106011
  
+ sort -g -k6 SKAT_Leu_ENSEMBL > SKAT_Leu_ENSEMBL_2
+ tail SKAT_Leu_ENSEMBL_2
+ sed -n -e '/LOCUS/,/ENST00000585223/p' SKAT_Leu_ENSEMBL_2 > SKAT_Leu_ENSEMBL_3 
+ ##106011
+ 
+ salendrapradh$  sort -g -k6 SKAT_Neu_ENSEMBL > SKAT_Neu_ENSEMBL_2
+ tail SKAT_Neu_ENSEMBL_2
+ sed -n -e '/LOCUS/,/ENST00000585277/p' SKAT_Neu_ENSEMBL_2 > ./SKAT_RESULTS/Whole_Variant_Neu_ENSEMBL 
+ 
+ ##############################################################################################################
+ ###############################################################################################################
+  For the variants with the MAF > 0.01 we first get the variants from the previously processed vcf files of maxmiss.filter.recode.vcf. 
+  
+cat maxmiss.filter.log
+
+Parameters as interpreted:
+	--vcf maxmiss.vcf
+	--exclude sample_remove
+	--out maxmiss.filter
+	--recode
+
+Excluding individuals in 'exclude' list
+After filtering, kept 210 out of 216 Individuals
+Outputting VCF file...
+After filtering, kept 151985 out of a possible 151985 Sites
+ 
+So for getting the vcf files with the variants at 0.01 we used the following command in weexport for the easy sake
+vcftools --vcf maxmiss.filter.recode.vcf --maf 0.01 --recode --out maxmiss.0.01
+
+Total Variant = 74018 (different from the one from the Benzamin may be different in the plink and plinkseq)
+plinkseq-0.10/pseq Common new-project --resources hg19
+ plinkseq-0.10/pseq Common load-vcf --vcf ./data/maxmiss.0.01.recode.vcf 
+ plinkseq-0.10/pseq Common tag-file --id 1 --name Common
+  plinkseq-0.10/pseq Common var-summary
+  
+  plinkseq-0.10/pseq Common load-pheno --file data/pop2.phe 
+  
+  plinkseq-0.10/pseq Common i-view
+  
+  plinkseq-0.10/pseq Common loc-summary
+  plinkseq-0.10/pseq Common ref-summary
+   plinkseq-0.10/pseq Common seq-summary
+
+plinkseq-0.10/pseq Common assoc --tests skat --phenotype Thr --mask loc.group=ensembl > Common_SKAT_THR_ENSEMBL
+plinkseq-0.10/pseq Common assoc --tests skat --phenotype Leu --mask loc.group=ensembl > Common_SKAT_Leu_ENSEMBL
+plinkseq-0.10/pseq Common assoc --tests skat --phenotype Neu --mask loc.group=ensembl > Common_SKAT_Neu_ENSEMBL
+
+## Further manipulation to get the desired result
+ sort -g -k6 Common_SKAT_THR_ENSEMBL > Common_SKAT_THR_ENSEMBL_2
+ head Common_SKAT_THR_ENSEMBL_2
+ tail Common_SKAT_THR_ENSEMBL_2
+ sed -n -e '/LOCUS/,/ENST00000585217/p' Common_SKAT_THR_ENSEMBL_2 > SKAT_RESULTS/Common_SKAT_THR
+
+ 
+  sort -g -k6 Common_SKAT_Neu_ENSEMBL > Common_SKAT_Neu_ENSEMBL_2
+   head Common_SKAT_Neu_ENSEMBL_2 
+   tail Common_SKAT_Neu_ENSEMBL_2
+   sed -n -e '/LOCUS/,/ENST00000585141/p' Common_SKAT_Neu_ENSEMBL_2 > SKAT_RESULTS/Common_SKAT_Neu
+
+ 
+
+
+
+
+ 
  
 
 
