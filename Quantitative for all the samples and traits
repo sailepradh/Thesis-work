@@ -213,13 +213,13 @@ plinkseq-0.10/pseq ben assoc --tests skat --phenotype Neu --mask loc.group=refse
  grep -v 'NA' SKAT_THR_Refseq_2 > SKAT_THR_Refseq_3
  sort -g -k6 SKAT_THR_Refseq_3 > SKAT_RESULTS/Whole_Variant_SKAT_THR_Ref
  
- sort -g -k6 SKAT_Leu_ENSEMBL > SKAT_Leu_ENSEMBL_2
- tail SKAT_Leu_ENSEMBL_2
- sed -n -e '/LOCUS/,/ENST00000585223/p' SKAT_Leu_ENSEMBL_2 > SKAT_Leu_ENSEMBL_3 
+ awk -F"\t" -v OFS="\t" '{ for(N=1; N<=NF; N++) if($6=="") $6="NA" } 1' SKAT_Leu_Refseq > SKAT_Leu_Refseq_2 
+ grep -v 'NA' SKAT_Leu_Refseq_2 > SKAT_Leu_Refseq_3
+ sort -g -k6 SKAT_Leu_Refseq_3 > SKAT_RESULTS/Whole_Variant_SKAT_Leu_Ref
  
- salendrapradh$  sort -g -k6 SKAT_Neu_ENSEMBL > SKAT_Neu_ENSEMBL_2
- tail SKAT_Neu_ENSEMBL_2
- sed -n -e '/LOCUS/,/ENST00000585277/p' SKAT_Neu_ENSEMBL_2 > ./SKAT_RESULTS/Whole_Variant_Neu_ENSEMBL 
+  awk -F"\t" -v OFS="\t" '{ for(N=1; N<=NF; N++) if($6=="") $6="NA" } 1' SKAT_Neu_Refseq > SKAT_Neu_Refseq_2 
+ grep -v 'NA' SKAT_Neu_Refseq_2 > SKAT_Neu_Refseq_3
+ sort -g -k6 SKAT_Neu_Refseq_3 > SKAT_RESULTS/Whole_Variant_SKAT_Neu_Ref
 
  ##############################################################################################################
  ###############################################################################################################
@@ -271,12 +271,28 @@ plinkseq-0.10/pseq Common assoc --tests skat --phenotype Neu --mask loc.group=en
    tail Common_SKAT_Neu_ENSEMBL_2
    sed -n -e '/LOCUS/,/ENST00000585141/p' Common_SKAT_Neu_ENSEMBL_2 > SKAT_RESULTS/Common_SKAT_Neu
 
+sort -g -k6 Common_SKAT_Leu_ENSEMBL > Common_SKAT_Leu_ENSEMBL_2 
+head Common_SKAT_Leu_ENSEMBL_2
+ sed -n -e '/LOCUS/,/ENST00000585223/p' Common_SKAT_Leu_ENSEMBL_2 > SKAT_RESULTS/Common_SKAT_Leu
+
+
+
+plinkseq-0.10/pseq Common assoc --tests skat --phenotype Thr --mask loc.group=refseq > Common_SKAT_THR_Refseq
+plinkseq-0.10/pseq Common assoc --tests skat --phenotype Leu --mask loc.group=refseq > Common_SKAT_Leu_Refseq
+plinkseq-0.10/pseq Common assoc --tests skat --phenotype Neu --mask loc.group=refseq > Common_SKAT_Neu_Refseq
+
+ ## Further manipulation to get the desired result
+ awk -F"\t" -v OFS="\t" '{ for(N=1; N<=NF; N++) if($6=="") $6="NA" } 1' Common_SKAT_THR_Refseq > Common_SKAT_THR_Refseq_2 
+ grep -v 'NA' Common_SKAT_THR_Refseq_2 > Common_SKAT_THR_Refseq_3
+ sort -g -k6 Common_SKAT_THR_Refseq_3 > SKAT_RESULTS/Common_SKAT_THR_Ref
  
-
-
-
-
+ awk -F"\t" -v OFS="\t" '{ for(N=1; N<=NF; N++) if($6=="") $6="NA" } 1' Common_SKAT_Leu_Refseq > Common_SKAT_Leu_Refseq_2 
+ grep -v 'NA' Common_SKAT_Leu_Refseq_2 > Common_SKAT_Leu_Refseq_3
+ sort -g -k6 Common_SKAT_Leu_Refseq_3 > SKAT_RESULTS/Common_SKAT_Leu_Ref
  
+  awk -F"\t" -v OFS="\t" '{ for(N=1; N<=NF; N++) if($6=="") $6="NA" } 1' Common_SKAT_Neu_Refseq > Common_SKAT_Neu_Refseq_2 
+ grep -v 'NA' Common_SKAT_Neu_Refseq_2 > Common_SKAT_Neu_Refseq_3
+ sort -g -k6 Common_SKAT_Neu_Refseq_3 > SKAT_RESULTS/Common_Neu_THR_Ref
  
 
 
