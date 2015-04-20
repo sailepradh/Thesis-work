@@ -184,6 +184,16 @@ plinkseq-0.10/pseq ben seq-summary
 
 plinkseq-0.10/pseq ben assoc --tests skat --phenotype Thr --mask loc.group=ensembl > SKAT_THR_ENSEMBL
 plinkseq-0.10/pseq ben assoc --tests skat --phenotype Leu --mask loc.group=ensembl > SKAT_Leu_ENSEMBL
+plinkseq-0.10/pseq ben assoc --tests skat --phenotype Neu --mask loc.group=ensembl > SKAT_Neu_ENSEMBL
+
+## Further manipulation to get the desired result
+ sort -g -k6 SKAT_THR_ENSEMBL > SKAT_THR_ENSEMBL_2
+ tail -1000 SKAT_THR_ENSEMBL_2
+ sed -n -e '/LOCUS/,/ENST00000585134/ p' SKAT_THR_ENSEMBL_2 > SKAT_THR_ENSEMBL_3
+ ## 106011
+ 
+ 
+
 
 
 
