@@ -16,4 +16,4 @@ Missing <- data.frame(diff,diff2)
 Missing$diff2<- NA
 colnames(Missing)<-c("ensembl_gene_id", "hgnc_symbol")
 Gene_lookup_table<- rbind(Gene_GO,Missing)
-Whole_Variant_SKAT_Leu_ENSEMBL$HGNC_Symbol<-Gene_lookup_table$hgnc_symbol[which(Whole_Variant_SKAT_Leu_ENSEMBL$ALIAS %in% Gene_lookup_table$ensembl_gene_id)]
+Whole_Variant_SKAT_Leu_ENSEMBL$HGNC_Symbol<-Gene_lookup_table$hgnc_symbol[match(Whole_Variant_SKAT_Leu_ENSEMBL$ALIAS,Gene_lookup_table$ensembl_gene_id)]
