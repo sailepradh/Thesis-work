@@ -1,0 +1,14 @@
+## intially getting the plink files as such
+ vcftools --vcf input.vcf --plink --out filename
+ 
+ ## gives the output the log files, Map and ped files, however we want our files to be in the binary files as these files are easier to manipulate and do the necessary analyis. Thus using the command
+ 
+ plink --file plinkfile --make-bed --out plinkfile --noweb 
+
+## using the awk to get the gene and exon information
+
+
+## Using Annovar for the annonation of the variant could help out the things 
+
+
+
