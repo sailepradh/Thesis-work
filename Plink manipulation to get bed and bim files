@@ -6,6 +6,8 @@
  plink --file plinkfile --make-bed --out plinkfile --noweb 
 
 ## using the awk to get the gene and exon information
+ curl  -s "http://hgdownload.cse.ucsc.edu/goldenPath/hg19/database/refFlat.txt.gz" | gunzip -c | awk '{n=int($9); split($10,S,/,/);split($11,E,/,/); for(i=1;i<=n;++i) {printf("%s,%s,%s,%s,%s\n",$1,$2,$3,S[i],E[i]);} }' > test.txt
+Admins-MacBook-Pro:Downloads admin$ less -Sx20 test.txt 
 
 
 ## Using Annovar for the annonation of the variant could help out the things 
