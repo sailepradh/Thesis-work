@@ -21,3 +21,6 @@ grep -v 'NA' Sorted.Logistic.Regression | head
 
 
 
+plink --file CastCtrl  --make-set-collapse-all Upload2.txt  --write-set --noweb
+
+plink --file CastCtrl  --make-set Upload2.txt  --list --noweb
