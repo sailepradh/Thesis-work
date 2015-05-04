@@ -24,3 +24,6 @@ grep -v 'NA' Sorted.Logistic.Regression | head
 plink --file CastCtrl  --make-set-collapse-all Upload2.txt  --write-set --noweb
 
 plink --file CastCtrl  --make-set Upload2.txt  --list --noweb
+
+
+ curl -s "http://hgdownload.cse.ucsc.edu/goldenPath/hg19/database/refFlat.txt.gz" | gunzip -c | awk '{n=int($9); split($10,S,/,/);split($11,E,/,/); i<=n;++i) {printf("%s,%s,%s,%s\n",$3,S[i],E[i],$1);} }' > jst.txt
