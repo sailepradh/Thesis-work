@@ -3,7 +3,9 @@
 Apply Filter criteria 1) Filter of the variants based on the genotyping depth ahd the GATK Filter
 
 For the intial analysis of the quantitative traits- in our case the toxicity score of the individual phenotype, we first have to qualtiy analysis of the genotype data. For that we first considered the variants that have passed through the GATK filter and have the mean depth score of 10 over all nucleotides. From the vcftools manuals we use the command the min-meanDP. This includes only sites with mean depth values (over all included individuals) greater than or equal to the "--min-meanDP" value of 10. 
-vcftools --vcf raw.vcf --remove-filtered-all --min-meanDP 10 --recode --out 
+
+vcftools --vcf raw.vcf --remove-filtered-all --min-meanDP 10 --recode --out Filter1
+
 ## Parameters as interpreted:
 	--vcf raw.vcf
 	--min-meanDP 10
@@ -13,12 +15,26 @@ vcftools --vcf raw.vcf --remove-filtered-all --min-meanDP 10 --recode --out
 
 ## Number of Variants =  158753/211467
 
-Apply quality filter criteria 2 ) Considering the genotyping rate for all the 216 individuals, we find that the three individuals S0328, S0724, S0664 who have genotyping rate lower than threshold of 0.95 are removed from the further analysis. Similarly the sample S0580 are removed as there are large number of variants present and hence the possibility of contamination. And sample S0922 was removed as it was similar to the S1056. After considering the genotyping rate, the IBD descent we have 212 samples.
+Apply quality filter criteria 2 ) Considering the genotyping rate for all the 216 individuals, we find that the three individuals S0328, S0724, S0664 who have genotyping rate lower than threshold of 0.95 are removed from the further analysis. Similarly the sample S0580 are removed as there are large number of variants present and hence the possibility of contamination. And sample S0922 was removed as it was similar to the S1056. After considering the genotyping rate, the IBD descent we have 212 samples.'
 
+head sample_remove
+S0328
+S0664
+S0580
+S0922
+S0724
 
-vcftools --vcf maxmiss.vcf --remove sample_remove --recode --out maxmiss.filter
+vcftools --vcf Filter1.recode.vcf  --max-missing 0.95 --remove sample_remove --recode --out Common_rare
 
-Numbr of variant = 149615
+Number of variants =152303 out of a possible 158753
+
+vcftools --vcf Common_rare.recode.vcf --maf 0.01 --recode --out Common
+
+Number of variant =74302 out of a possible 152303
+
+vcftools --vcf Common_rare.recode.vcf --max-maf 0.01 --recode --out Rare
+
+Number of variant = 78001 out of a possible 152303 Sites
 
 plinkseq-0.10/pseq ben new-project --resources hg19
 plinkseq-0.10/pseq ben load-vcf --vcf data/maxmiss.filter.recode.vcf 
