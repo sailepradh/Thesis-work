@@ -47,11 +47,26 @@ Number of variant = 78001 out of a possible 152303 Sites
 Number of variant = 104865 out of a possible 152303 Sites
 
 
+## Single variant association studies Using the plink 
+
+First, we made the plink files for the common.vcf. However we command only takes the biallelic alleles and converts in the bed and map format which can be used for the association studies in the plink.
+
+vcftools --vcf Common.recode.vcf --plink --out Common
+
+plink --file Common --noweb --assoc --pheno pheno216.fam --mpheno 4 --out Thr
+plink --file Common --noweb --assoc --pheno pheno216.fam --mpheno 4 --out Thr --adjust
+plink --file Common --noweb --assoc --pheno pheno216.fam --mpheno 4 --out Thr --adjust --mperm 1000  
+plink --file Common --noweb  --pheno pheno216.fam --mpheno 4 --out Thr --adjust --linear --mperm 1000
 
 
+plink --file Common --noweb --assoc --pheno pheno216.fam --mpheno 5 --out Leu
+plink --file Common --noweb --assoc --pheno pheno216.fam --mpheno 5 --out Leu --adjust
+plink --file Common --noweb --assoc --pheno pheno216.fam --mpheno 5 --out Leu --adjust --mperm 1000
+plink --file Common --noweb  --pheno pheno216.fam --mpheno 4 --out Leu --adjust --linear --mperm 1000
 
-
-
+plink --file Common --noweb --assoc --pheno pheno216.fam --mpheno 6 --out Neu
+plink --file Common --noweb --assoc --pheno pheno216.fam --mpheno 6 --out Neu --adjust
+plink --file Common --noweb  --pheno pheno216.fam --mpheno 4 --out Thr --adjust --linear --mperm 1000
 
 plinkseq-0.10/pseq ben new-project --resources hg19
 plinkseq-0.10/pseq ben load-vcf --vcf data/maxmiss.filter.recode.vcf 
