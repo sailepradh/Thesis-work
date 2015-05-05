@@ -28,13 +28,30 @@ vcftools --vcf Filter1.recode.vcf  --max-missing 0.95 --remove sample_remove --r
 
 Number of variants =152303 out of a possible 158753
 
-vcftools --vcf Common_rare.recode.vcf --maf 0.01 --recode --out Common
+## Alternatively considering the allele frequency at 0.05 and seeing the difference  in the result!!!
+
+vcftools --vcf Common_rare.recode.vcf --maf 0.01 --recode --out 
+
+vcftools --vcf Common_rare.recode.vcf --maf 0.05 --recode --out Common_0.05
 
 Number of variant =74302 out of a possible 152303
 
+Result for the second case = 47490 out of a possible 152303 Sites
+
 vcftools --vcf Common_rare.recode.vcf --max-maf 0.01 --recode --out Rare
 
+vcftools --vcf Common_rare.recode.vcf --max-maf 0.05 --recode --out Rare_0.05
+
 Number of variant = 78001 out of a possible 152303 Sites
+
+Number of variant = 104865 out of a possible 152303 Sites
+
+
+
+
+
+
+
 
 plinkseq-0.10/pseq ben new-project --resources hg19
 plinkseq-0.10/pseq ben load-vcf --vcf data/maxmiss.filter.recode.vcf 
