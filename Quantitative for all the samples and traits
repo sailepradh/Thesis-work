@@ -1,4 +1,4 @@
-## Quality control of the raw variants 
+##post–SNP calling quality control filters of the raw variants 
 
 Apply Filter criteria 1) Filter of the variants based on the genotyping depth ahd the GATK Filter
 
