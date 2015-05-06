@@ -9,6 +9,21 @@
  curl  -s "http://hgdownload.cse.ucsc.edu/goldenPath/hg19/database/refFlat.txt.gz" | gunzip -c | awk '{n=int($9); split($10,S,/,/);split($11,E,/,/); for(i=1;i<=n;++i) {printf("%s,%s,%s,%s,%s\n",$1,$2,$3,S[i],E[i]);} }' > test.txt
 Admins-MacBook-Pro:Downloads admin$ less -Sx20 test.txt 
 
+gene <- read.delim("~/Downloads/gene", dec=",")
+glist.hg19 <- read.table("~/Downloads/glist-hg19.txt", quote="\"")
+gene <- gene[order(-gene$exonCount),]
+gene_dup =gene[duplicated(gene$name2),]
+gene_non =gene[!duplicated(gene$name2),]
+gene_non$chrom<- as.character(gene_non$chrom)
+gene_non<- sapply(strsplit(gene_non$chrom, "_"), "[",1)
+write.table(gene_non,"~/Desktop/gene_list.txt", sep="\t", quote = F, row.names = F)
+
+## Test with this gene
+gene_non[gene_non$name2=="TTN",]
+
+
+cat gene_list.txt | awk '{n=int($9); split($10,S,/,/);split($11,E,/,/); for(i=1;i<=n;++i) {printf("%s %s %s %s %s %s %s\n",$3," ",S[i]," ",E[i]," ",$13);} }' > Exon_list.txt
+cat gene_list.txt | awk '{n=int($9); split($10,S,/,/);split($11,E,/,/); for(i=1;i<=n;++i) {printf("%s %s %s %s %s %s %s\n",$3," ",S[i]-6," ",E[i]+6," ",$13);} }' > Exon_plus6list.txt
 
 ## Using Annovar for the annonation of the variant could help out the things 
 
