@@ -22,8 +22,8 @@ write.table(gene_non,"~/Desktop/gene_list.txt", sep="\t", quote = F, row.names =
 gene_non[gene_non$name2=="TTN",]
 
 
-cat gene_list.txt | awk '{n=int($9); split($10,S,/,/);split($11,E,/,/); for(i=1;i<=n;++i) {printf("%s %s %s %s %s %s %s\n",$3," ",S[i]," ",E[i]," ",$13);} }' > Exon_list.txt
-cat gene_list.txt | awk '{n=int($9); split($10,S,/,/);split($11,E,/,/); for(i=1;i<=n;++i) {printf("%s %s %s %s %s %s %s\n",$3," ",S[i]-6," ",E[i]+6," ",$13);} }' > Exon_plus6list.txt
+cat gene_list.txt | awk '{n=int($9); split($10,S,/,/);split($11,E,/,/); for(i=1;i<=n;++i) {printf("%s %s %s %s\n",$3,S[i],E[i],$13);} }' > Exon_list.txt
+cat gene_list.txt | awk '{n=int($9); split($10,S,/,/);split($11,E,/,/); for(i=1;i<=n;++i) {printf("%s %s %s %s\n",$3,S[i]-6,E[i]+6,$13);} }' > Exon_plus6list.txt
 
 ## Using Annovar for the annonation of the variant could help out the things 
 
