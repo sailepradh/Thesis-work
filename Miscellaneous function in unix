@@ -29,4 +29,98 @@ plink --file CastCtrl  --make-set Upload2.txt  --list --noweb
  curl -s "http://hgdownload.cse.ucsc.edu/goldenPath/hg19/database/refFlat.txt.gz" | gunzip -c | awk '{n=int($9); split($10,S,/,/);split($11,E,/,/); i<=n;++i) {printf("%s,%s,%s,%s\n",$3,S[i],E[i],$1);} }' > jst.txt
  
  awk 'BEGIN {OFS="\t"}{print "chrName", $1, $1+35, "0",  $2}' <your file> | mergeBed -scores sum > bedgraph.bg
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ #ENSEMBL manipulation
+ENSEMBL_WHOLE_LEU_Gene_ANN <- read.delim("~/Dropbox/SKAT_RESULTS/ENSEMBL_WHOLE_LEU_Gene_ANN")
+str(ENSEMBL_WHOLE_LEU_Gene_ANN)
+colnames(ENSEMBL_WHOLE_LEU_Gene_ANN)[colnames(ENSEMBL_WHOLE_LEU_Gene_ANN)=="p.adjust"] <- "Before_P_adjust"
+ENSEMBL_WHOLE_LEU_Gene_ANN$ALIAS<-as.character(ENSEMBL_WHOLE_LEU_Gene_ANN$ALIAS)
+system.time(test.split<- split(ENSEMBL_WHOLE_LEU_Gene_ANN, ENSEMBL_WHOLE_LEU_Gene_ANN$ALIAS))
+head(test.split)
+
+mergeData <- function(x){
+  tmp.LOCUS <- paste(x$LOCUS, collapse = " | ")
+  tmp.POS <- paste(x$POS, collapse = " | ")
+  tmp.P <-  paste(x$P, collapse = " | ")
+  tmp.NVAR<- paste(x$NVAR, collapse = " | ")
+  tmp.meanVAR <- mean(x$NVAR)
+  y <- x[1,]
+  y$LOCUS <- tmp.LOCUS
+  y$POS <- tmp.POS 
+  y$P <-tmp.P
+  y$NVAR <-tmp.NVAR
+  y$meanVAR<-tmp.meanVAR
+  return(y)
+}
+
+system.time(d.result<-lapply(test.split,function(x) mergeData(x)))
+head(d.result)
+tail(d.result)
+require(data.table)
+system.time(Skat_processed <- rbindlist(d.result))
+SKAT_test_ENSEMBL_Leu<-Skat_processed[order(Skat_processed$Before_P_adjust),]
+write.table(SKAT_test_ENSEMBL_Leu, "~/Dropbox/SKAT_RESULTS/ENSEMBL_WHOLE_LEU_Post.txt", sep="\t", quote = F, row.names = F)
+
+
+
+
+## Ref seq manipulation
+Whole_Variant_SKAT_Leu_Ref <- read.delim("~/Dropbox/SKAT_RESULTS/Whole_Variant_SKAT_Leu_Ref")
+Whole_Variant_SKAT_Leu_Ref$Before_P_adjust<-p.adjust(Whole_Variant_SKAT_Leu_Ref$P,"BH") 
+
+test<- Whole_Variant_SKAT_Leu_Ref[order(Whole_Variant_SKAT_Leu_Ref$Before_P_adjust),]
+Whole_Variant_SKAT_Leu_Ref$ALIAS<-as.character(Whole_Variant_SKAT_Leu_Ref$ALIAS)
+str(Whole_Variant_SKAT_Leu_Ref)
+test$ALIAS<- sapply(strsplit(Whole_Variant_SKAT_Leu_Ref$ALIAS, ","), "[", 1)
+test$GENES<- sapply(strsplit(Whole_Variant_SKAT_Leu_Ref$ALIAS, ","), "[", 2)
+
+test.split<-split (test,test$GENES)
+
+#ENSEMBL_VARIANT_Rare_Leu_Gene_ANN$ALIAS<- as.character(ENSEMBL_VARIANT_Rare_Leu_Gene_ANN$ALIAS)
+#ENSEMBL_VARIANT_Rare_Leu_Gene_ANN$NVAR<- as.numeric(ENSEMBL_VARIANT_Rare_Leu_Gene_ANN$NVAR)
+#str(ENSEMBL_VARIANT_Rare_Leu_Gene_ANN)
+#system.time(test.split<- split(ENSEMBL_VARIANT_Rare_Leu_Gene_ANN, ENSEMBL_VARIANT_Rare_Leu_Gene_ANN$ALIAS)) ## splitting the rare variant with the Gene 
+head (test.split)
+#Skat_processed<- Skat_processed[order(Skat_processed$P),]
+
+mergeData <- function(x){
+  tmp.LOCUS <- paste(x$LOCUS, collapse = " | ")
+  tmp.POS <- paste(x$POS, collapse = " | ")
+  tmp.P <-  paste(x$P, collapse = " | ")
+  tmp.p2<- mean(x$P)
+  tmp.NVAR<- paste(x$NVAR, collapse = " | ")
+  tmp.meanVAR <- mean(x$NVAR)
+  y <- x[1,]
+  y$LOCUS <- tmp.LOCUS
+  y$POS <- tmp.POS 
+  y$P <-tmp.P
+  y$P_mean<-tmp.p2
+  y$NVAR <-tmp.NVAR
+  y$meanVAR<-tmp.meanVAR
+  return(y)
+}
+
+system.time(d.result<-lapply(test.split,function(x) mergeData(x)))
+head(d.result)
+tail(d.result)
+require(data.table)
+system.time(Skat_processed <- rbindlist(d.result))
+SKAT_test<-Skat_processed[order(Skat_processed$Before_P_adjust),]
+write.table(SKAT_test_ENSEMBL_Leu, "~/Dropbox/SKAT_RESULTS/Ref_WHOLE_LEU_Post.txt", sep="\t", quote = F, row.names = F)
+
+
+
 
