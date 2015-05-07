@@ -48,6 +48,12 @@ s3d$points3d(pheno_Low_extreme$LOG_TPK,
              pheno_Low_extreme$LOG_Lpk,
              type="h",
              col="darkgreen",cex=0.5,pch=20)
+             
+legend(0,22, c("High Toxicity", "Low Toxicity"), col =c("Red", "Green"), pch=c(19,19), cex = 0.8)
+plot(pheno_Low_tox$LOG_TPK, pheno_Low_tox$LOG_neu, col= "Green", pch = 19, xlab = "LOG Nadir TPK", 
+     ylab ="LOG Nadir Neutophile", main= "Distribution of LOG Nadir values in Different phenotypes", xlim = c(0, 7.5) , ylim=c(0,25), cex =0.5,frame.plot=FALSE)
+
+
 
 pheno_High_extreme$Group<-2
 pheno_Low_extreme$Group<-1
