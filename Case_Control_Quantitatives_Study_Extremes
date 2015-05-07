@@ -24,8 +24,9 @@ cp raw.vcf Extreme/
  
 head sample_remove
 S0328
-S0664
 S0580
+S0664
+S0724
 S0922
 
 vcftools --vcf raw.vcf --keep case.txt --remove sample_remove --remove-filtered-all  --max-missing 1 --recode --out ExtremeHighTox
@@ -39,7 +40,7 @@ Number of variants = 151956
 cp hg19/ ../Extreme/
 
 pseq ext new-project --resources hg19
-pseq ext load-vcf --vcf data/*.vcf
+pseq ext load-vcf --vcf data/*.vcf--id 
 pseq ext tag-file --id 1 --name HighTox
 pseq ext tag-file --id 2 --name LowTox
 pseq ext var-summary
