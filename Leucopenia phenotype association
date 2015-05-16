@@ -26,6 +26,40 @@ Original Variants in the VCF files =  211467
 On the subsequent files we obtained we defined the minor allele frquency threshold as 0.01 and divided the file into Common and rare variants based on greater or less than the threshold.
 
 Part 2) Leucopenia data Analysis.
+## Updated phenotype excel sheet was provided by benjamin. This new phenotype information contains the baseline leucopenia values of the three phenotypes. Analysis done in R statistical software
+
+A) Normalization of the phenotype values:
+Firstly, we considered the normalization of the leucopenia values in the sample. Considering benzamin idea of the measuring the difference in the leucopenia decrease from the intial baseline leucopenia values. We first calculated the decrease in the lecuopenia values using the formula,
+
+Leu_decrease = (Leu_Baseline-Leu_Nadir)/Leu_Baseline = (1-(Leu_nadir/Leu_Baseline))
+
+And subsequenly we normalized the values using the package multic package and Empirical Normal Quantile transformation (ENQT). For the time being, we used the logtransformed Nadir_leucopenia, ENQT Nadir Values, Leu_Decrease and ENQT Leu_Decrease values. And observing the basic single nucleotide association studies. Upon doing some analysis in the R I found out that the phenotypes are not homogenoous as expected from the prior knowldege. There are certain specifically important samples that could provide us with more information than the other samples. From the above manipulation we got the aggergrate phenotype file which contains the log normalized, EQRT normalized and ENQT_Decrease values which are then associated with the genotype data from exome sequenicing.
+
+B) Using plink tools to associate the Common variants(>0.01) with the individual phenotype of interest
+Creating the MAP and PED files that are read by the plink
+
+vcftools --vcf Common.recode.vcf --plink --out Common
+
+Doing the allelic association with the files. First associating with the normal allelic with the log normalized values using the parameters
+	--file Common
+	--pheno ../Leucopenia.fam
+	--mpheno 4
+	--linear
+	--out Leu_log_allelic
+	--noweb
+	--adjust
+	
+	
+Upon doing the association study we found that the using the lognormalized phwnotype values does provide some association signals but I think they are due to the erroer from the non normality of the phenotype values. Hence I did shapiro-test into it and found that actually, the log normalized values were not normalized. But this lead to toallty lose the power of the study. ( Well this is really disapponting)
+
+
+
+
+
+
+
+
+
 
 
 
