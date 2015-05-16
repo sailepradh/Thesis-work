@@ -1,0 +1,31 @@
+Part-1) Quality Control of the Variants and samples
+
+First using the raw.vcf files we, we first used the filtration of on the basis of the genotyping rate and identity by descent to remove the five samples from the study cohort. On the study cohort we used the following filtration pipelines such that final sample number in the cohort in 211. we used the follwing filtration pipelines in the vcf tools.
+
+Original Variants in the VCF files =  211467
+
+1) First, we used the filtration criteria based on the variant quality. We only considered using the variants sites with mean depth values (over all included individuals) greater than or equal to 10 and those variants which have passed the GATK filteration pipeline. 
+  Parameter used 
+  --vcf raw.vcf
+	--min-meanDP 10
+	--out Filter1
+	--recode
+	--remove-filtered-all
+	
+	The number of variants= 158753 
+
+2) Subsequently on the above file we again used the quality criteria such that based on genotyping rate and duplicates result from IBD clustering. We removed the samples S0328 ,S0664, S0580, S0724, S0922 based on the lowergenotyping rate and exceptionally high variants count in the sample.
+--vcf Filter1.recode.vcf
+	--exclude sample_remove
+	--max-missing 0.95
+	--out Common_rare
+	--recode
+	
+	The number of the variants = 152303 
+	
+On the subsequent files we obtained we defined the minor allele frquency threshold as 0.01 and divided the file into Common and rare variants based on greater or less than the threshold.
+
+Part 2) Leucopenia data Analysis.
+
+
+
