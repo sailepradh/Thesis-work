@@ -50,9 +50,44 @@ Doing the allelic association with the files. First associating with the normal 
 	--adjust
 	
 	
-Upon doing the association study we found that the using the lognormalized phwnotype values does provide some association signals but I think they are due to the erroer from the non normality of the phenotype values. Hence I did shapiro-test into it and found that actually, the log normalized values were not normalized. But this lead to toallty lose the power of the study. ( Well this is really disapponting)
+Upon doing the association study we found that the using the lognormalized phwnotype values does provide some association signals but I think they are due to the error from the non normality of the phenotype values. Hence I did shapiro-test into it and found that actually, the log normalized values were not normalized. This lead to lose all the genetic signals that were prviosuly found from the association of single variant.
+
+2) Gene-based association study using the Common-Rare varaints VCF files.
+
+First converting the vcf files into plink files using the command
+Rare_Common_Gene_Asso]$ vcftools --vcf Common_rare.recode.vcf --plink --out Common_Rare
+Rare_Common_Gene_Asso]$ plink --file Common_Rare --out Common_rare --make-bed --noweb
 
 
+##Doing the maniplulation to get the gene-list, exon list and exon+/- 6bp list
+
+Get the gene list from the hgTable listfrom USCG genome browser
+Gene <- read.delim("~/Downloads/gene", dec=",")
+glist.hg19 <- read.table("~/Downloads/glist-hg19.txt", quote="\"")
+Gene <- Gene[order(-Gene$exonCount),]
+Gene_dup =Gene[duplicated(Gene$name2),]
+Gene_non =Gene[!duplicated(Gene$name2),]
+Gene_non$chrom<- as.character(Gene_non$chrom)
+Gene_non$chrom<- sapply(strsplit(Gene_non$chrom, "_"), "[",1)
+Gene_non$chrom<-gsub("chr", "",Gene_non$chrom)
+rownames(Gene_non)<- NULL
+write.table(gene_non,"~/Desktop/gene_list.txt", sep="\t", quote = F, row.names = F)
+write.table(Gene_non[,c(3,5,6,13)],"~/Desktop/plink_gene_list.txt", sep="\t", quote = F, row.names = F, col.names=F)
+
+gene_non[gene_non$name2=="TTN",]
+cat gene_list.txt | awk '{n=int($9); split($10,S,/,/);split($11,E,/,/); for(i=1;i<=n;++i) {printf("%s %s %s %s\n",$3,S[i],E[i],$13);} }' > Exon_list.txt
+cat gene_list.txt | awk '{n=int($9); split($10,S,/,/);split($11,E,/,/); for(i=1;i<=n;++i) {printf("%s %s %s %s\n",$3,S[i]-6,E[i]+6,$13);} }' > Exon_plus6list.txt
+
+scp -r ./Desktop/Gene_list_plink_files/ sail@milou.uppmax.uu.se:/proj/b2012058/nobackup/private/sailen/Leucopenia/Rare_Common_Gene_Asso
+
+
+Now using the linear association file to get the gene list we use the association funcitonin plink the phenotype in consideration is LPK_baseline
+
+plink --file Common_Rare --noweb --assoc --pheno ../Leucopenia.fam --mpheno 4 --linear --out LPK_baseline_linear
+
+plink --gene-report LPK_baseline_linear.assoc.linear --gene-list ./Gene_list_plink_files/plink_gene_list.txt --out Gene_mapping --noweb
+
+plink --gene-report LPK_baseline_linear.assoc.linear --gene-list ./Gene_list_plink_files/Exon_list.txt --out Exon_mapping --noweb
 
 
 
