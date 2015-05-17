@@ -89,9 +89,13 @@ plink --gene-report LPK_baseline_linear.assoc.linear --gene-list ./Gene_list_pli
 
 plink --gene-report LPK_baseline_linear.assoc.linear --gene-list ./Gene_list_plink_files/Exon_list.txt --out Exon_mapping --noweb
 
+plink --gene-report LPK_baseline_linear.assoc.linear --gene-list ./Gene_list_plink_files/Exon_plus6list.txt --out Exo_plus_six_mapping --noweb
 
 
 
+From the range_report files we generated the SetID files for the SKAT test using the codes provided by Lin guys.
+
+SKAT-TEST in R
 
 
 
