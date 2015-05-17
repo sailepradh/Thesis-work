@@ -37,6 +37,7 @@ plink --file CastCtrl  --make-set Upload2.txt  --list --noweb
  
  
  
+scp -r sail@milou.uppmax.uu.se:/home/sail/prj/fastqcfiles .  
  
  
  
