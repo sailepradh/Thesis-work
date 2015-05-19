@@ -102,7 +102,18 @@ SKAT-TEST in R
 
 Sample selected based on the Leucopenia score of either 1/0 as Control and 3/4 as the High tox and doing some association study
 
-vcftools --vcf Common.recode.vcf --keep sample_Leucopenia.txt --recode --out Case_Control_Common
+vcftools --vcf Common.recode.vcf --keep sample_Leucopenia.txt --recode --out CaseControl
+vcftools --vcf CaseControl.recode.vcf --plink --out CaseContrl
+
+plink --file CaseContrl --pheno ../Leuco_Quali.fam --mpheno 2 --logistic --out Leu_CC_allelic --noweb
+plink --file CaseContrl --pheno ../Leuco_Quali.fam --mpheno 2 --logistic --out Leu_CC_allelic --noweb --adjust
+
+
+plink --file CaseContrl --assoc  --pheno ../Leuco_Quali.fam --mpheno 2  --out Leu_CC_allelic_Fischer --noweb
+plink --file CaseContrl --assoc  --pheno ../Leuco_Quali.fam --mpheno 2  --out Leu_CC_allelic_Fischer --noweb --adjust
+
+## Qualitative Case-Control study for Rare and Control test
+--vcf Common_rare.recode.vcf --keep sample_Leucopenia --recode --out Case_Control_Common_rare
 
 
 
