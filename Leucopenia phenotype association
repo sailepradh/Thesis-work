@@ -115,6 +115,22 @@ plink --file CaseContrl --assoc  --pheno ../Leuco_Quali.fam --mpheno 2  --out Le
 ## Qualitative Case-Control study for Rare and Control test
 --vcf Common_rare.recode.vcf --keep sample_Leucopenia --recode --out Case_Control_Common_rare
 
+mapping the Assoc files with the Gene, Exonplus6, and Exon only regions
+plink --gene-report CaseControlCommonRare.assoc.logistic --gene-list ./Gene_list_plink_files/plink_gene_list.txt --out Gene_mapping_Quali --noweb 
+plink --gene-report CaseControlCommonRare.assoc.logistic --gene-list ./Gene_list_plink_files/Exon_list.txt --out Exon_mapping_Quali --noweb
+plink --gene-report CaseControlCommonRare.assoc.logistic --gene-list ./Gene_list_plink_files/Exon_plus6list.txt --out Exon_plus6_mapping_Quali --noweb 
+
+## Next lot of analysis was done in matlab in the code provided by lin guys. from running the matlab code we get the gene list required for the analysis in the R for SKAT test.
+
+Genes -> 135963 (No of variants) 125652 unique 10311(Variants present in more than 1 gene) 18811
+Exons -> 96593 (No of Variants) 94997 unique 1596 (variants presene in mor than 1 genes) 17689
+Exon+6 -> 99092 (No of Variants)(97444)unique 1648 (variants present in more than 1 genes 17800 
+
+
+Now making the bed files for the R 
+plink --file CaseControlCommonRare --make-bed --out CC --noweb 
+
+
 
 
 
