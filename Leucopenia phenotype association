@@ -98,6 +98,13 @@ From the range_report files we generated the SetID files for the SKAT test using
 SKAT-TEST in R
 
 
+## Qualitative study /Case Control / Exteme phenotype sampling
+
+Sample selected based on the Leucopenia score of either 1/0 as Control and 3/4 as the High tox and doing some association study
+
+vcftools --vcf Common.recode.vcf --keep sample_Leucopenia.txt --recode --out Case_Control_Common
+
+
 
 
 
