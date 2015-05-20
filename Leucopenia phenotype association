@@ -130,7 +130,52 @@ Exon+6 -> 99092 (No of Variants)(97444)unique 1648 (variants present in more tha
 Now making the bed files for the R 
 plink --file CaseControlCommonRare --make-bed --out CC --noweb 
 
+## Qualitative analysis for the Leucopenia 
+File.Bed <-"CC.bed"
+File.Bim <- "CC.bim"
+File.Fam <- "CC.fam"
+File.SetID<-"../Gene_list_plink_files/exon_6bp_Quali_gene_variant_list.txt"
+File.SSD<- "Leu_Qual.SSD"
+File.Info<- "Leu_Qual.SSD.info"
+Generate_SSD_SetID(File.Bed,File.Bim,
+                   File.Fam,File.SetID,
+                   File.SSD,File.Info)
 
+phe_LEU_Binary <- read.delim("~/Dropbox/phe_LEU_Binary.txt", header=FALSE)
+colnames(phe_LEU_Binary)<-c("Patients","Phenotype")
+obj<-SKAT_Null_Model(phe_LEU_Binary$Phenotype ~ 1, out_type="D") 
+out<-SKAT.SSD.All(SSD.INFO, obj)
+out$results[order(out$results$P.value),] [1:15,]
+qq(out$results$P.value, main ="Case-Control SKAT result")
+
+obj<-SKAT_Null_Model(phe_LEU_Binary$Phenotype ~ 1, out_type="D")
+out_Qual_weights_adjusted<-SKAT.SSD.All(SSD.INFO, obj,weights.beta=c(1,1))
+out_Qual_weights_adjusted$results[order(out_Qual_weights_adjusted$results$P.value)
+                                  ,] [1:15,]
+qq(out_Qual_weights_adjusted$results$P.value, main ="Case-Control weights adjusted SKAT result")
+
+pdf("SKAT_results_Leu_Qual.pdf")
+qq(out$results$P.value, main ="Case-Control SKAT result Beta(1,25)")
+qq(out_Qual_weights_adjusted$results$P.value, 
+    main ="Case-Control weights adjusted SKAT result")
+dev.off()
+
+
+## Burden test
+obj<-SKAT_Null_Model(phe_LEU_Binary$Phenotype ~ 1, out_type="D") 
+out_burden<-SKAT.SSD.All(SSD.INFO, obj, r.corr=1)
+out_burden$results[order(out_burden$results$P.value),] [1:15,]
+qq(out_burden$results$P.value, main ="Case-Control Burden result")
+
+out_burden_adjusted<-SKAT.SSD.All(SSD.INFO, obj, r.corr=1,weights.beta=c(1,1))
+out_burden_adjusted$results[order(out_burden_adjusted$results$P.value),] [1:15,]
+qq(out_burden_adjusted$results$P.value, main ="Case-Control Weight Adjusted Burden result")
+
+pdf("Burden_results_Leu_Qual.pdf")
+qq(out_burden$results$P.value, main ="Case-Control Burden results weights(1,25)")
+qq(out_burden_adjusted$results$P.value, 
+   main ="Case-Control Burden adjusted SKAT result")
+dev.off()
 
 
 
