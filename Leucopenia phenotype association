@@ -190,6 +190,8 @@ Generate_SSD_SetID(File.Bed,File.Bim,
 
 phe_LEU_Binary <- read.delim("~/Dropbox/phe_LEU_Binary.txt", header=FALSE)
 colnames(phe_LEU_Binary)<-c("Patients","Phenotype")
+
+## SKAT 
 obj<-SKAT_Null_Model(phe_LEU_Binary$Phenotype ~ 1, out_type="D") 
 out<-SKAT.SSD.All(SSD.INFO, obj)
 out$results[order(out$results$P.value),] [1:15,]
@@ -222,6 +224,20 @@ pdf("Burden_results_Leu_Qual.pdf")
 qq(out_burden$results$P.value, main ="Case-Control Burden results weights(1,25)")
 qq(out_burden_adjusted$results$P.value, 
    main ="Case-Control Burden adjusted SKAT result")
+dev.off()
+
+## SKAT-O test
+out_SKATO<-SKAT.SSD.All(SSD.INFO, obj, method="optimal.adj")
+out_SKATO$results[order(out_SKATO$results$P.value),] [1:15,]
+qq(out_SKATO$results$P.value, main ="Case-Control SKATO results weights(1,25)")
+
+out_SKATO_adjusted<-SKAT.SSD.All(SSD.INFO, obj, method="optimal.adj",weights.beta=c(1,1))
+out_SKATO_adjusted$results[order(out_SKATO_adjusted$results$P.value),] [1:15,]
+qq(out_SKATO_adjusted$results$P.value, main ="Case-Control SKATO  Equal weights results")
+
+pdf("SKATO_results_Leu_Qual.pdf")
+qq(out_SKATO$results$P.value, main ="Case-Control SKATO results weights(1,25)")
+qq(out_SKATO_adjusted$results$P.value, main ="Case-Control SKATO  Equal weights results")
 dev.off()
 
 
