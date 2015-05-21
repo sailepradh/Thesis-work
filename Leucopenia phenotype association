@@ -98,12 +98,59 @@ From the range_report files we generated the SetID files for the SKAT test using
 SKAT-TEST in R
 
 
-## Qualitative study /Case Control / Exteme phenotype sampling
+##########
+Qualitative study /Case Control / Exteme phenotype sampling
 
 Sample selected based on the Leucopenia score of either 1/0 as Control and 3/4 as the High tox and doing some association study
 
 vcftools --vcf Common.recode.vcf --keep sample_Leucopenia.txt --recode --out CaseControl
 vcftools --vcf CaseControl.recode.vcf --plink --out CaseContrl
+
+##################################################################
+Getting the necessary phenotype files in R
+
+phe <- read.delim("~/Downloads/phe.txt")
+phe[c("LOG_TPK","LOG_Lpk","LOG_neu")] <- c(log(phe$TPK_Nadir),
+                                             log(phe$LPK_Nadir), 
+                                             log(phe$Neutrophiles_Nadir))
+
+pheno_trim<-phe[!phe$FID %in% c("S0328","S0664","S0724","S0580","S0922"),]
+
+Phe_Leu_low_tox<- pheno_trim[which(pheno_trim$LPK_CTC==0 | pheno_trim$LPK_CTC==1),]
+Phe_Leu_high_tox<- pheno_trim[which(pheno_trim$LPK_CTC==3 | pheno_trim$LPK_CTC==4),]
+
+Phe_Leu_high_tox$Groups<-2
+Phe_Leu_low_tox$Groups<-1
+row.names(Phe_Leu_high_tox)<- NULL
+row.names(Phe_Leu_low_tox)<- NULL
+
+#################################
+boxplot(Phe_Leu_high_tox$LOG_Lpk, boxwex=0.1,col="Green", 
+        ylim = c(ceiling(min(Phe_Leu_high_tox$LOG_Lpk)-1), ceiling(max(Phe_Leu_low_tox$LOG_Lpk)+1)),
+        yaxs="i")
+boxplot(Phe_Leu_low_tox$LOG_Lpk, boxwex = 0.1, col = "Yellow", add =TRUE)
+################################
+
+Phe_Quali_Leu <- rbind(Phe_Leu_high_tox,Phe_Leu_low_tox)
+write.table(Phe_Quali_Leu[,1],
+            "sample_Leucopenia.txt", 
+            sep="\t", quote = F, row.names = F, col.names =F)
+
+write.table(Phe_Quali_Leu[,c(1,2,30,32)],
+            "Leucopenia_Quali_fam", sep="\t", quote = F, row.names = F)
+
+Phe_Quali<- Phe_Quali_Leu[,c(1,32)]
+
+Phe_Quali$Groups= replace(Phe_Quali$Groups, Phe_Quali$Groups==1, 0)  
+Phe_Quali$Groups= replace(Phe_Quali$Groups, Phe_Quali$Groups==2, 1)  
+            
+write.table(Phe_Quali,
+            "~/Dropbox/phe_LEU_Binary.txt", 
+            sep="\t", quote = F, row.names = F, col.names =F)
+
+Analysis done in R
+
+#########################################
 
 plink --file CaseContrl --pheno ../Leuco_Quali.fam --mpheno 2 --logistic --out Leu_CC_allelic --noweb
 plink --file CaseContrl --pheno ../Leuco_Quali.fam --mpheno 2 --logistic --out Leu_CC_allelic --noweb --adjust
