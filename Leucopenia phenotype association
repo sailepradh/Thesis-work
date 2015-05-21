@@ -91,8 +91,6 @@ plink --gene-report LPK_baseline_linear.assoc.linear --gene-list ./Gene_list_pli
 
 plink --gene-report LPK_baseline_linear.assoc.linear --gene-list ./Gene_list_plink_files/Exon_plus6list.txt --out Exo_plus_six_mapping --noweb
 
-
-
 From the range_report files we generated the SetID files for the SKAT test using the codes provided by Lin guys.
 
 SKAT-TEST in R
@@ -240,7 +238,8 @@ qq(out_SKATO$results$P.value, main ="Case-Control SKATO results weights(1,25)")
 qq(out_SKATO_adjusted$results$P.value, main ="Case-Control SKATO  Equal weights results")
 dev.off()
 
-
+plinkseq-0.10/pseq test load-vcf --vcf data/Case_Control_Common_rare.recode.vcf 
+plinkseq-0.10/pseq test g-view  --geno --mask gene=GSR
 
 
 
