@@ -189,6 +189,8 @@ Generate_SSD_SetID(File.Bed,File.Bim,
 phe_LEU_Binary <- read.delim("~/Dropbox/phe_LEU_Binary.txt", header=FALSE)
 colnames(phe_LEU_Binary)<-c("Patients","Phenotype")
 
+SSD.INFO<-Open_SSD(File.SSD, File.Info)
+
 ## SKAT 
 obj<-SKAT_Null_Model(phe_LEU_Binary$Phenotype ~ 1, out_type="D") 
 out<-SKAT.SSD.All(SSD.INFO, obj)
