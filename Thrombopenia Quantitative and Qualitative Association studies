@@ -1,0 +1,207 @@
+Part 1 ) Quantitative association of the phenotype.
+
+A) Getting phenotype of the Quantitaive indvidual 
+
+For the phenotype in consideration we first normalizied the phenotype. for this I used log normalized value and Empricial Normailized Quantile transformation (ENQT)
+
+##### doing the manipulation in R
+
+phe <- read.delim("~/Downloads/phe.txt")
+#phe[c("LOG_TPK","LOG_Lpk","LOG_neu")] <- c(log(phe$TPK_Nadir),
+                                             #log(phe$LPK_Nadir), 
+                                             #log(phe$Neutrophiles_Nadir))
+
+library(mulic)
+phe[c("ENQT_TPK","ENQT_Lpk","ENQT_Neu")]<-c(t.rank(phe$TPK_Nadir),
+                                            t.rank(phe$LPK_Nadir),
+                                            t.rank(phe$Neutrophiles_Nadir))
+
+pheno_trim<-phe[!phe$FID %in% c("S0328","S0664","S0724","S0580","S0922"),]
+row.names(pheno_trim)<- NULL
+
+## Quantitative phenotype files are generated for each individual phenotypes
+write.table(pheno_trim[,c(1,2,10,12,22,29)],"Throm.fam", 
+            sep="\t", quote = F, row.names = F)
+write.table(pheno_trim[,c(1,2,14,16,23,30)],"Leu.fam", 
+             sep="\t", quote = F, row.names = F)
+phe_Neu<-pheno_trim[,c(1,2,18,20,24,31)]
+phe_Neu[, 5:6][is.na(phe_Neu[, 5:6])] <- -9
+
+#### 
+
+B) Getting the single variant association in plink
+Getting the plink files for the outputting for the common variant >0.01 and getting the plink files for the association study
+
+vcftools --vcf Common.recode.vcf --plink --out Common
+
+## Doing the association with the log normalized values 
+plink --file ../../Common --assoc --qt-means --pheno ../Throm.fam --mpheno 3 --out Common --noweb --adjust
+plink --file ../../Common --linear --pheno ../Throm.fam --mpheno 3 --out Common --noweb --adjust
+
+##Doing the association with the ENQT normalized values and comparing the values
+plink --file ../../Common --assoc --pheno ../Throm.fam --mpheno 4 --out Common_ENQT --noweb --adjust
+plink --file ../../Common --assoc --qt-means --pheno ../Throm.fam --mpheno 4 --out Common_ENQT --noweb --adjust 
+plink --file ../../Common --linear --pheno ../Throm.fam --mpheno 4 --out Common_ENQT --noweb --adjust
+
+C) GENE-Based association to the both transformed values.
+
+Getting the phenotype
+write.table(pheno_trim,"~/Dropbox/Result_From_R/phenotype.txt", 
+               sep="\t", quote = F, row.names = F)
+  
+#################################################################################################
+#####################Doing the analysis in R
+
+## Taking into account the log normalized values
+
+File.Bed <-"Common_rare.bed"
+File.Bim <- "Common_rare.bim"
+File.Fam <- "Common_rare.fam"
+File.SetID<-"../Gene_list_plink_files/Exon_6bp_sai_list.txt"
+File.SSD<- "Common_rare.SSD"
+File.Info<- "Common_rare.info"
+
+Generate_SSD_SetID(File.Bed,File.Bim,
+                   File.Fam,File.SetID,
+                   File.SSD,File.Info)
+
+SSD.INFO<-Open_SSD(File.SSD, File.Info)
+
+Open_SSD(File.SSD,File.Info)
+obj<-SKAT_Null_Model(phenotype$TPK_Nadir_log~ 1, out_type="C")
+
+
+##SKAT 
+SKAT_Log_Unadj_Thr<-SKAT.SSD.All(SSD.INFO, obj)
+SKAT_Log_Unadj_Thr$results[order(SKAT_Log_Unadj_Thr$results$P.value),] [1:15,]
+qq(SKAT_Log_Unadj_Thr$results$P.value,
+   main ="Quantitative SKAT result - log normalized Thr")
+
+
+SKAT_Log_adj_Thr<-SKAT.SSD.All(SSD.INFO, obj,weights.beta=c(1,1))
+SKAT_Log_adj_Thr$results[order(SKAT_Log_adj_Thr$results$P.value),] [1:15,]
+qq(SKAT_Log_adj_Thr$results$P.value, 
+   main ="Quantitative weights adjusted Beta(1,25) SKAT result - log normalized Thr")
+
+
+pdf("SKAT_results_Thr_log_normalized_Quantitative.pdf")
+qq(SKAT_Log_Unadj_Thr$results$P.value,
+   main ="Quantitative SKAT result - log normalized Thr")
+qq(SKAT_Log_adj_Thr$results$P.value, 
+   main ="Quantitative weights adjusted Beta(1,25) SKAT result - log normalized Thr")
+dev.off()
+
+
+## Burden test
+ 
+Burden_Log_Unadj_Thr<-SKAT.SSD.All(SSD.INFO, obj, r.corr=1)
+Burden_Log_Unadj_Thr$results[order(Burden_Log_Unadj_Thr$results$P.value),] [1:15,]
+qq(Burden_Log_Unadj_Thr$results$P.value, 
+   main = "Burden result Log Normalized Thr")
+
+Burden_Log_adj_Thr<-SKAT.SSD.All(SSD.INFO, obj, r.corr=1,weights.beta=c(1,1))
+Burden_Log_adj_Thr$results[order(Burden_Log_adj_Thr$results$P.value),] [1:15,]
+qq(Burden_Log_adj_Thr$results$P.value, 
+   main ="Burden result Weight Adjusted Log Normalized Thr")
+
+pdf("Burden_results_Thr_Quantitative_Log.pdf")
+qq(Burden_Log_Unadj_Thr$results$P.value, 
+   main = "Burden result Log Normalized Thr")
+qq(Burden_Log_adj_Thr$results$P.value, 
+   main ="Burden result Weight Adjusted Log Normalized Thr")
+dev.off()
+
+##SKAT-O
+SKATO_Log_Unadj_Thr<-SKAT.SSD.All(SSD.INFO, obj, method="optimal.adj")
+SKATO_Log_Unadj_Thr$results[order(SKATO_Log_Unadj_Thr$results$P.value),] [1:15,]
+qq(SKATO_Log_Unadj_Thr$results$P.value,
+   main ="SKATO Quantitative results weights(1,25)")
+
+## Trying out this as well
+QQPlot_Adj(SKATO_Log_Unadj_Thr$results$P.value, SKATO_Log_Unadj_Thr$results$MAP)
+
+SKATO_Log_adj_Thr<-SKAT.SSD.All(SSD.INFO, obj, method="optimal.adj",weights.beta=c(1,1))
+SKATO_Log_adj_Thr$results[order(SKATO_Log_adj_Thr$results$P.value),] [1:15,]
+qq(SKATO_Log_adj_Thr$results$P.value, 
+   main ="SKATO  Results Quantitative Equal weights results")
+
+pdf("SKATO_results_Thr_Quantitative_log.pdf")
+qq(SKATO_Log_Unadj_Thr$results$P.value,
+   main ="SKATO Quantitative results weights(1,25)")
+qq(SKATO_Log_adj_Thr$results$P.value, 
+   main ="SKATO  Results Quantitative Equal weights results")
+dev.off()
+
+
+## Testing for ENQT normalized value
+obj<-SKAT_Null_Model(phenotype$ENQT_TPK ~ 1, out_type="C")
+
+##SKAT 
+SKAT_ENQT_Unadj_Thr<-SKAT.SSD.All(SSD.INFO, obj)
+SKAT_ENQT_Unadj_Thr$results[order(SKAT_ENQT_Unadj_Thr$results$P.value),] [1:15,]
+qq(SKAT_ENQT_Unadj_Thr$results$P.value,
+   main ="Quantitative SKAT result - ENQT normalized Thr")
+
+SKAT_ENQT_adj_Thr<-SKAT.SSD.All(SSD.INFO, obj,weights.beta=c(1,1))
+SKAT_ENQT_adj_Thr$results[order(SKAT_ENQT_adj_Thr$results$P.value),] [1:15,]
+qq(SKAT_ENQT_adj_Thr$results$P.value, 
+   main ="Quantitative weights adjusted SKAT result - ENQT normalized Thr")
+
+
+pdf("SKAT_results_Thr_ENQT_Quantitative.pdf")
+qq(SKAT_ENQT_Unadj_Thr$results$P.value,
+   main ="Quantitative SKAT result - ENQT normalized Thr")
+qq(SKAT_ENQT_adj_Thr$results$P.value, 
+   main ="Quantitative weights adjusted SKAT result - ENQT normalized Thr")
+dev.off()
+
+
+## Burden test
+
+Burden_ENQT_Unadj_Thr<-SKAT.SSD.All(SSD.INFO, obj, r.corr=1)
+Burden_ENQT_Unadj_Thr$results[order(Burden_ENQT_Unadj_Thr$results$P.value),] [1:15,]
+qq(Burden_ENQT_Unadj_Thr$results$P.value, 
+   main = "Burden result ENQT Thr")
+
+Burden_ENQT_adj_Thr<-SKAT.SSD.All(SSD.INFO, obj, r.corr=1,weights.beta=c(1,1))
+Burden_ENQT_adj_Thr$results[order(Burden_ENQT_adj_Thr$results$P.value),] [1:15,]
+qq(Burden_ENQT_adj_Thr$results$P.value, 
+   main ="Burden result Weight Adjusted ENQT Thr")
+
+pdf("Burden_results_Thr_Quantitative_ENQT.pdf")
+qq(Burden_ENQT_Unadj_Thr$results$P.value, 
+   main = "Burden result ENQT Thr")
+qq(Burden_ENQT_adj_Thr$results$P.value, 
+   main ="Burden result Weight Adjusted ENQT Thr")
+dev.off()
+
+##SKAT-O
+SKATO_ENQT_Unadj_Thr<-SKAT.SSD.All(SSD.INFO, obj, method="optimal.adj")
+SKATO_ENQT_Unadj_Thr$results[order(SKATO_ENQT_Unadj_Thr$results$P.value),] [1:15,]
+qq(SKATO_ENQT_Unadj_Thr$results$P.value,
+   main ="SKATO ENQT THR Quantitative DATA UNADJUSTED")
+
+SKATO_ENQT_adj_Thr<-SKAT.SSD.All(SSD.INFO, obj, method="optimal.adj",weights.beta=c(1,1))
+SKATO_ENQT_adj_Thr$results[order(SKATO_ENQT_adj_Thr$results$P.value),] [1:15,]
+qq(SKATO_ENQT_adj_Thr$results$P.value, 
+   main ="SKATO ENQT THR Quantitative DATA ADJUSTED")
+
+pdf("SKATO_results_Thr_Quantitative_ENQT.pdf")
+qq(SKATO_ENQT_Unadj_Thr$results$P.value,
+   main ="SKATO ENQT THR Quantitative DATA UNADJUSTED")
+qq(SKATO_ENQT_adj_Thr$results$P.value, 
+   main ="SKATO ENQT THR Quantitative DATA ADJUSTED")
+dev.off()
+
+##############################################################################################################
+Results are saved as the session files .. Refer it for further analysis
+
+
+
+Part 2) Qualitative case control based analysis for the thrombopenia
+
+
+
+
+
+
