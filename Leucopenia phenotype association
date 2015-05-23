@@ -96,6 +96,162 @@ From the range_report files we generated the SetID files for the SKAT test using
 SKAT-TEST in R
 
 
+
+
+
+
+Quantiative analysis with the S0164 sample.
+
+vcftools --vcf Common_rare.recode.vcf --remove-indv S0164  --recode --out Common_rare_S0164
+vcftools --vcf Common_rare_S0164.recode.vcf --plink --out Common_rare_S0164 
+plink --file Common_rare_S0164 --out Common_rare_S0164 --make-bed --noweb
+cp Common_rare_S0164.bim Common_rare_S0164.bed Common_rare_S0164.fam /proj/b2012058/webexport
+
+## Doing the analysis without the extreme of the outliers S0164 REMOVED
+
+File.Bed <-"Common_rare_S0164.bed"
+File.Bim <- "Common_rare_S0164.bim"
+File.Fam <- "Common_rare_S0164.fam"
+File.SetID<-"../Gene_list_plink_files/Exon_6bp_sai_list.txt"
+File.SSD<- "Common_rare.SSD"
+File.Info<- "Common_rare.info"
+
+Generate_SSD_SetID(File.Bed,File.Bim,
+                   File.Fam,File.SetID,
+                   File.SSD,File.Info)
+
+SSD.INFO<-Open_SSD(File.SSD, File.Info)
+
+Open_SSD(File.SSD,File.Info)
+obj<-SKAT_Null_Model(pheno_S0164$LPK_Nadir_log~ 1, out_type="C")
+
+
+##SKAT 
+SKAT_Log_Unadj_Leu<-SKAT.SSD.All(SSD.INFO, obj)
+SKAT_Log_Unadj_Leu$results[order(SKAT_Log_Unadj_Leu$results$P.value),] [1:15,]
+qq(SKAT_Log_Unadj_Leu$results$P.value,
+   main ="Quantitative SKAT result - log normalized Leu")
+
+SKAT_Log_adj_Leu<-SKAT.SSD.All(SSD.INFO, obj,weights.beta=c(1,1))
+SKAT_Log_adj_Leu$results[order(SKAT_Log_adj_Leu$results$P.value),] [1:15,]
+qq(SKAT_Log_adj_Leu$results$P.value, 
+   main ="Quantitative weights adjusted SKAT result - log normalized Leu")
+
+
+pdf("SKAT_results_Leu_log_normalized_Quantitative.pdf")
+qq(SKAT_Log_Unadj_Leu$results$P.value,
+   main ="Quantitative SKAT result - log normalized Leu")
+qq(SKAT_Log_adj_Leu$results$P.value, 
+   main ="Quantitative weights adjusted SKAT result - log normalized Leu")
+dev.off()
+
+
+## Burden test
+
+Burden_Log_Unadj_Leu<-SKAT.SSD.All(SSD.INFO, obj, r.corr=1)
+Burden_Log_Unadj_Leu$results[order(Burden_Log_Unadj_Leu$results$P.value),] [1:15,]
+qq(Burden_Log_Unadj_Leu$results$P.value, 
+   main = "Burden result Log Non-adjusted")
+
+Burden_Log_adj_Leu<-SKAT.SSD.All(SSD.INFO, obj, r.corr=1,weights.beta=c(1,1))
+Burden_Log_adj_Leu$results[order(Burden_Log_adj_Leu$results$P.value),] [1:15,]
+qq(Burden_Log_Unadj_Leu$results$P.value, 
+   main ="Burden result Weight Adjusted Log Leu")
+
+pdf("Burden_results_Leu_Quantitative_log.pdf")
+qq(Burden_Log_Unadj_Leu$results$P.value, 
+   main = "Burden result Log Non-adjusted")
+qq(Burden_Log_Unadj_Leu$results$P.value, 
+   main ="Burden result Weight Adjusted Log Leu")
+dev.off()
+
+##SKAT-O
+SKATO_Log_Unadj_Leu<-SKAT.SSD.All(SSD.INFO, obj, method="optimal.adj")
+SKATO_Log_Unadj_Leu$results[order(SKATO_Log_Unadj_Leu$results$P.value),] [1:15,]
+qq(SKATO_Log_Unadj_Leu$results$P.value,
+   main ="SKATO Log Leu Quantitative DATA UNADJUSTED")
+
+SKATO_Log_adj_Leu<-SKAT.SSD.All(SSD.INFO, obj, method="optimal.adj",weights.beta=c(1,1))
+SKATO_Log_adj_Leu$results[order(SKATO_Log_adj_Leu$results$P.value),] [1:15,]
+qq(SKATO_Log_adj_Leu$results$P.value, 
+   main ="SKATO LOG Quantitative DATA ADJUSTED")
+
+pdf("SKATO_results_Leu_Quantitative_LOG_S0164.pdf")
+qq(SKATO_Log_Unadj_Leu$results$P.value,
+   main ="SKATO Log Leu Quantitative DATA UNADJUSTED")
+qq(SKATO_Log_adj_Leu$results$P.value, 
+   main ="SKATO LOG Quantitative DATA ADJUSTED")
+dev.off()
+
+
+
+DOING THE SIMILAR ANALYSIS WITH THE ENQT ADJUSTED PHENOTYPE VALUES
+
+## Testing for ENQT normalized value
+obj<-SKAT_Null_Model(phenotype$ENQT_Lpk ~ 1, out_type="C")
+
+##SKAT 
+SKAT_ENQT_Unadj_Leu<-SKAT.SSD.All(SSD.INFO, obj)
+SKAT_ENQT_Unadj_Leu$results[order(SKAT_ENQT_Unadj_Leu$results$P.value),] [1:15,]
+qq(SKAT_ENQT_Unadj_Leu$results$P.value,
+   main ="Quantitative SKAT result - ENQT normalized Leu")
+
+SKAT_ENQT_adj_Leu<-SKAT.SSD.All(SSD.INFO, obj,weights.beta=c(1,1))
+SKAT_ENQT_adj_Leu$results[order(SKAT_ENQT_adj_Leu$results$P.value),] [1:15,]
+qq(SKAT_ENQT_adj_Leu$results$P.value, 
+   main ="Quantitative weights adjusted SKAT result - ENQT normalized Leu")
+
+
+pdf("SKAT_results_Neu_ENQT_Quantitative.pdf")
+qq(SKAT_ENQT_Unadj_Leu$results$P.value,
+   main ="Quantitative SKAT result - ENQT normalized Leu")
+qq(SKAT_ENQT_adj_Leu$results$P.value, 
+   main ="Quantitative adjusted SKAT result - ENQT normalized Leu")
+dev.off()
+
+
+## Burden test
+
+Burden_ENQT_Unadj_Leu<-SKAT.SSD.All(SSD.INFO, obj, r.corr=1)
+Burden_ENQT_Unadj_Leu$results[order(Burden_ENQT_Unadj_Leu$results$P.value),] [1:15,]
+qq(Burden_ENQT_Unadj_Leu$results$P.value, 
+   main = "Burden result ENQT Non-adjusted")
+
+Burden_ENQT_adj_Leu<-SKAT.SSD.All(SSD.INFO, obj, r.corr=1,weights.beta=c(1,1))
+Burden_ENQT_adj_Leu$results[order(Burden_ENQT_adj_Leu$results$P.value),] [1:15,]
+qq(Burden_ENQT_adj_Leu$results$P.value, 
+   main ="Burden result Weight Adjusted ENQT Neu")
+
+pdf("Burden_results_Leu_Quantitative_ENQT.pdf")
+qq(Burden_ENQT_Unadj_Leu$results$P.value, 
+   main = "Burden result ENQT Non-adjusted")
+qq(Burden_ENQT_adj_Leu$results$P.value, 
+   main ="Burden result Weight Adjusted ENQT Neu")
+dev.off()
+
+##SKAT-O
+SKATO_ENQT_Unadj_Leu<-SKAT.SSD.All(SSD.INFO, obj, method="optimal.adj")
+SKATO_ENQT_Unadj_Leu$results[order(SKATO_ENQT_Unadj_Leu$results$P.value),] [1:15,]
+qq(SKATO_ENQT_Unadj_Leu$results$P.value,
+   main ="SKATO ENQT Leu Quantitative DATA UNADJUSTED")
+
+SKATO_ENQT_adj_Leu<-SKAT.SSD.All(SSD.INFO, obj, method="optimal.adj",weights.beta=c(1,1))
+SKATO_ENQT_adj_Leu$results[order(SKATO_ENQT_adj_Leu$results$P.value),] [1:15,]
+qq(SKATO_ENQT_adj_Leu$results$P.value, 
+   main ="SKATO ENQT Quantitative DATA ADJUSTED")
+
+pdf("SKATO_results_Leu_Quantitative_ENQT.pdf")
+qq(SKATO_ENQT_Unadj_Leu$results$P.value,
+   main ="SKATO ENQT Leu Quantitative DATA UNADJUSTED")
+qq(SKATO_ENQT_adj_Leu$results$P.value, 
+   main ="SKATO ENQT Quantitative DATA ADJUSTED")
+dev.off()
+
+
+
+
+
+
 ##########
 Qualitative study /Case Control / Exteme phenotype sampling
 
