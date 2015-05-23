@@ -42,3 +42,86 @@ exon_6bp_gene_variant_Neu_list <- read.delim("~/Desktop/exon_6bp_gene_variant_Ne
 Genes 145740 Variants 134707 unique variants 11033 variants mapped in  18971 genes
 Exon plus6 106590 Variants  104843 unique variants  1747 variants in more than 1 gene 18014
 Exon 103903 Variants 102216 unique 1687 duplicated variants  mapped in 17903 genes
+
+making a bed files for the further analysis
+plink --file CC_Neu --make-bed --out CC_Neu --noweb 
+
+library(gplots)
+library(SKAT)
+library(qqman)
+
+File.Bed <-"~/Desktop/Example_bped/CC_Neu.bed"
+File.Bim <- "~/Desktop/Example_bped/CC_Neu.bim"
+File.Fam <- "~/Desktop/Example_bped/CC_Neu.fam"
+File.SetID<-"~/Desktop/Example_bped/exon_6bp_gene_variant_Neu_list.txt"
+File.SSD<- "~/Desktop/Example_bped/Qualitative_NEU.SSD"
+File.Info<- "~/Desktop/Example_bped/Qualitative_NEU.info"
+
+Generate_SSD_SetID(File.Bed,File.Bim,
+                   File.Fam,File.SetID,
+                   File.SSD,File.Info)
+
+SSD.INFO<-Open_SSD(File.SSD, File.Info)
+
+## Doing the Gene based association for the Thr association
+## SKAT 
+obj<-SKAT_Null_Model(Phe_Quali_Neu$Group ~ 1, out_type="D") 
+SKAT_Neu_QUAL_Unadj<-SKAT.SSD.All(SSD.INFO, obj)
+SKAT_Neu_QUAL_Unadj$results[order(SKAT_Neu_QUAL_Unadj$results$P.value),] [1:15,]
+qq(SKAT_Neu_QUAL_Unadj$results$P.value,
+   main ="Qualitative SKAT result Neu phenotype ")
+
+SKAT_Neu_Qual_adj<-SKAT.SSD.All(SSD.INFO, obj,weights.beta=c(1,1))
+SKAT_Neu_Qual_adj$results[order(SKAT_Neu_Qual_adj$results$P.value),] [1:15,]
+qq(SKAT_Neu_Qual_adj$results$P.value, main ="Qualitative weights adjusted SKAT neu result")
+
+pdf("SKAT_results_Neu_Qual.pdf")
+qq(SKAT_Neu_QUAL_Unadj$results$P.value,
+   main ="Qualitative SKAT result Neu phenotype ")
+qq(SKAT_Neu_Qual_adj$results$P.value, 
+   main ="Qualitative weights adjusted SKAT neu result")
+dev.off()
+
+## Burden test
+
+Burden_Unadj_Neu_Qual<-SKAT.SSD.All(SSD.INFO, obj, r.corr=1)
+Burden_Unadj_Neu_Qual$results[order(Burden_Unadj_Neu_Qual$results$P.value),] [1:15,]
+qq(Burden_Unadj_Neu_Qual$results$P.value, 
+   main = "Burden result Qualitative Neu")
+
+Burden_Adj_Neu_Qual<-SKAT.SSD.All(SSD.INFO, obj, r.corr=1,weights.beta=c(1,1))
+Burden_Adj_Neu_Qual$results[order(Burden_Adj_Neu_Qual$results$P.value),] [1:15,]
+qq(Burden_Adj_Neu_Qual$results$P.value, 
+   main ="Burden result Weight Adjusted Qualitative Thr")
+
+pdf("Burden_results_Neu_Qualitative_Log.pdf")
+qq(Burden_Unadj_Neu_Qual$results$P.value, 
+   main = "Burden result Qualitative Neu")
+qq(Burden_Adj_Neu_Qual$results$P.value, 
+   main ="Burden result Weight Adjusted Qualitative Thr")
+dev.off()
+
+##SKAT-O
+SKATO_Neu_Quali<-SKAT.SSD.All(SSD.INFO, obj, method="optimal.adj")
+SKATO_Neu_Quali$results[order(SKATO_Neu_Quali$results$P.value),] [1:15,]
+qq(SKATO_Neu_Quali$results$P.value,
+   main ="SKATO Quantitative results Unadjusted Neu")
+
+
+SKATO_Neu_adj_Quali<-SKAT.SSD.All(SSD.INFO, obj, method="optimal.adj",weights.beta=c(1,1))
+SKATO_Neu_adj_Quali$results[order(SKATO_Neu_adj_Quali$results$P.value),] [1:15,]
+qq(SKATO_Neu_adj_Quali$results$P.value, 
+   main ="SKATO  Results Quantitative Equal weights results")
+
+pdf("SKATO_results_Neu_Qualitative.pdf")
+qq(SKATO_Neu_Quali$results$P.value,
+   main ="SKATO Quantitative results Unadjusted Neu")
+qq(SKATO_Neu_adj_Quali$results$P.value, 
+   main ="SKATO  Results Quantitative Equal weights results")
+dev.off()
+
+Close_SSD()
+
+
+
+
