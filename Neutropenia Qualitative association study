@@ -36,3 +36,9 @@ plink --gene-report CC_Neu.assoc.logistic --gene-list ~/glob/Gene_list_plink_fil
 
 plink --gene-report CC_Neu.assoc.logistic --gene-list ~/glob/Gene_list_plink_files/Exon_plus6list.txt --out Exon_6plus_mapping_Quali_Neu --noweb 
 
+doing the analysis in R to get the genelist files
+exon_6bp_gene_variant_Neu_list <- read.delim("~/Desktop/exon_6bp_gene_variant_Neu_list.txt", header=FALSE)
+
+Genes 145740 Variants 134707 unique variants 11033 variants mapped in  18971 genes
+Exon plus6 106590 Variants  104843 unique variants  1747 variants in more than 1 gene 18014
+Exon 103903 Variants 102216 unique 1687 duplicated variants  mapped in 17903 genes
