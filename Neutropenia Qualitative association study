@@ -1,0 +1,38 @@
+Part 1 Getting the necessary patients information for the data manipulation
+
+Phe_Neu_low_tox<- 
+  pheno_trim[which(pheno_trim$Neutrophiles_CTC==0 | pheno_trim$Neutrophiles_CTC==1),]
+Phe_Neu_high_tox<- 
+  pheno_trim[which(pheno_trim$Neutrophiles_CTC==3 | pheno_trim$Neutrophiles_CTC==4),]
+  
+Phe_Neu_high_tox$Group <- 1
+Phe_Neu_low_tox$Group <- 0
+Phe_Neu_high_tox$phe <- 2
+Phe_Neu_low_tox$phe <- 1
+row.names(Phe_Neu_high_tox)<- NULL
+row.names(Phe_Neu_low_tox)<- NULL
+Phe_Quali_Neu <- rbind(Phe_Neu_high_tox,Phe_Neu_low_tox)
+
+write.table(Phe_Quali_Neu[,1],"Neutropenia", 
+            sep="\t", quote = F, row.names = F,col.names = F)
+write.table(Phe_Quali_Neu[,c(1,2,33)],"Neu.fam",
+            sep="\t", quote = F, row.names = F)
+            
+B) Getting the necessary plink single nucleotide association study
+
+Sample selected based on the Leucopenia score of either 1/0 as Control and 3/4 as the High tox and doing some association study
+
+vcftools --vcf Common_rare.recode.vcf --keep ./Neutro/Quali/Neutropenia --recode --out CC_Neu 
+
+173/211 kept 
+152303 variant   
+
+vcftools --vcf CC_Neu.recode.vcf --plink --out CC_Neu
+plink --file CC_Neu --logistic --pheno Neu.fam --mpheno 1 --out CC_Neu --noweb 
+
+plink --gene-report CC_Neu.assoc.logistic --gene-list ~/glob/Gene_list_plink_files/plink_gene_list.txt --out Gene_mapping_Quali_Neu --noweb 
+
+plink --gene-report CC_Neu.assoc.logistic --gene-list ~/glob/Gene_list_plink_files/Exon_list.txt --out Exon_mapping_Quali_Neu --noweb
+
+plink --gene-report CC_Neu.assoc.logistic --gene-list ~/glob/Gene_list_plink_files/Exon_plus6list.txt --out Exon_6plus_mapping_Quali_Neu --noweb 
+
