@@ -31,7 +31,8 @@ plink --file CastCtrl  --make-set Upload2.txt  --list --noweb
  awk 'BEGIN {OFS="\t"}{print "chrName", $1, $1+35, "0",  $2}' <your file> | mergeBed -scores sum > bedgraph.bg
  
  
- 
+ find . -type f -name Common\* -exec rm {} \;
+
  
  
  
