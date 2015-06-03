@@ -1,0 +1,7 @@
+Part -1) Raw vcf manipulation to get high quaity variants
+
+Raw VCF QC parameters
+
+Filter A ) Apply Filter criteria 1) Filter of the variants based on the genotyping depth ahd the GATK Filter
+
+For the intial analysis of the quantitative traits- in our case the toxicity score of the individual phenotype, we first have to qualtiy analysis of the genotype data. For that we first considered the variants that have passed through the GATK filter and have the mean depth score of 10 over all nucleotides. From the vcftools manuals we use the command the min-meanDP. This includes only sites with mean depth values (over all included individuals) greater than or equal to the "--min-meanDP" value of 10. 
