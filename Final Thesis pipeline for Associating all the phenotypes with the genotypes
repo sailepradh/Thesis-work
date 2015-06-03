@@ -1,7 +1,24 @@
+
+Genotype Quality Filtering 
+
 Part -1) Raw vcf manipulation to get high quaity variants
 
-Raw VCF QC parameters
-
-Filter A ) Apply Filter criteria 1) Filter of the variants based on the genotyping depth ahd the GATK Filter
+Apply Filter criteria 1)-  Filter of the variants based on the genotyping depth ahd the GATK Filter
 
 For the intial analysis of the quantitative traits- in our case the toxicity score of the individual phenotype, we first have to qualtiy analysis of the genotype data. For that we first considered the variants that have passed through the GATK filter and have the mean depth score of 10 over all nucleotides. From the vcftools manuals we use the command the min-meanDP. This includes only sites with mean depth values (over all included individuals) greater than or equal to the "--min-meanDP" value of 10. 
+
+vcftools --vcf raw.vcf --remove-filtered-all --min-meanDP 10 --recode --out Filter1
+
+## Number of Variants =  158753/211467
+
+Apply quality filter criteria 2 ) Considering the genotyping rate for all the 216 individuals, we find that the three individuals S0328, S0664 who have genotyping rate lower than threshold of 0.95 are removed from the further analysis. Similarly the sample S0580 are removed as there are large number of variants present and hence the possibility of contamination. And sample S0922 was removed as it was similar to the S1056. After considering the genotyping rate, the IBD descent we have 212 samples.
+
+head sample_remove
+S0328
+S0664
+S0580
+S0922
+
+vcftools --vcf Filter1.recode.vcf  --max-missing 0.95 --remove sample_remove --recode --out Common_rare
+
+
