@@ -1,7 +1,9 @@
+Part-1) Phenotype Manipulation
 
-Genotype Quality Filtering 
 
-Part -1) Raw vcf manipulation to get high quaity variants
+Part -2) Genotype manipulation
+
+2.1)Genotype Quality Filtering 
 
 Apply Filter criteria 1)-  Filter of the variants based on the genotyping depth ahd the GATK Filter
 
@@ -20,5 +22,15 @@ S0580
 S0922
 
 vcftools --vcf Filter1.recode.vcf  --max-missing 0.95 --remove sample_remove --recode --out Common_rare
+152042 out of a possible 158753 Sites
+
+Dividing the Common_Rare.VCF file into common and rare variants for further downstreaming analysis
+vcftools --vcf Common_rare.recode.vcf --maf 0.01 --recode --Common
+74281 out of a possible 152042 Sites
+vcftools --vcf Common_rare.recode.vcf --max-maf 0.01 --recode --out Rare
+
+
+
+
 
 
