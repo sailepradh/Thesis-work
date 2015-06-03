@@ -1,5 +1,98 @@
 Part-1) Phenotype Manipulation
 
+A)## Qualitative Association study for Leucopenia
+phe <- read.delim("~/Downloads/phe.txt")
+#phe[c("LOG_TPK","LOG_Lpk","LOG_neu")] <- c(log(phe$TPK_Nadir),
+#log(phe$LPK_Nadir), 
+#log(phe$Neutrophiles_Nadir))
+
+library(multic)
+
+phe[c("ENQT_TPK","ENQT_Lpk","ENQT_Neu")]<-c(t.rank(phe$TPK_Nadir),
+                                            t.rank(phe$LPK_Nadir),
+                                            t.rank(phe$Neutrophiles_Nadir))
+
+
+phe[c("Nadir_base_TPK","Nadir_base_Lpk","Nadir_base_Neu")]<- 
+                                            c((log(phe$TPK_Nadir/phe$TPK_Baseline)),
+                                            (log(phe$LPK_Nadir/phe$LPK_Baseline)),
+                                            (log(phe$Neutrophiles_Nadir/phe$Neutrophiles_Baseline)))
+
+
+hist(phe$Nadir_base_TPK); shapiro.test(phe$Nadir_base_TPK)
+hist(phe$Nadir_base_Lpk); shapiro.test(phe$Nadir_base_Lpk)
+hist(phe$Nadir_base_Neu); shapiro.test(phe$Nadir_base_Neu)
+
+library(multic)
+
+phe[c("ENQT_Nadir_base_TPK","ENQT_Nadir_base_Lpk","ENQT_Nadir_base_Neu")]<- 
+  c((t.rank(phe$TPK_Nadir/phe$TPK_Baseline)),
+    (t.rank(phe$LPK_Nadir/phe$LPK_Baseline)),
+    (t.rank(phe$Neutrophiles_Nadir/phe$Neutrophiles_Baseline)))
+
+hist(phe$ENQT_Nadir_base_TPK); shapiro.test(phe$ENQT_Nadir_base_TPK)
+hist(phe$ENQT_Nadir_base_Lpk); shapiro.test(phe$ENQT_Nadir_base_Lpk)
+hist(phe$ENQT_Nadir_base_Neu); shapiro.test(phe$ENQT_Nadir_base_Lpk)
+
+
+pheno_trim<-phe[!phe$FID %in% c("S0328","S0664","S0580","S0922"),]
+row.names(pheno_trim)<- NULL
+
+write.table(pheno_trim,"phenotype_manipulated.txt", 
+            sep="\t", quote = F, row.names = F)
+
+## Quantitative phenotype files are generated for each individual phenotypes
+write.table(pheno_trim[,c(1,2,10,12,22,29,32,35)],"Throm.fam", 
+            sep="\t", quote = F, row.names = F)
+write.table(pheno_trim[,c(1,2,14,16,23,30,33,36)],"Leu.fam", 
+            sep="\t", quote = F, row.names = F)
+phe_Neu<-pheno_trim[,c(1,2,18,20,24,31,34,37)]
+phe_Neu[, 5:6][is.na(phe_Neu[, 5:8])] <- -9
+getwd()
+
+Phe_Thr_low_tox<-pheno_trim[which(pheno_trim$TPK_CTC==0 | pheno_trim$TPK_CTC==1),]
+Phe_Thr_high_tox<-pheno_trim[which(pheno_trim$TPK_CTC==3 | pheno_trim$TPK_CTC==4),]
+
+Phe_Leu_low_tox<- pheno_trim[which(pheno_trim$LPK_CTC==0 | pheno_trim$LPK_CTC==1),]
+Phe_Leu_high_tox<- pheno_trim[which(pheno_trim$LPK_CTC==3 | pheno_trim$LPK_CTC==4),]
+
+Phe_Neu_low_tox<- 
+  pheno_trim[which(pheno_trim$Neutrophiles_CTC==0 | pheno_trim$Neutrophiles_CTC==1),]
+Phe_Neu_high_tox<- 
+  pheno_trim[which(pheno_trim$Neutrophiles_CTC==3 | pheno_trim$Neutrophiles_CTC==4),]
+
+Phe_Thr_high_tox$Group <- 1
+Phe_Thr_low_tox$Group <- 0
+Phe_Thr_high_tox$phe <- 2
+Phe_Thr_low_tox$phe <-1
+row.names(Phe_Thr_high_tox)<- NULL
+row.names(Phe_Thr_low_tox)<- NULL
+Phe_Quali_Thr <- rbind(Phe_Thr_high_tox,Phe_Thr_low_tox)
+
+write.table(Phe_Quali_Thr[,1],"Thrombopenia", 
+            sep="\t", quote = F, row.names = F,col.names = F)
+write.table(Phe_Quali_Thr[,c(1,2,33)],"Thr.fam",
+            sep="\t", quote = F, row.names = F)
+
+
+Phe_Leu_high_tox$Groups<-2
+Phe_Leu_low_tox$Groups<-1
+row.names(Phe_Leu_high_tox)<- NULL
+row.names(Phe_Leu_low_tox)<- NULL
+
+
+Phe_Neu_high_tox$Group <- 1
+Phe_Neu_low_tox$Group <- 0
+Phe_Neu_high_tox$phe <- 2
+Phe_Neu_low_tox$phe <- 1
+row.names(Phe_Neu_high_tox)<- NULL
+row.names(Phe_Neu_low_tox)<- NULL
+Phe_Quali_Neu <- rbind(Phe_Neu_high_tox,Phe_Neu_low_tox)
+
+write.table(Phe_Quali_Neu[,1],"Neutropenia", 
+            sep="\t", quote = F, row.names = F,col.names = F)
+write.table(Phe_Quali_Neu[,c(1,2,33)],"Neu.fam",
+            sep="\t", quote = F, row.names = F)
 
 Part -2) Genotype manipulation
 
