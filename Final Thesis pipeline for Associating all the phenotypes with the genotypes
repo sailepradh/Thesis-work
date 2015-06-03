@@ -123,6 +123,59 @@ vcftools --vcf Common_rare.recode.vcf --maf 0.01 --recode --Common
 vcftools --vcf Common_rare.recode.vcf --max-maf 0.01 --recode --out Rare
 
 
+## Gene based association
+First converting the vcf files into plink files using the command
+
+vcftools --vcf Common_rare.recode.vcf --plink --out ./Quantitative/Common_Rare
+plink --file Common_Rare --out Common_rare --make-bed --noweb
+
+This only outputs the bialleic files from the vcftools and kept all the 150402 sites
+
+Now getting the exon plus six basepairs for mapping the individual biallelic variant to respective exons
+
+Doing the following analysis in R
+###################################################################################
+Gene <- read.delim("~/Downloads/gene", dec=",")
+##glist.hg19 <- read.table("~/Downloads/glist-hg19.txt", quote="\"") checking what is needed from the original gene list in the plink documentation
+
+Gene <- Gene[order(-Gene$exonCount),]
+Gene_dup =Gene[duplicated(Gene$name2),]
+Gene_non =Gene[!duplicated(Gene$name2),]
+Gene_non$chrom<- as.character(Gene_non$chrom)
+Gene_non$chrom<- sapply(strsplit(Gene_non$chrom, "_"), "[",1)
+Gene_non$chrom<-gsub("chr", "",Gene_non$chrom)
+rownames(Gene_non)<- NULL
+write.table(Gene_non,"~/Desktop/gene_list.txt", sep="\t", quote = F, row.names = F)
+write.table(Gene_non[,c(3,5,6,13)],"~/Desktop/plink_gene_list.txt", sep="\t", quote = F, row.names = F, col.names=F)
+
+##################################################################################
+################# Running the following pipeline in unix to get the gene plus 6 basepairs for the every exons in the Refseq database###########
+
+cat gene_list.txt | awk '{n=int($9); split($10,S,/,/);split($11,E,/,/); for(i=1;i<=n;++i) {printf("%s %s %s %s\n",$3,S[i],E[i],$13);} }' > Exon_list.txt
+cat gene_list.txt | awk '{n=int($9); split($10,S,/,/);split($11,E,/,/); for(i=1;i<=n;++i) {printf("%s %s %s %s\n",$3,S[i]-6,E[i]+6,$13);} }' > Exon_plus6list.txt
+
+###################################################################################
+
+
+Now doing the further analysis in linux using plink
+
+
+vcftools --vcf Common_rare.recode.vcf --plink --out ./Quantitative/Common_Rare
+
+Getting the binary files of the original ped files
+plink --file Common_Rare --out Common_rare --make-bed --noweb
+
+plink --file Common_Rare --noweb --assoc --pheno ../Leucopenia.fam --mpheno 4 --linear --out LPK_baseline_linear
+
+plink --gene-report LPK_baseline_linear.assoc.linear --gene-list ./Gene_list_plink_files/plink_gene_list.txt --out Gene_mapping --noweb
+
+plink --gene-report LPK_baseline_linear.assoc.linear --gene-list ./Gene_list_plink_files/Exon_list.txt --out Exon_mapping --noweb
+
+plink --gene-report LPK_baseline_linear.assoc.linear --gene-list ./Gene_list_plink_files/Exon_plus6list.txt --out Exo_plus_six_mapping --noweb
+
+
+
+
 
 
 
