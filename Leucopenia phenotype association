@@ -95,11 +95,6 @@ From the range_report files we generated the SetID files for the SKAT test using
 
 SKAT-TEST in R
 
-
-
-
-
-
 Quantiative analysis with the S0164 sample.
 
 vcftools --vcf Common_rare.recode.vcf --remove-indv S0164  --recode --out Common_rare_S0164
