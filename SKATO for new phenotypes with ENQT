@@ -152,3 +152,18 @@ write.table(Topgene_SKATO_ENQT_Decrease_LPK[order(Topgene_SKATO_ENQT_Decrease_LP
             "~/Dropbox/Result_From_R/SKATO_LPK_Decrese_ENQT_top.txt",
             sep="\t", quote = F, row.names = F)
 
+obj<-SKAT_Null_Model(phenotype$ENQT_Lpk~ 1, out_type="C")
+SKATO_ENQT_Leu_v1<-SKAT.SSD.All(SSD.INFO, obj, method="optimal.adj",weights.beta=c(1,1))
+SKATO_ENQT_Leu_v1$results[order(SKATO_ENQT_Leu_v1$results$P.value),] [1:15,]
+SKATO_ENQT_Leu_v1$results$p_adjust_BH<-p.adjust((SKATO_ENQT_Leu_v1$results$P.value),
+                                                 method ="BH")
+SKATO_ENQT_Leu_v1$results$p_adjust_Bonf<-p.adjust((SKATO_ENQT_Leu_v1$results$P.value),
+                                                   method ="bonferroni")
+
+
+Topgene_SKATO_ENQT_LPK<-(SKATO_ENQT_Leu_v1$results
+                                  [(which(SKATO_ENQT_Leu_v1$results$P.value <= 1.00e-03)),])
+write.table(Topgene_SKATO_ENQT_LPK[order(Topgene_SKATO_ENQT_LPK$P.value),],
+            "~/Dropbox/Result_From_R/SKATO_LPK_ENQT_top.txt",
+            sep="\t", quote = F, row.names = F)
+
