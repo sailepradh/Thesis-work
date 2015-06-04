@@ -44,6 +44,19 @@ scp -r sail@milou.uppmax.uu.se:/home/sail/prj/fastqcfiles .
  
  
  
+ SKATO_ENQT_adj_Leu<-SKAT.SSD.All(SSD.INFO, obj, method="optimal.adj",weights.beta=c(1,1))
+SKATO_ENQT_adj_Leu$results[order(SKATO_ENQT_adj_Leu$results$P.value),] [1:15,]
+SKATO_ENQT_adj_Leu$results$p_adjust_BH<-p.adjust((SKATO_ENQT_adj_Leu$results$P.value),
+                                                 method ="BH")
+SKATO_ENQT_adj_Leu$results$p_adjust_Bonf<-p.adjust((SKATO_ENQT_adj_Leu$results$P.value),
+                                                   method ="bonferroni")
+
+write.table(SKATO_ENQT_adj_Leu$results[order(SKATO_ENQT_adj_Leu$results$P.value),] [1:15,],
+            "~/Dropbox/Result_From_R/SKATO_adj_ENQT_Leu_top15.txt",
+            sep="\t", quote = F, row.names = F)
+ 
+ 
+ 
  
  
  #ENSEMBL manipulation
