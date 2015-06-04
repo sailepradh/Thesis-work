@@ -1,0 +1,154 @@
+## Gene-Based Association in the Thrombopenia using Quantitative
+## approach 
+
+## Taking into account the ENQT normalized values
+
+File.Bed <-"Common_rare.bed"
+File.Bim <- "Common_rare.bim"
+File.Fam <- "Common_rare.fam"
+File.SetID<-"gene_variant_list_unique.txt"
+File.SSD<- "Common_rare.SSD"
+File.Info<- "Common_rare.info"
+
+Generate_SSD_SetID(File.Bed,File.Bim,
+                   File.Fam,File.SetID,
+                   File.SSD,File.Info)
+
+SSD.INFO<-Open_SSD(File.SSD, File.Info)
+
+###############################################################################
+###########################################################################
+################SKATO Test for ENQT Normalized data phenotype TPK
+SKATO_ENQT_adj_Thr<-SKAT.SSD.All(SSD.INFO, obj, method="optimal.adj",weights.beta=c(1,1))
+SKATO_ENQT_adj_Thr$results$p_adjust_BH<-p.adjust((SKATO_ENQT_adj_Thr$results$P.value),
+                                                 method ="BH")
+SKATO_ENQT_adj_Thr$results$p_adjust_Bonf<-p.adjust((SKATO_ENQT_adj_Thr$results$P.value),
+                                                   method ="bonferroni")
+SKATO_ENQT_adj_Thr$results[order(SKATO_ENQT_adj_Thr$results$P.value),] [1:15,]
+
+Topgene_SKATO_ENQT_TPK<-(SKATO_ENQT_adj_Thr$results
+                         [(which(SKATO_ENQT_adj_Thr$results$P.value <= 1.00e-03)),])
+
+write.table(Topgene_SKATO_ENQT_TPK[order(Topgene_SKATO_ENQT_TPK$P.value),],
+            "~/Dropbox/Result_From_R/SKATO_Thr_ENQT_top1.txt",
+            sep="\t", quote = F, row.names = F)
+
+#############################################################################
+SKATO_ENQT_NAdir_Thr<- SKAT.SSD.All(SSD.INFO, obj, method="optimal.adj",weights.beta=c(1,1))
+SKATO_ENQT_NAdir_Thr$results[order(SKATO_ENQT_NAdir_Thr$results$P.value),] [1:15,]
+SKATO_ENQT_NAdir_Thr$results$p_adjust_BH<-p.adjust((SKATO_ENQT_NAdir_Thr$results$P.value),
+                                                 method ="BH")
+SKATO_ENQT_NAdir_Thr$results$p_adjust_Bonf<-p.adjust((SKATO_ENQT_NAdir_Thr$results$P.value),
+                                                   method ="bonferroni")
+Topgene_SKATO_ENQT_Decrease_TPK<-(SKATO_ENQT_NAdir_Thr$results
+                         [(which(SKATO_ENQT_NAdir_Thr$results$P.value <= 1.00e-03)),])
+write.table(Topgene_SKATO_ENQT_Decrease_TPK[order(Topgene_SKATO_ENQT_Decrease_TPK$P.value),],
+            "~/Dropbox/Result_From_R/SKATO_Thr_ENQT_Decrease_top.txt",
+            sep="\t", quote = F, row.names = F)
+
+######################################################################
+################################
+TPK_ENQT_SKATO<-as.character((SKATO_ENQT_adj_Thr$results[(which(SKATO_ENQT_adj_Thr$results$P.value <= 1.00e-03)),])$SetID)
+TPK_Log_SKATO<-as.character((SKATO_ENQT_adj_Thr$results[(which(SKATO_Log_adj_Thr$results$P.value <= 1.00e-03)),])$SetID )
+v <- venn.diagram(list(TPK_ENQT_SKATO=TPK_ENQT_SKATO, TPK_Log_SKATO=TPK_Log_SKATO),
+                  lty = rep("blank", 2), fill = c("light blue", "pink"), 
+                  alpha = rep(0.5, 2),cat.pos = c(-10,10), 
+                  cat.cex = 0.75, cex=1.0,
+                  ,filename=NULL)
+grid.newpage()
+grid.draw(v)
+lapply(v,  names)
+lapply(v, function(i) i$label)
+v[[5]]$label  <- paste(setdiff(TPK_Log_SKATO,TPK_ENQT_SKATO), collapse="\n") 
+v[[6]]$label <- paste(setdiff(TPK_ENQT_SKATO, TPK_Log_SKATO)  , collapse="\n")
+v[[7]]$label <- paste(intersect(TPK_ENQT_SKATO, TPK_Log_SKATO), collapse="\n")  
+
+pdf("SKATO_TPK_Genebased.pdf", width=9, height=9)
+grid.newpage()
+grid.draw(v)
+dev.off()
+
+#############################################
+###########################################
+#####Doing the similar analysis for Neutropenia
+obj<-SKAT_Null_Model(phenotype$ENQT_Neu~ 1, out_type="C")
+obj<-SKAT_Null_Model(phenotype$ENQT_Nadir_base_TPK~ 1, out_type="C")
+
+##SKAT-O
+SKATO_ENQT_adj_Neu<-SKAT.SSD.All(SSD.INFO, obj, method="optimal.adj",weights.beta=c(1,1))
+SKATO_ENQT_adj_Neu$results$p_adjust_BH<-p.adjust((SKATO_ENQT_adj_Neu$results$P.value),
+                                                 method ="BH")
+SKATO_ENQT_adj_Neu$results$p_adjust_Bonf<-p.adjust((SKATO_ENQT_adj_Neu$results$P.value),
+                                                   method ="bonferroni")
+SKATO_ENQT_adj_Neu$results[order(SKATO_ENQT_adj_Neu$results$P.value),] [1:15,]
+
+Topgene_SKATO_ENQT_NPK<-(SKATO_ENQT_adj_Neu$results
+                                  [(which(SKATO_ENQT_adj_Neu$results$P.value <= 1.00e-03)),])
+write.table(Topgene_SKATO_ENQT_NPK[order(Topgene_SKATO_ENQT_NPK$P.value),],
+            "~/Dropbox/Result_From_R/SKATO_NPK_ENQT_top.txt",
+            sep="\t", quote = F, row.names = F)
+
+
+obj<-SKAT_Null_Model(phenotype$ENQT_Nadir_base_Neu~ 1, out_type="C")
+SKATO_ENQT_Nadir_baseline_Neu<-SKAT.SSD.All(SSD.INFO, obj, method="optimal.adj",weights.beta=c(1,1))
+SKATO_ENQT_Nadir_baseline_Neu$results[order(SKATO_ENQT_Nadir_baseline_Neu$results$P.value),] [1:15,]
+SKATO_ENQT_Nadir_baseline_Neu$results$p_adjust_BH<-p.adjust((SKATO_ENQT_Nadir_baseline_Neu$results$P.value),
+                                                 method ="BH")
+SKATO_ENQT_Nadir_baseline_Neu$results$p_adjust_Bonf<-p.adjust((SKATO_ENQT_Nadir_baseline_Neu$results$P.value),
+                                                   method ="bonferroni")
+
+
+Topgene_SKATO_ENQT_Decrease_NPK<-(SKATO_ENQT_Nadir_baseline_Neu$results
+                         [(which(SKATO_ENQT_Nadir_baseline_Neu$results$P.value <= 1.00e-03)),])
+write.table(Topgene_SKATO_ENQT_Decrease_NPK[order(Topgene_SKATO_ENQT_Decrease_NPK$P.value),],
+            "~/Dropbox/Result_From_R/SKATO_NPK_Decrese_ENQT_top.txt",
+            sep="\t", quote = F, row.names = F)
+
+
+#######################################################
+### Venn diagram to represent the above results
+NPK_SKATO_ENQT<-as.character((SKATO_ENQT_adj_Neu$results[(which(SKATO_ENQT_adj_Neu$results$P.value <= 1.00e-03)),])$SetID)
+NPK_SKATO_LOG<-as.character((SKATO_Log_adj_Neu$results[(which(SKATO_Log_adj_Neu$results$P.value <= 1.00e-03)),])$SetID )
+v <- venn.diagram(list(NPK_SKATO_ENQT=NPK_SKATO_ENQT, NPK_SKATO_LOG=NPK_SKATO_LOG),
+                  lty = rep("blank", 2), fill = c("light blue", "light green"), 
+                  alpha = rep(0.5, 2),cat.pos = c(-10,10), 
+                  cat.cex = 1.0, cex=0.75,
+                  ,filename=NULL, scaled = FALSE)
+grid.newpage()
+grid.draw(v)
+lapply(v,  names)
+lapply(v, function(i) i$label)
+v[[5]]$label  <- paste(intersect(NPK_SKATO_LOG, NPK_SKATO_ENQT), collapse="\n") 
+v[[6]]$label <- paste(setdiff(NPK_SKATO_LOG, NPK_SKATO_ENQT), collapse="\n")
+
+pdf("SKATO_Neu_Genebased.pdf", width=9, height=9)
+grid.newpage()
+grid.draw(v)
+dev.off()
+
+pdf("SKATO_results_Neu_Quantitative_ENQT.pdf")
+qq(SKATO_ENQT_Unadj_Neu$results$P.value,
+   main ="SKATO ENQT Neu Quantitative DATA UNADJUSTED")
+qq(SKATO_ENQT_adj_Neu$results$P.value, 
+   main ="SKATO ENQT NEU Quantitative DATA ADJUSTED")
+dev.off()
+
+
+#Associating the ENQT normalized values with the leucpoenia 
+## Considering the qualitative values are similar to one normalixed 
+
+## Testing for ENQT normalized value
+obj<-SKAT_Null_Model(phenotype$ENQT_Nadir_base_Lpk~ 1, out_type="C")
+SKATO_ENQT_Nadir_baseline_adj_Leu<-SKAT.SSD.All(SSD.INFO, obj, method="optimal.adj",weights.beta=c(1,1))
+SKATO_ENQT_Nadir_baseline_adj_Leu$results$p_adjust_BH<-p.adjust((SKATO_ENQT_Nadir_baseline_adj_Leu$results$P.value),
+                                               method ="BH")
+SKATO_ENQT_Nadir_baseline_adj_Leu$results$p_adjust_Bonf<-p.adjust((SKATO_ENQT_Nadir_baseline_adj_Leu$results$P.value),
+                                                 method ="bonferroni")
+SKATO_ENQT_Nadir_baseline_adj_Leu$results[order(SKATO_ENQT_Nadir_baseline_adj_Leu$results$P.value),] [1:15,]
+
+Topgene_SKATO_ENQT_Decrease_LPK<-(SKATO_ENQT_Nadir_baseline_adj_Leu$results
+                                  [(which(SKATO_ENQT_Nadir_baseline_adj_Leu$results$P.value <= 1.00e-03)),])
+write.table(Topgene_SKATO_ENQT_Decrease_LPK[order(Topgene_SKATO_ENQT_Decrease_LPK$P.value),],
+            "~/Dropbox/Result_From_R/SKATO_LPK_Decrese_ENQT_top.txt",
+            sep="\t", quote = F, row.names = F)
+
