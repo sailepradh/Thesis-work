@@ -93,6 +93,11 @@ plink --gene-report LPK_baseline_linear.assoc.linear --gene-list ./Gene_list_pli
 
 From the range_report files we generated the SetID files for the SKAT test using the codes provided by Lin guys.
 
+from that we get the genes with more than one variant in the R
+test<-table(plink107_gene_variant_list$Genes)
+plink_unique<-plink107_gene_variant_list[plink107_gene_variant_list$Genes %in% names(test)[test>1],]
+plink_unique_one_variant<-plink107_gene_variant_list[plink107_gene_variant_list$Genes %in% names(test)[test==1],]
+
 SKAT-TEST in R
 
 Quantiative analysis with the S0164 sample.
