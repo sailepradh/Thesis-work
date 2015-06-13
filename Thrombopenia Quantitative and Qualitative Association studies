@@ -225,7 +225,7 @@ write.table(Phe_Quali_Thr[,1],"Thrombopenia",
             
 Using the vcftools to get the required Case_Control files            
 vcftools --vcf Common_rare.recode.vcf --keep ./Thrombo/Thrombopenia --recode --out ./Thrombo/Quali/CC_Thr_Common_rare
-167 out of 211 Individuals
+168 out of 211 Individuals
 
 getting a gene list for the association studies we used the range report command to get SNV linkded to the Genes
 
