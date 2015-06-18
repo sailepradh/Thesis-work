@@ -138,5 +138,10 @@ SKAT_test<-Skat_processed[order(Skat_processed$Before_P_adjust),]
 write.table(SKAT_test_ENSEMBL_Leu, "~/Dropbox/SKAT_RESULTS/Ref_WHOLE_LEU_Post.txt", sep="\t", quote = F, row.names = F)
 
 
+sed '/^#/ d' Common.recode.vcf 
+awk '{print $1 " " $2 " " $3 " " $4 " " $5}'
+awk '{gsub(/\./,$1 ":" $2 ,$3); print}' Common_3 >
+awk  '{print $3 " " $5 }' altallele.txt > alt_allele.txt
+
 
 
