@@ -22,7 +22,6 @@ S0328
 S0664
 S0580
 S0922
-S0724
 
 vcftools --vcf Filter1.recode.vcf  --max-missing 0.95 --remove sample_remove --recode --out Common_rare
 
