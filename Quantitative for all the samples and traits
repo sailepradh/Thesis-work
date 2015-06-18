@@ -58,6 +58,10 @@ plink --file Common --noweb --assoc --pheno pheno216.fam --mpheno 4 --out Thr --
 plink --file Common --noweb  --pheno pheno216.fam --mpheno 4 --out Thr --adjust --linear --mperm 1000
 
 
+## Done for the Case_control Neutropenia
+plink --file CC_Neu_Common --noweb --logistic --reference-allele alt_allele_Neu.txt --pheno ../../Neu.fam --mpheno 2 --out CC_Neu_SNV --adjust --mperm 1000
+
+
 plink --file Common --noweb --assoc --pheno pheno216.fam --mpheno 5 --out Leu
 plink --file Common --noweb --assoc --pheno pheno216.fam --mpheno 5 --out Leu --adjust
 plink --file Common --noweb --assoc --pheno pheno216.fam --mpheno 5 --out Leu --adjust --mperm 1000
