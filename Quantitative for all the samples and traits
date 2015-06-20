@@ -59,11 +59,21 @@ plink --file Common --noweb  --pheno pheno216.fam --mpheno 4 --out Thr --adjust 
 
 
 ## Done for the Case_control Neutropenia
-plink --file CC_Neu_Common --noweb --logistic --reference-allele alt_allele_Neu.txt --pheno ../../Neu.fam --mpheno 2 --out CC_Neu_SNV --adjust --mperm 1000
+plink --file CC_Neu_Common --noweb --logistic --reference-allele alt_allele_Neu.txt --pheno ../../Neu.fam --mpheno 2 --out CC_Neu_SNV --adjust
 ## Done for Case-Control Thrombopenia
-plink --file CC_Thr --noweb --logistic --reference-allele alt_allele_Thr.txt --pheno ../../Thr.fam --mpheno 2 --out CC_Thr_SNV --adjust --mperm 1000
+plink --file CC_Thr --noweb --logistic --reference-allele alt_allele_Thr.txt --pheno ../../Thr.fam --mpheno 2 --out CC_Thr_SNV --adjust
 ## Done for Case_Control Leucopenia
-plink --file CC_Common --noweb --logistic --reference-allele alt_allele_leu.txt --pheno ../../Neu.fam --mpheno 2 --out CC_Leu_SNV --adjust --mperm 1000
+plink --file CC_Common --noweb --logistic --reference-allele alt_allele_leu.txt --pheno ../../Neu.fam --mpheno 2 --out CC_Leu_SNV --adjust
+
+
+
+plink --file ../Thr/Common_Thr --noweb --linear --reference-allele ../../alt_allele.txt --pheno Leu.fam --mpheno 4 --out Common_LN_SNV_LPK --adjust
+plink --file ../Thr/Common_Thr --noweb --assoc --reference-allele ../../alt_allele.txt --pheno Leu.fam --mpheno 5 --out Common_ENQT_SNV_LPK_assoc --adjust --qt-means
+plink --file ../Thr/Common_Thr --noweb --linear --reference-allele ../../alt_allele.txt --pheno Leu.fam --mpheno 5 --out Common_ENQT_SNV_LPK --adjust
+
+
+
+
 
 
 plink --file Common --noweb --assoc --pheno pheno216.fam --mpheno 5 --out Leu
