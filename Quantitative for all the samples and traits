@@ -71,6 +71,8 @@ plink --file ../Thr/Common_Thr --noweb --linear --reference-allele ../../alt_all
 plink --file ../Thr/Common_Thr --noweb --assoc --reference-allele ../../alt_allele.txt --pheno Leu.fam --mpheno 5 --out Common_ENQT_SNV_LPK_assoc --adjust --qt-means
 plink --file ../Thr/Common_Thr --noweb --linear --reference-allele ../../alt_allele.txt --pheno Leu.fam --mpheno 5 --out Common_ENQT_SNV_LPK --adjust
 
+plink --file ../Thr/Common_Thr --noweb --linear --reference-allele ../../alt_allele.txt --pheno Neu.fam --mpheno 4 --out Common_LN_SNV_NPK --adjust
+
 
 
 
