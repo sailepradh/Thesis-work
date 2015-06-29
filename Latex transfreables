@@ -87,80 +87,77 @@
 
 
 
-
-
 \begin{table}[h]
-\label{my-label}
-\begin{tabular}{lllll}
-	\hline
-Gene   & Variant     & \multicolumn{3}{l}{Genotype in Cohort} \\
-HOMER1 & 5:78734835  & G/G=0      & G/A=1       & A/A=211     \\
-HOMER1 & rs72766735  & G/G=0      & G/A=3       & A/A=209     \\
-HOMER1 & rs35944172  & C/C=0      & C/T=18      & T/T=194     \\
-HOMER2 & rs34287296  & A/A=0      & A/G=6       & G/G=206     \\
-HOMER2 & rs74416301  & A/A=0      & A/G=10      & G/G=202     \\
-HOMER2 & rs79448007  & C/C=0      & C/T=3       & T/T=209     \\
-HOMER2 & rs76145073  & C/C=0      & C/T=1       & T/T=211     \\
-HOMER2 & rs200280749 & A/A=0      & A/G=2       & G/G=210     \\
-HOMER3 & rs78642721  & A/A=0      & A/G=3       & G/G=209     \\
-HOMER3 & rs58183423  & A/A=0      & A/G=1       & G/G=211     \\
-HOMER3 & rs57792670  & G/G=0      & G/A=1       & A/A=209     \\
-HOMER3 & rs142700713 & T/T=0      & T/G=1       & G/G=209     \\
-HOMER3 & rs11540741  & A/A=2      & A/G=53      & G/G=157     \\
-HOMER3 & rs1064351   & A/A=36     & A/G=96      & G/G=80      \\
-HOMER3 & rs367777459 & A/A=1      & A/G=1       & G/G=211     \\
-ZZEF1  & rs62072392  & G/G=5      & G/A=67      & A/A=140     \\
-ZZEF1  & rs116870033 & G/G=0      & G/A=1       & A/A=211     \\
-ZZEF1  & 17:3912217  & A/A=0      & A/G=1       & G/G=211     \\
-ZZEF1  & rs76915727  & A/A=0      & A/G=6       & G/G=206     \\
-ZZEF1  & rs112497098 & A/A=0      & A/G=1       & G/G=211     \\
-ZZEF1  & rs8075562   & A/A=11     & A/G=70      & G/G=131     \\
-ZZEF1  & rs201134194 & A/A=0      & A/G=1       & G/G=211     \\
-ZZEF1  & rs72827323  & C/C=0      & C/G=3       & G/G=209     \\
-ZZEF1  & rs711177    & G/G=2      & G/C=23      & C/C=187     \\
-ZZEF1  & rs35511240  & A/A=0      & A/G=3       & G/G=209     \\
-ZZEF1  & rs1006954   & A/A=5      & A/G=56      & G/G=151     \\
-ZZEF1  & rs35284780  & T/T=0      & T/C=16      & C/C=196     \\
-\end{tabular}
-\end{table}
-
-\begin{table}[h]
-	\centering
+\centering
 \begin{tabular}{|l|l|l|l|l|}
-	\hline
-Gene   & Variant     & \multicolumn{3}{l}{Genotype in Cohort} \\
-ZZEF1  & rs781831    & C/C=31     & C/T=117     & T/T=64      \\
-ZZEF1  & rs34719232  & A/A=0      & A/G=1       & G/G=211     \\
-ZZEF1  & rs781853    & C/C=26     & C/T=115     & T/T=71      \\
-ZZEF1  & rs781852    & G/G=28     & G/A=113     & A/A=71      \\
-ZZEF1  & rs146287047 & A/A=0      & A/G=4       & G/G=208     \\
-ZZEF1  & rs117408376 & A/A=0      & A/G=1       & G/G=211     \\
-ZZEF1  & rs781825    & G/G=28     & G/A=113     & A/A=71      \\
-ZZEF1  & rs4790555   & C/C=0      & C/A=1       & A/A=211     \\
-ZZEF1  & 17:3970468  & C/C=0      & C/G=1       & G/G=211     \\
-ZZEF1  & rs9891850   & T/T=0      & T/G=9       & G/G=203     \\
-ZZEF1  & rs139226355 & A/A=0      & A/G=1       & G/G=211     \\
-ZZEF1  & rs34760976  & A/A=1      & A/G=53      & G/G=158     \\
-ZZEF1  & 17:3978633  & T/T=0      & T/C=1       & C/C=211     \\
-ZZEF1  & rs143736611 & T/T=0      & T/C=2       & C/C=210     \\
-ZZEF1  & rs7207986   & A/A=3      & A/G=62      & G/G=147     \\
-ZZEF1  & rs8065185   & A/A=5      & A/G=59      & G/G=148     \\
-ZZEF1  & rs78806449  & G/G=1      & G/A=30      & A/A=181     \\
-ZZEF1  & 17:3994109  & G/G=0      & G/A=1       & A/A=211     \\
-ZZEF1  & rs12947597  & T/T=3      & T/C=60      & C/C=149     \\
-ZZEF1  & rs7222392   & C/C=6      & C/T=58      & T/T=148     \\
-ZZEF1  & rs143093880 & A/A=0      & A/G=1       & G/G=211     \\
-ZZEF1  & 17:4015912  & C/C=0      & C/T=1       & T/T=211     \\
-ZZEF1  & rs150456516 & A/A=0      & A/G=1       & G/G=211     \\
-ZZEF1  & rs58625333  & G/G=8      & G/A=81      & A/A=123     \\
-ZZEF1  & rs138134000 & C/C=0      & C/T=11      & T/T=201     \\
-ZZEF1  & rs117738178 & T/T=0      & T/C=5       & C/C=207     \\
-ZZEF1  & rs188631556 & T/T=0      & T/A=1       & A/A=211     \\
-ZZEF1  & rs111724159 & A/A=0      & A/G=6       & G/G=205    
+\hline
+Gene & Variant & \multicolumn{3}{l|}{Genotype in Cohort} \\ \hline
+HOMER1 & 5:78734835 & G/G=0 & G/A=1 & A/A=211 \\ \hline
+HOMER1 & rs72766735 & G/G=0 & G/A=3 & A/A=209 \\ \hline
+HOMER1 & rs35944172 & C/C=0 & C/T=18 & T/T=194 \\ \hline
+HOMER2 & rs34287296 & A/A=0 & A/G=6 & G/G=206 \\ \hline
+HOMER2 & rs74416301 & A/A=0 & A/G=10 & G/G=202 \\ \hline
+HOMER2 & rs79448007 & C/C=0 & C/T=3 & T/T=209 \\ \hline
+HOMER2 & rs76145073 & C/C=0 & C/T=1 & T/T=211 \\ \hline
+HOMER2 & rs200280749 & A/A=0 & A/G=2 & G/G=210 \\ \hline
+HOMER3 & rs78642721 & A/A=0 & A/G=3 & G/G=209 \\ \hline
+HOMER3 & rs58183423 & A/A=0 & A/G=1 & G/G=211 \\ \hline
+HOMER3 & rs57792670 & G/G=0 & G/A=1 & A/A=209 \\ \hline
+HOMER3 & rs142700713 & T/T=0 & T/G=1 & G/G=209 \\ \hline
+HOMER3 & rs11540741 & A/A=2 & A/G=53 & G/G=157 \\ \hline
+HOMER3 & rs1064351 & A/A=36 & A/G=96 & G/G=80 \\ \hline
+HOMER3 & rs367777459 & A/A=1 & A/G=1 & G/G=211 \\ \hline
+ZZEF1 & rs62072392 & G/G=5 & G/A=67 & A/A=140 \\ \hline
+ZZEF1 & rs116870033 & G/G=0 & G/A=1 & A/A=211 \\ \hline
+ZZEF1 & 17:3912217 & A/A=0 & A/G=1 & G/G=211 \\ \hline
+ZZEF1 & rs76915727 & A/A=0 & A/G=6 & G/G=206 \\ \hline
+ZZEF1 & rs112497098 & A/A=0 & A/G=1 & G/G=211 \\ \hline
+ZZEF1 & rs8075562 & A/A=11 & A/G=70 & G/G=131 \\ \hline
+ZZEF1 & rs201134194 & A/A=0 & A/G=1 & G/G=211 \\ \hline
+ZZEF1 & rs72827323 & C/C=0 & C/G=3 & G/G=209 \\ \hline
+ZZEF1 & rs711177 & G/G=2 & G/C=23 & C/C=187 \\ \hline
 \end{tabular}
-	\caption{ Table: Gene and SNP identified by High Toxicity Single Nucleotide and Gene based test}
-		\label{SNVandGene_NPK}
 \end{table}
 
+\begin{table}[h]
+\centering
+\begin{tabular}{|l|l|l|l|l|}
+\hline
+Gene & Variant & \multicolumn{3}{l|}{Genotype in Cohort} \\ \hline
+ZZEF1 & rs35511240 & A/A=0 & A/G=3 & G/G=209 \\ \hline
+ZZEF1 & rs1006954 & A/A=5 & A/G=56 & G/G=151 \\ \hline
+ZZEF1 & rs35284780 & T/T=0 & T/C=16 & C/C=196 \\ \hline
+ZZEF1 & rs781831 & C/C=31 & C/T=117 & T/T=64 \\ \hline
+ZZEF1 & rs34719232 & A/A=0 & A/G=1 & G/G=211 \\ \hline
+ZZEF1 & rs781853 & C/C=26 & C/T=115 & T/T=71 \\ \hline
+ZZEF1 & rs781852 & G/G=28 & G/A=113 & A/A=71 \\ \hline
+ZZEF1 & rs146287047 & A/A=0 & A/G=4 & G/G=208 \\ \hline
+ZZEF1 & rs117408376 & A/A=0 & A/G=1 & G/G=211 \\ \hline
+ZZEF1 & rs781825 & G/G=28 & G/A=113 & A/A=71 \\ \hline
+ZZEF1 & rs4790555 & C/C=0 & C/A=1 & A/A=211 \\ \hline
+ZZEF1 & 17:3970468 & C/C=0 & C/G=1 & G/G=211 \\ \hline
+ZZEF1 & rs9891850 & T/T=0 & T/G=9 & G/G=203 \\ \hline
+ZZEF1 & rs139226355 & A/A=0 & A/G=1 & G/G=211 \\ \hline
+ZZEF1 & rs34760976 & A/A=1 & A/G=53 & G/G=158 \\ \hline
+ZZEF1 & 17:3978633 & T/T=0 & T/C=1 & C/C=211 \\ \hline
+ZZEF1 & rs143736611 & T/T=0 & T/C=2 & C/C=210 \\ \hline
+ZZEF1 & rs7207986 & A/A=3 & A/G=62 & G/G=147 \\ \hline
+ZZEF1 & rs8065185 & A/A=5 & A/G=59 & G/G=148 \\ \hline
+ZZEF1 & rs78806449 & G/G=1 & G/A=30 & A/A=181 \\ \hline
+ZZEF1 & 17:3994109 & G/G=0 & G/A=1 & A/A=211 \\ \hline
+ZZEF1 & rs12947597 & T/T=3 & T/C=60 & C/C=149 \\ \hline
+ZZEF1 & rs7222392 & C/C=6 & C/T=58 & T/T=148 \\ \hline
+ZZEF1 & rs143093880 & A/A=0 & A/G=1 & G/G=211 \\ \hline
+ZZEF1 & 17:4015912 & C/C=0 & C/T=1 & T/T=211 \\ \hline
+ZZEF1 & rs150456516 & A/A=0 & A/G=1 & G/G=211 \\ \hline
+ZZEF1 & rs58625333 & G/G=8 & G/A=81 & A/A=123 \\ \hline
+ZZEF1 & rs138134000 & C/C=0 & C/T=11 & T/T=201 \\ \hline
+ZZEF1 & rs117738178 & T/T=0 & T/C=5 & C/C=207 \\ \hline
+ZZEF1 & rs188631556 & T/T=0 & T/A=1 & A/A=211 \\ \hline
+ZZEF1 & rs111724159 & A/A=0 & A/G=6 & G/G=205 \\ \hline
+\end{tabular}
+\caption{ Table: Gene and SNP identified by High Toxicity Single Nucleotide and Gene based test NPK}
+\label{SNVandGene_NPK}
+\end{table}
 
 
