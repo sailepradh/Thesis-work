@@ -1,0 +1,85 @@
+ begin{table}[h]
+	\centering
+	\begin{tabular}{|l|l|l|l|l|}
+		\hline
+		LPK & Variant & \multicolumn{3}{l|}{Genotype in Cohort} \\ \hline
+		HMGXB4 & rs148351517 & T/T= 0 & T/C=5 & C/C=207 \\ \hline
+		HMGXB4 & rs1053593 & T/T=88 & T7G=98 & G/G=26 \\ \hline
+		HMGXB4 & 22:35661305 & A/A=0 & A/G=1 & G/G=211 \\ \hline
+		HMGXB4 & 22:35661371 & T/T=0 & T/C=1 & C/C=211 \\ \hline
+		HMGXB4 & rs2272789 & C/C=101 & C/T=88 & T/T= 23 \\ \hline
+		RGS17 & rs2295230 & C/C=17 & C/A=90 & A/A=105 \\ \hline
+		RGS17 & rs41292882 & A/A=0 & A/G=27 & G/G=185 \\ \hline
+		SLC7A7 & rs143575981 & A/A=0 & A/G=4 & G/G=208 \\ \hline
+		SLC7A7 & rs1061040 & C/C=160 & C/T=51 & T/T= 1 \\ \hline
+		SLC7A7 & rs373156106 & A/A=0 & A/G=1 & G/G=211 \\ \hline
+		SLC7A7 & rs199522527 & A/A=0 & A/T=1 & T/T=1 \\ \hline
+		SLC7A7 & rs1805062 & T/T=0 & T/C=6 & C/C=206 \\ \hline
+		SLC7A7 & rs1805061 & G/G=1 & G/A=58 & A/A=153 \\ \hline
+		SLC7A7 & rs8018462 & G/G=62 & G/A=103 & A/A=47 \\ \hline
+		SLC7A7 & 14:23282335 & T/T=0 & T/C =1 & C/C=211 \\ \hline
+		SLC7A7 & rs11568438 & A/A=0 & A/G=8 & G/G=204 \\ \hline
+		SLC7A7 & rs1805059 & T/T=74 & T/C=85 & C/C=45 \\ \hline
+		SLC7A7 & rs45479698 & T/T=0 & T/C=8 & C/C=204 \\ \hline
+		SLC7A7 & rs2281677 & G/G=63 & G/A=106 & A/A=43 \\ \hline
+		SLC7A7 & 14:23284892 & A/A=0 & A/G=1 & G/G=211 \\ \hline
+		SLC7A7 & rs28364570 & G/G=1 & G/A=1 & A/A=180 \\ \hline
+     	SVIL & rs56022643 & A/A=0 & A/G=4 & G/G=208 \\ \hline
+		SVIL & rs1057952 & C/C=27 & C/T=43 & T/T=137 \\ \hline
+		SVIL & rs7921306 & C/C=9 & C/T=30 & T/T=173 \\ \hline
+		SVIL & rs11007607 & G/G=12 & G/A=85 & A/A=115 \\ \hline
+		SVIL & 10:29762907 & C/C=0 & C/G= 1 & G/G= 207 \\ \hline
+		SVIL & rs61737920 & T/T=1 & T/C=25 & C/C=186 \\ \hline
+		SVIL & rs10763720 & A/A=4 & A/G=55 & G/G=153 \\ \hline
+		SVIL & rs11007612 & G/G=4 & G/A=51 & A/A=157 \\ \hline
+		SVIL & rs1056782 & G/G=41 & G/A= 129 & A/A=42 \\ \hline
+		SVIL & rs56817459 & A/A=0 & A/G=42 & G/G=170 \\ \hline
+		SVIL & rs146267453 & A/A=0 & A/C=1 & C/C=211 \\ \hline
+		SVIL & rs7070135 & A/A=1 & A/C=41 & C/C=170 \\ \hline
+		SVIL & rs145392867 & T/T=0 & T/G=2 & G/G=210 \\ \hline
+		SVIL & rs7070678 & T/T=37 & T/G=112 & G/G=63 \\ \hline
+		SVIL & 10:29813439 & G/G=0 & G/A=1 & A/A=211 \\ \hline
+	
+	\end{tabular}
+	\end{table}
+	
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|l|l|l|l|l|}
+		\hline
+		LPK & Variant & \multicolumn{3}{l|}{Genotype in Cohort} \\ \hline
+			SVIL & 10:29820187 & A/A=0 & A/G=1 & G/G=211 \\ \hline
+			SVIL & rs17756919 & T/T=40 & T/C=98 & C/C=74 \\ \hline
+			SVIL & rs41284748 & A/A=1 & A/G=31 & G/G=180 \\ \hline
+			SVIL & rs1328323 & C/C=45 & C/T=103 & T/T=64 \\ \hline
+			SVIL & rs147010426 & T/T=0 & T/C=5 & C/C=207 \\ \hline
+			SVIL & rs150826046 & A/A=0 & A/G=1 & G/G=211 \\ \hline
+			SVIL & rs1247696 & T/T=204 & T/C=7 & C/C=1 \\ \hline
+			SVIL & rs7076239 & C/C=45 & C/T=103 & T/T=64 \\ \hline
+			SVIL & rs142262993 & T/T=0 & T/C=1 & C/C=211 \\ \hline
+			SVIL & rs138539716 & C/C=0 & C/T=1 & T/T=211 \\ \hline
+			SVIL & rs143011277 & A/A=0 & A/G=1 & G/G=211 \\ \hline
+		SVIL & rs141506698 & T/T=0 & T/C=2 & C/C=210 \\ \hline
+		SVIL & 10:29839785 & T/T=0 & T/C=1 & C/C=211 \\ \hline
+		SVIL & rs10160013 & G/G=15 & G/A=75 & A/A=122 \\ \hline
+		SVIL & rs17834991 & G/G=7 & G/A=69 & A/A=136 \\ \hline
+		SVIL & rs1270874 & C/C=120 & C/A=77 & A/A=15 \\ \hline
+		SVIL & 10:29839886 & G/G=0 & G/T=1 & T/T=211 \\ \hline
+		SVIL & rs3740003 & G/G=15 & G/A=76 & A/A=121 \\ \hline
+		SVIL & rs3740002 & G/G=18 & G/A=66 & A/A=126 \\ \hline
+		SVIL & rs1547169 & T/T=15 & T/C=74 & C/C=123 \\ \hline
+		SVIL & rs375845375 & C/C=0 & C/G=1 & G/G=211 \\ \hline
+		SVILP1 & 10:30993387 & C/C=0 & C/G=1 & G/G=210 \\ \hline
+		SVILP1 & rs112090325 & A/A=0 & A/G=2 & G/G=209 \\ \hline
+		SVILP1 & rs11008192 & A/A=79 & A/G=93 & G/G=39 \\ \hline
+		SVILP1 & rs79612491 & C/C=0 & C/T=1 & T/T=211 \\ \hline
+		SVILP1 & rs10826848 & A/A=178 & A/G=32 & G/G=2 \\ \hline
+		SVILP1 & rs141761009 & A/A=0 & A/G=2 & G/G=210 \\ \hline
+		SVILP1 & rs1826619 & C/C=144 & C/A=60 & A/A=8 \\ \hline
+		UBXN7 & rs61742253 & C/C=0 & C/T =2 & T/T=210 \\ \hline
+		UBXN7 & rs73213957 & G/G =0 & G/A=5 & A/A=207 \\ \hline
+	\end{tabular}
+		\caption{ Table: Gene and SNP identified by High Toxicity Single Nucleotide and Gene based test}
+		\label{SNVandGene_LPK}
+\end{table}
+\newpage
