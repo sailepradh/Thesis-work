@@ -20,3 +20,70 @@ names(my_list) <- c("vec", "mat", "df")
 
 # Print out my_list
 my_list
+
+## while loop examples from datacamp
+
+# Initialize the speed variable
+speed <- 64
+
+# Code the while loop
+while (speed >30) {
+  print ("Slow down!")
+  speed <- speed -7
+}
+# Print out the speed variable
+speed
+
+
+####################################
+speed <- 64
+
+# Extend/adapt the while loop
+while (speed > 30) {
+  print(paste("Your speed is",speed))
+  if (speed > 48) {
+    print ("Slow down big time!")
+    speed <- speed - 11
+  } else {
+    print("Slow down!")
+    speed <- speed - 6 
+  }
+}
+
+#####################################
+## Using break in if loop
+
+speed <- 88
+
+while (speed > 30) {
+  print(paste("Your speed is", speed))
+
+  # Break the while loop when speed exceeds 80
+  if (speed >80 ) {
+  print ("The hurricane is near!!")  
+  }
+  break
+  if (speed > 48) {
+    print("Slow down big time!")
+    speed <- speed - 11
+  } else {
+    print("Slow down!")
+    speed <- speed - 6
+  }
+}
+
+
+####################################################
+## Using break and while loop
+## prints out the triple of i, so 3 * i, at each run.
+## is abandoned with a break if the triple of i is divisible by 8, but still prints out this triple before breaking.
+i <- 1
+
+# Code the while loop
+while (i <= 10) {
+  print(3*i)
+  if ((i*3) %% 8 == 0) {
+    break
+  }
+  i <- i + 1
+}
