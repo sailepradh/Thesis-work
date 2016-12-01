@@ -185,5 +185,58 @@ for (char in chars) {
 # Print out rcount
 print(rcount)
 
+## ENd of intermediate level  on loops in data camp
 
-## ENd of intermediate level data camp
+## 5 writting a function in R
+
+## writing function receipe
+
+## my_fun <- function(arg1, arg2){
+##           body
+##           }
+
+## 5.1 
+# Create a function pow_two()
+pow_two <- function(x){
+        x*x
+}
+
+# Use the function
+pow_two(12)
+
+# Create a function sum_abs()
+sum_abs <- function (x ,y){
+  abs(x)+abs (y)
+}
+
+# Use the function
+sum_abs(-2,-3)
+
+## Random assignment of function
+throw_dice <- function() {
+  number <- sample(1:6, size = 1)
+  number
+}
+
+throw_dice()
+
+## 5.2
+# Define the function hello()
+hello <- function () {
+  print ("Hi there!")
+  return(TRUE)
+}
+
+# Call the function hello()
+hello()
+
+## adding function with extra optional arguments
+
+pow_two <- funtion (x, printinfo = TRUE){
+                    y <- x^2
+                    if (printinfo==TRUE){
+                          print (paste("The number is ", y))
+                        }      
+                    return(y)
+                    }
+
