@@ -347,3 +347,161 @@ select_el <- function(x, index) {
 
 names <- lapply (split_low , select_el, index = 1)
 years <- lapply (split_low , select_el, index = 2)
+
+
+## Apply with self made function
+
+# temp is already defined in the workspace
+
+# Finish function definition of extremes_avg
+extremes_avg <- function(x) {
+  ( min(x) + max(x) )/ 2
+}
+
+# Apply extremes_avg() over temp using sapply()
+sapply(temp, extremes_avg)
+
+# Apply extremes_avg() over temp using lapply()
+lapply(temp, extremes_avg)
+
+
+## More examples
+
+# temp is already available in the workspace
+
+# Create a function that returns min and max of a vector: extremes
+extremes <- function(x) {
+  c(min = min(x), max = max(x))
+}
+
+# Apply extremes() over temp with sapply()
+sapply(temp, extremes)
+
+# Apply extremes() over temp with lapply()
+lapply(temp, extremes)
+
+## Example of anomyous function used in apply
+
+sapply(list(runif (10), runif (10)), 
+        function(x) c(min = min(x), mean = mean(x), max = max(x)))
+          
+          
+## Basic understanding of apply function
+          
+          ## apply function enables useer to  avoid using for loop in data objects in R
+          ## we have learned to used lapply function that generates list of elements after applyinf of function in either matrix or list.
+          ## Mind you these function always generates list of elements
+          ## It can be however sinplified to matrix or array objects based on the use of sapply.
+          ## with vapply you can specifically tell what kind of data output you would like to return
+          
+## Examples of vapply function in R
+# temp is already available in the workspace
+
+# Definition of basics()
+basics <- function(x) {
+  c(min = min(x), mean = mean(x), max = max(x))
+}
+
+# Apply basics() over temp using vapply()
+vapply(temp, basics, numeric(3))
+          
+################################
+# temp is already defined in the workspace
+
+# Convert to vapply() expression
+vapply(temp, max, numeric(1))
+
+# Convert to vapply() expression
+vapply(temp, function(x, y) { mean(x) > y }, y = 5, logical(1))
+          
+          
+#################LAST CHAPTER OF INTERMEDIATE R###############
+   ## Regular expresssions
+          ## searh pattern exicts or not  / replace, extract data
+          
+# The emails vector has already been defined for you
+emails <- c("john.doe@ivyleague.edu", "education@world.gov", "dalai.lama@peace.org", 
+            "invalid.edu", "quant@bigdatacollege.edu", "cookie.monster@sesame.tv")
+
+# Use grepl() to match for "edu"
+grepl("edu", emails)
+
+# Use grep() to match for "edu", save result to hits
+hits <- grep ("edu", emails)
+
+# Subset emails using hits
+         
+emails[hits]
+         
+ 
+# @, because a valid email must contain an at-sign.
+# .*, which matches any character (.) zero or more times (*). Both the dot and the asterisk are metacharacters. You can use them to match any character between the at-sign and the ".edu" portion of an email address.
+# \\.edu$, to match the ".edu" part of the email at the end of the string. The \\ part escapes the dot: it tells R that you want to use the . as an actual character.
+
+ # The emails vector has already been defined for you
+emails <- c("john.doe@ivyleague.edu", "education@world.gov", "dalai.lama@peace.org", 
+            "invalid.edu", "quant@bigdatacollege.edu", "cookie.monster@sesame.tv")
+
+# Use grepl() to match for .edu addresses more robustly
+grepl ("@.*\\.edu$", emails)
+
+# Use grep() to match for .edu addresses more robustly, save result to hits
+hits <- grep("@.*\\.edu$", emails)
+
+# Subset emails using hits
+emails[hits]
+   
+          
+          
+          
+##  .*: A usual suspect! It can be read as "any character that is matched zero or more times".
+## \\s: Match a space. The "s" is normally a character, escaping it (\\) makes it a metacharacter.
+## [0-9]+: Match the numbers 0 to 9, at least once (+).
+## we([0-9]+): The parentheses are used to make parts of the matching string available to define the replacement. The \\1 in the replacement argument of sub() gets set to the string that is captured by the regular expression [0-9]+.
+
+          
+          
+          
+          
+          
+          ###########Dates and time
+          
+          # Definition of character strings representing times
+str1 <- "May 23, '96 hours:23 minutes:01 seconds:45"
+str2 <- "2012-3-12 14:23:08"
+
+# Convert the strings to POSIXct objects: time1, time2
+time1 <- as.POSIXct(str1, format = "%B %d, '%y hours:%H minutes:%M seconds:%S")
+time2 <- as.POSIXct(str2, format = "%Y-%m-%d %H:%M:%S")
+
+# Convert times to formatted strings
+ format (time1,"%M")
+format(time2, "%I:%M %p")
+          
+          
+# day1, day2, day3, day4 and day5 are already available in the workspace
+
+# Difference between last and first pizza day
+day5 - day1
+
+# Create vector pizza
+pizza <- c(day1, day2, day3, day4, day5)
+
+# Create differences between consecutive pizza days: day_diff
+days_diff <- diff(pizza)
+
+# Average period between two consecutive pizza days
+mean(days_diff)
+          
+          
+# Convert astro to vector of Date objects: astro_dates
+astro_dates <- as.Date(astro,"%d-%b-%Y")
+astro_dates
+# Convert meteo to vector of Date objects: meteo_dates
+meteo_dates <- as.Date(meteo,"%B %d, %y")
+meteo_dates
+
+# Calculate the maximum absolute difference between astro_dates and meteo_dates
+max((abs(meteo_dates-astro_dates)))
+
+          
