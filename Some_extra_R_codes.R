@@ -504,4 +504,39 @@ meteo_dates
 # Calculate the maximum absolute difference between astro_dates and meteo_dates
 max((abs(meteo_dates-astro_dates)))
 
+          ############################################LOOP for further understanding
           
+ # me, my_class and last_5 are preloaded
+
+# Embedded control structure: fix the error
+if (mean(my_class) < 75) {
+  if (mean(my_class) > me) {
+    print("average year, but still smarter than me")
+  } else {
+    print("average year, but I'm not that bad")
+  }
+} else {
+  if (mean(my_class) > me) {
+    print("smart year, even smarter than me")
+  } else {
+    print("smart year, but I am smarter")
+  }
+}
+          
+          
+ ### This is interesting way to acess list files
+ logs[[1]]$timestamp
+
+          
+          
+          
+# logs is available in your workspace
+
+# Initialize the iterator i to be 1
+i <- 1
+
+# Code the while loop
+while ( logs[[i]]$success == TRUE ) {
+  print (i)
+  i <- i+1
+}
