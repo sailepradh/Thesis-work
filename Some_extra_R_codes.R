@@ -540,3 +540,24 @@ while ( logs[[i]]$success == TRUE ) {
   print (i)
   i <- i+1
 }
+          
+## use of loop function in R to get lis elements
+# logs is available in your workspace
+
+### for loop to extract timestamp; put this inside function body below
+info <- c()
+for (log in logs) {
+ info <- c(info, log$timestamp)
+}
+
+# Build a function extract_info(): use for loop, add return statement
+extract_info <- function(x) {
+info <- c()
+  for (log in x) {
+    info <- c(info, log$timestamp)
+  }
+return (info)
+}
+
+# Call extract_info() on logs
+extract_info(logs)
