@@ -561,3 +561,119 @@ return (info)
 
 # Call extract_info() on logs
 extract_info(logs)
+
+          
+          
+### use of multiple arguments in R to get informatio from list
+# logs is available in your workspace
+
+# Adapt the extract_info() function.
+extract_info <- function(x, property) {
+  info <- c()
+  for (log in x) {
+   info <- c(info, log[[property]])
+  }
+  return(info)
+}
+
+# Call extract_info() on logs, set property to "timestamp"
+extract_info(logs, "timestamp")
+
+# Call extract_info() on logs, set property to "success"
+extract_info(logs, "success")
+          
+          
+          
+## setting a default values in function 
+          
+# logs is available in your workspace
+
+# Add default value for property argument
+extract_info <- function(x, property="success") {
+  info <- c()
+  for (log in x) {
+   info <- c(info, log[[property]])
+  }
+  return(info)
+}
+
+# Call extract_info() on logs, don't specify property
+extract_info (logs)
+
+# Call extract_info() on logs, set property to "timestamp"
+extract_info (logs, "timestamp")
+
+          
+          
+ # logs is available in your workspace
+
+# Adapt extract_info():
+# - add argument with default value
+# - change function body
+extract_info <- function(x, property = "success", include_all=TRUE) {
+  info <- c()
+  for (log in x) { 
+
+   # add if construct around the line below'
+   if ((include_all) || (!log$success)){
+     info <- c(info, log[[property]])
+    }
+  }
+  return(info)
+}
+
+# Call extract_info() on logs, no additional arguments
+extract_info(logs)
+
+          
+          
+          
+## using of functions 
+          
+# logs is available in your workspace
+
+# Write the function compute_fail_pct
+compute_fail_pct <- function(x, property = "success", include_all=FALSE) {
+  info <- c()
+  for (log in x) { 
+
+   # add if construct around the line below'
+   if ((include_all) || (!log$success)){
+     info <- c(info, log[[property]])
+    }
+  pct <- (length(info)/length(x)) *100
+  }
+  return(pct)
+}
+
+
+# Call compute_fail_pct on logs
+compute_fail_pct(logs)
+# Call extract_info() on logs, set include_all to FALSE
+extract_info(logs, include_all=FALSE)
+          
+          
+ ### this is such a cool way to extract informtion from  list elements suh that you can access elements fucha as from list of list
+ ### 
+ x <- list(a = 1, b = list(r = 2, s = 3))
+x[[c("b", "r")]]
+## Putting this in realization
+          
+# logs is available in your workspace
+
+# Defition of the extract_info() function
+extract_info <- function(x, property = "success", include_all = TRUE) {
+  info <- c()
+  for (log in x) {
+    if (include_all || !log$success) {
+     info <- c(info, log[[property]])
+    }
+  }
+  return(info)
+}
+
+# Generate vector of messages
+extract_info(logs, property = c("details", "message"))
+
+# Generate vector of locations for failed log entries
+extract_info(logs, property = c("details", "location"), include_all =FALSE)
