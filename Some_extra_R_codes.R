@@ -626,6 +626,32 @@ extract_info <- function(x, property = "success", include_all=TRUE) {
 extract_info(logs)
 
           
+ ### this is such a cool way to extract informtion from  list elements suh that you can access elements fucha as from list of list
+ ### 
+ x <- list(a = 1, b = list(r = 2, s = 3))
+x[[c("b", "r")]]
+## Putting this in realization
+          
+# logs is available in your workspace
+
+# Defition of the extract_info() function
+extract_info <- function(x, property = "success", include_all = TRUE) {
+  info <- c()
+  for (log in x) {
+    if (include_all || !log$success) {
+     info <- c(info, log[[property]])
+    }
+  }
+  return(info)
+}
+
+# Generate vector of messages
+extract_info(logs, property = c("details", "message"))
+
+# Generate vector of locations for failed log entries
+extract_info(logs, property = c("details", "location"), include_all =FALSE)
+          
+          
           
           
 ## using of functions 
@@ -651,29 +677,3 @@ compute_fail_pct <- function(x, property = "success", include_all=FALSE) {
 compute_fail_pct(logs)
 # Call extract_info() on logs, set include_all to FALSE
 extract_info(logs, include_all=FALSE)
-          
-          
- ### this is such a cool way to extract informtion from  list elements suh that you can access elements fucha as from list of list
- ### 
- x <- list(a = 1, b = list(r = 2, s = 3))
-x[[c("b", "r")]]
-## Putting this in realization
-          
-# logs is available in your workspace
-
-# Defition of the extract_info() function
-extract_info <- function(x, property = "success", include_all = TRUE) {
-  info <- c()
-  for (log in x) {
-    if (include_all || !log$success) {
-     info <- c(info, log[[property]])
-    }
-  }
-  return(info)
-}
-
-# Generate vector of messages
-extract_info(logs, property = c("details", "message"))
-
-# Generate vector of locations for failed log entries
-extract_info(logs, property = c("details", "location"), include_all =FALSE)
