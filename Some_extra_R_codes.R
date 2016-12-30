@@ -677,3 +677,25 @@ compute_fail_pct <- function(x, property = "success", include_all=FALSE) {
 compute_fail_pct(logs)
 # Call extract_info() on logs, set include_all to FALSE
 extract_info(logs, include_all=FALSE)
+          
+          
+          
+### Extra pracitse for apply function in R
+# logs is available in your workspace
+
+# Call length() on each element of logs
+lapply(logs, length)
+
+# Call class() on each element of logs
+lapply(logs, class)
+          
+          
+ # logs is available in your workspace
+
+# Define get_timestamp()
+get_timestamp <- function(x) {
+  x$timestamp
+}
+
+# Apply get_timestamp() over all elements in logs
+lapply(logs, get_timestamp)
