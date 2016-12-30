@@ -733,4 +733,56 @@ get_timestamp <- function(x) {
 
 # Get vector of log entries' timestamps
 sapply(logs, get_timestamp)
+ 
+ ### using sapply in different scenarios
+# logs is available in your workspace
+
+# Use sapply() to select the success element from each log: results
+results <- sapply(logs, function(x) {`[[`(x, "success")})
+
+# Call mean() on results
+mean(results)
+
+# Use sapply() to select the details element from each log
+ sapply(logs, function(x) {`[[`(x, "details")})
+ ##### Use if sapply function with function making
+  # logs is available in your workspace
+
+# Implement function get_failure_loc
+get_failure_loc <- function(x) {
+  if (x$success == TRUE) {
+    return(NULL)
+  } else {
+    return(x$details$location)
+  }
+}
+
+# Use sapply() to call get_failure_loc on logs
+sapply(logs, get_failure_loc)
+
+## For many of the log entries, get_failure_loc() returns NULL, for others, it returns a character string. R does not know how to simplify a list with this information…
           
+
+          
+ ### vapply function in practise: a mild reminder in vapply--> it is the simplification of sapply. Howver, we have to ascertain the type of element to be supplied in vapply. --> doing like this would be the receipe: vapply(X, FUN, FUN.VALUE).. FUN.VALUE must be a template for the output FUN generates. You can use functions such as integer(), numeric(), character() and logical() to do this.
+          
+ # logs is available in your workspace
+
+# Convert the sapply call to vapply
+vapply(logs, length,integer(1))
+
+# Convert the sapply call to vapply
+vapply(logs, `[[`, "success",FUN.VALUE = logical(1))
+          
+ ############
+ sapply(logs, `[[`, c("details", "message"))
+  vapply(logs, `[[`, c("details", "message"), FUN.VALUE= character(1))
+
+ sapply(logs, function(x) { x$details })
+ lapply(logs, function(x) { x$details }) 
+ 
+  ### output in upper letters
+  # logs is available in your workspace
+
+# Return vector with uppercase version of message elements in log entries
+ toupper(vapply(logs, `[[`, c("details", "message"), FUN.VALUE= character(1)))
