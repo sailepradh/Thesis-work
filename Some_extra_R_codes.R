@@ -699,6 +699,38 @@ get_timestamp <- function(x) {
 
 # Apply get_timestamp() over all elements in logs
 lapply(logs, get_timestamp)
+ 
           
           
+ ## Anonymous function::
+ ## for example defiining a function that gives two times of a 
+  
+ a <- list(3, 2, 5)
+ lapply(a, function(x) { 2 * x })
+  
+## Anomyous function assignment
+lapply(logs, function(x) {x$timestamp})
+
+          
+## The anomyous argument can also be passed as ´[[`can be used as function  
+x <- list(a = 1, b = 2, c = 3)
+x[["a"]]
+`[[`(x, "a")
+          
+## this is equivalent to
+lapply(logs, function(x) {`[[`(x, "timestamp")})
+          
+ ######### sapply function is used to get the vector matrices of same logs
+ # logs is available in your workspace
+
+# Call length() on each element of logs using sapply()
+sapply(logs, length)
+
+# Definition of get_timestamp
+get_timestamp <- function(x) {
+  x$timestamp
+}
+
+# Get vector of log entries' timestamps
+sapply(logs, get_timestamp)
           
