@@ -699,3 +699,6 @@ get_timestamp <- function(x) {
 
 # Apply get_timestamp() over all elements in logs
 lapply(logs, get_timestamp)
+          
+          
+          
