@@ -786,3 +786,24 @@ vapply(logs, `[[`, "success",FUN.VALUE = logical(1))
 
 # Return vector with uppercase version of message elements in log entries
  toupper(vapply(logs, `[[`, c("details", "message"), FUN.VALUE= character(1)))
+  
+          
+          
+          
+## using grepl function to get the logical vector
+
+          # Extract the name column from titanic
+pass_names <- titanic$Name
+
+# Create the logical vectror is_man
+is_man <- grepl(", Mr\\.", pass_names)
+
+# Count the number of men
+sum(is_man)
+
+# Count number of men based on gender
+sum(titanic$Sex == "male")
+
+          
+## using grep to find pattern
+gsub("^.*, (.*?)\\..*$", "\\1", pass_names)
