@@ -74,8 +74,57 @@ str(tricky_list$model)
 tricky_list$model$coefficients
 
 # Subset the wt element
-tricky_list$model$coefficients[["wt"]]```
+tricky_list$model$coefficients[["wt"]]
+```
+
+#### For loops
+
+Review and new basic concept of for loops
+
+For loops are important looping structure in R. The basic receipe of for loops can be seen as here
+```R
+df <- data.frame()
+1:ncol(df)
+
+for (i in 1:ncol(df)) {
+  print(median(df[[i]]))
+}
+
+``` 
+ 
+Here we can see three basic structures to for loop which are :-
+ 
+* sequence --> start to end of loop
+* body --> what is supposed to do
+* output --> defination of where to store the loop
 
 
+Important note: While creating a empty vector of given vector use the function vector with type of element it is stored with. Use two arguments: the type of vectors ("logical", "integer", "double", "character") and the length of vector
 
-####
+
+#### Lecture 2 "when to write function"
+
+Repeating same command on and on is not clever way to do an operations. Repeation of the commands make is hard to understand what it is doing as well it also hampers decoding scheme for mistake finding. Thats why we write a function. Basic rule of thumb is when you have copied-and-pasted twice its time to write a function. This would helps in making more updates in coding.
+
+
+In a real hand example we are trying with rescaling a column between 0 and 1
+
+For example we have a rescale logic as seen below
+
+```R
+(df$a - min(df$a, na.rm = TRUE)) /  
+  (max(df$a, na.rm = TRUE) - min(df$a, na.rm = TRUE))
+  ```
+
+Now we would like to make a function out of this logic so that it coule be used a general function that could be used for generality
+```R
+
+# Define example vector x
+x <- c(1:10)
+
+# Rewrite this snippet to refer to x
+(x- min(x, na.rm = TRUE)) /
+  (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
+  ```
+ 
+ In this example what we are doing is trying to make a generality of vector
