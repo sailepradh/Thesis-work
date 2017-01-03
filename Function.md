@@ -168,3 +168,40 @@ So in the end did the following things to convert into function:
 * Finally, turn into a function
 
 #### Extra practise sessions
+
+Problem identification: Here we want to write a function both_na() that counts at how many positions two vectors , x and y, both have a missing value
+```R
+x <- c( 1, 2, NA, 3, NA)
+y <- c(NA, 3, NA, 3,  4)
+
+sum(is.na(x) & is.na(y))
+## Snippet of code that works to find postion where there is missing values
+```
+
+Using this snippet to get function
+```R
+# Define example vectors x and y
+x <- c( 1, 2, NA, 3, NA)
+y <- c(NA, 3, NA, 3,  4)
+
+# Turn this snippet into a function: both_na()
+ 
+ both_na <- function (x,y){
+  sum(is.na(x) & is.na(y))
+}
+``` 
+
+testing with some examples
+```R
+# Define x, y1 and y2
+x <-  c(NA, NA, NA)
+y1 <- c( 1, NA, NA)
+y2 <- c( 1, NA, NA, NA)
+
+# Call both_na on x, y1
+both_na(x, y1)
+
+# Call both_na on x, y2
+both_na(x, y2)
+## here in the second example we encounter an error which telss us that object length is not equal hence we have to change this
+```
