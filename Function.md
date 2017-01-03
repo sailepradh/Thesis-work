@@ -114,17 +114,16 @@ For example we have a rescale logic as seen below
 ```R
 (df$a - min(df$a, na.rm = TRUE)) /  
   (max(df$a, na.rm = TRUE) - min(df$a, na.rm = TRUE))
-  ```
+```
 
 Now we would like to make a function out of this logic so that it coule be used a general function that could be used for generality
 ```R
-
 # Define example vector x
 x <- c(1:10)
 
 # Rewrite this snippet to refer to x
 (x- min(x, na.rm = TRUE)) /
   (max(x, na.rm = TRUE) - min(x, na.rm = TRUE))
-  ```
+```
  
  In this example what we are doing is trying to make a generality of vector
