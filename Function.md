@@ -157,3 +157,14 @@ rescale01 <- function(x) {
 # Test your function, call rescale01 using the vector x as the argument
 rescale01(x) 
 ```
+
+
+So in the end did the following things to convert into function:
+
+* Start with simple problem
+* Get the working snippet of code
+* Rewrite to use temporary variables
+* Rewrite for clarity
+* Finally, turn into a function
+
+#### Extra practise sessions
