@@ -312,5 +312,5 @@ replace_missings <- function(x, replacement) {
 }
 
 # Check your new function by running on df$z
-replace_missings(df$z ,0)```
+replace_missings(df$z ,0)
 ```
