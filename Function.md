@@ -226,9 +226,9 @@ Good names helping in understanding function clearly
 
 * should be nouns
 * use the common short names when appropriate
-** x,y and z: vectors
-** df; a dataframe
-** i , j: numeric indices (typically rows and columns)
-** n: length or number of rows
+..* x,y and z: vectors
+..* df; a dataframe
+..* i , j: numeric indices (typically rows and columns)
+..* n: length or number of rows
 
 
