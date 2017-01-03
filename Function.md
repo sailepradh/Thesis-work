@@ -6,8 +6,33 @@ Function has three parts
 * usually the enviroment where it is being executed
 
 Clearly it is also an obect in R environment
+
 ```R
 my_fun <- function(arg1, arg2) {
   # body
+}
+```
+
+###### Example-1
+
+```R
+# Define ratio() function
+my_fun <- function(arg1, arg2) {
+  # 
+  arg1/arg2
+}
+
+# Call ratio() with arguments 3 and 4
+my_fun(3,4)
+```
+###### Example-2 
+
+In this example we see that the condition is always evaluted and ther function returns early without even running the x
+```R
+f <- function(x) {
+  if (TRUE) {
+    return(x + 1)
+  }
+  x
 }
 ```
