@@ -205,3 +205,30 @@ both_na(x, y1)
 both_na(x, y2)
 ## here in the second example we encounter an error which telss us that object length is not equal hence we have to change this
 ```
+
+#### Write a good understandable function that can be universally implemented
+
+Elements of good function
+
+* Sovles problem correctlly
+* understandable to others
+
+
+Good names helping in understanding function clearly 
+
+##### Naming a function
+* make a conistent style function
+* Dont override existing variable or functions
+* should generally function
+* should be descriptive
+
+##### Naming an argument
+
+* should be nouns
+* use the common short names when appropriate
+** x,y and z: vectors
+** df; a dataframe
+** i , j: numeric indices (typically rows and columns)
+** n: length or number of rows
+
+
