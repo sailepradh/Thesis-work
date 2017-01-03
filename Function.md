@@ -50,7 +50,7 @@ Functions are called in new clean environment which is locally available to this
 Atomic vector usually contains the homogenous data-type in it. These could be numeric vector or logical vector or character vector. In most of the circumstances they would work just fine with data type to store it in form of vector or matrix. However, to increase effciency of data storage we might have to go beyond normal vector method of storing and in these condition lists are handy.
 
 In the following snippet of codes it is preseneted the ways to access data in list
-``` R
+```R
 # 2nd element in tricky_list
 typeof(tricky_list [[2]])
 
@@ -58,5 +58,6 @@ typeof(tricky_list [[2]])
 typeof((tricky_list [["x"]]))
 
 # 2nd element inside the element called x in tricky_list
-typeof(tricky_list [["x"]] [[2]]```
+typeof(tricky_list [["x"]] [[2]]
+```
   
