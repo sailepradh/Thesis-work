@@ -42,3 +42,21 @@ f <- function(x) {
 Functions are called in new clean environment which is locally available to this function. In this environment arguments and variables for this particular function are called upon and body is called upon. However, if objects are not called upon the variables are looked upon one upper environment as in global environment.
 
 
+#### Data Types in R
+
+* Atomic Vector
+* List
+
+Atomic vector usually contains the homogenous data-type in it. These could be numeric vector or logical vector or character vector. In most of the circumstances they would work just fine with data type to store it in form of vector or matrix. However, to increase effciency of data storage we might have to go beyond normal vector method of storing and in these condition lists are handy.
+
+In the following snippet of codes it is preseneted the ways to access data in list
+``` R
+# 2nd element in tricky_list
+typeof(tricky_list [[2]])
+
+# Element called x in tricky_list
+typeof((tricky_list [["x"]]))
+
+# 2nd element inside the element called x in tricky_list
+typeof(tricky_list [["x"]] [[2]]```
+  
