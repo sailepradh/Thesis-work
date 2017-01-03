@@ -227,9 +227,90 @@ Good names helping in understanding function clearly
 * should be nouns
 * use the common short names when appropriate
 
-*** x,y and z: vectors
-*** df; a dataframe
-*** i , j: numeric indices (typically rows and columns)
-*** n: length or number of rows
+* x,y and z: vectors
+* df; a dataframe
+* i , j: numeric indices (typically rows and columns)
+* n: length or number of rows
+
+##### Argument order
+
+* two types of arguments
+
+Data arguments--> specifiy data to compute  
+Detail arguments --> apply arguments that control details of the computation
 
 
+So in the end it is as follows:
+
+- Use good names for functions and arguments
+- Use an intutuve argument order and resonable default
+- Make it clear what ther function returns
+- Use good style inside the body of the function
+
+Example:
+```R
+# Alter the arguments to mean_ci
+mean_ci <- function(x,level = 0.95) {
+  se <- sd(x) / sqrt(length(x))
+  alpha <- 1 - level
+  mean(x) + se * qnorm(c(alpha / 2, 1 - alpha / 2))
+}
+```
+
+altering different ways to improve function 
+```R
+# Alter the mean_ci function
+mean_ci <- function(x, level = 0.95) {
+  if (length(x) == 0){
+    return( c(-Inf, Inf))
+  }else{
+    se <- sd(x) / sqrt(length(x))
+    alpha <- 1 - level
+    mean(x) + se * qnorm(c(alpha / 2, 1 - alpha / 2))
+  }    
+}
+```
+
+Examples of good function 
+```R
+
+# Rename the function f() to replace_missings()
+
+replace_missings <- function(x, replacement) {
+  # Change the name of the y argument to replacement
+  x[is.na(x)] <- replacement
+  cat(sum(is.na(x)), replacement, "\n")
+  x
+}
+
+# Rewrite the call on df$z to match our new names
+df$z <- replace_missings(df$z, 0)
+```
+Evolving function 
+```R
+replace_missings <- function(x, replacement) {
+  # Define is_miss
+  is_miss <- is.na(x)
+  
+  # Rewrite rest of function to refer to is_miss
+  x[is_miss] <- replacement
+  cat(sum(is_miss), replacement, "\n")
+  x
+}
+```
+
+
+providng with message for user
+```R
+replace_missings <- function(x, replacement) {
+  is_miss <- is.na(x)
+  x[is_miss] <- replacement
+  
+  # Rewrite to use message()
+  message("sum(is_miss) missing replaced by value replacement.")
+  x
+}
+
+# Check your new function by running on df$z
+replace_missings(df$z ,0)```
+```
