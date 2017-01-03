@@ -127,3 +127,33 @@ x <- c(1:10)
 ```
  
  In this example what we are doing is trying to make a generality of vector
+ 
+ After some inspection with snippet of code, we found that range can do us good to find the maximun and minimum of our vector. We find assign the range and use it in following way
+ ```R
+ # Define example vector x
+x <- 1:10
+
+# Define rng
+rng <- range(x, na.rm=TRUE)
+
+# Rewrite this snippet to refer to the elements of rng
+(x - rng[[1]])/
+  (rng[[2]]- rng[[1]])
+ ``` 
+ 
+ Finally, putting all of these codes together to get the function rescale01 as below:
+ 
+ ```R
+ # Define example vector x
+x <- 1:10 
+
+# Use the function template to create the rescale01 function
+
+rescale01 <- function(x) {
+  rng <- range(x, na.rm=TRUE)
+  (x - rng[[1]] )/ (rng[[2]]- rng[[1]])
+}
+
+# Test your function, call rescale01 using the vector x as the argument
+rescale01(x) 
+```
