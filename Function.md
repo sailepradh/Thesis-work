@@ -36,3 +36,9 @@ f <- function(x) {
   x
 }
 ```
+
+#### Lecture 2 Enviroments in R
+
+Functions are called in new clean environment which is locally available to this function. In this environment arguments and variables for this particular function are called upon and body is called upon. However, if objects are not called upon the variables are looked upon one upper environment as in global environment.
+
+
