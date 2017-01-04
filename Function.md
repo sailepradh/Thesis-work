@@ -456,4 +456,26 @@ coefs <- map (models, coef)
 
 # Use string shortcut to extract the wt coefficient 
 map (coefs, "wt")
+map_dbl (coefs, 2)
 ```
+
+Interesting operator called as pipe oerator '%>%' is the one wehich is used for shortcut ancd saves typing. 
+
+interpretation :
+
+x %>% f(y) is another way of writing f (x, y) that means "the left hand side of the pipe, x, becomes the first argument to the function, f(), on the right hand side of the pipe." 
+
+See the following clever use of %>%
+
+Normal routine
+```R
+cyl <- split(mtcars, mtcars$cyl) 
+map(cyl, ~ lm(mpg ~ wt, data = .))
+```
+
+We split the data frame mtcars and save it as the variable cyl. We then pass cyl as the first argument to map to fit the models. We could rewrite this using the pipe operator as:
+
+```R
+split(mtcars, mtcars$cyl) %>% 
+ map(~ lm(mpg ~ wt, data = .))
+ ```
