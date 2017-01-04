@@ -431,9 +431,29 @@ map(cyl, function(df) lm (mpg ~ wt, data =df))
 Here now the lecture is more tailored to purr package and its utility in calling of function 
 for example if we want to find the mean displacement (from cyl package in R) we can write a function as
 ```R
- map_dbl(cyl, function(df) mean(df$disp))```
+ map_dbl(cyl, function(df) mean(df$disp))
 ```
 However if this has to be done with shortcuts in purr package we can do using less words as
 ```R
 map_dbl(cyl, ~ mean(.$disp))
+```
+
+We can do the same as for the above statement
+
+```R
+map(cyl, function(df) lm (mpg ~ wt, data =df))
+map(cyl, ~ lm (.$mpg ~ .$wt, data = .))
+```
+
+This is such a cool way to manipulate list in R
+
+```R
+# Save the result from the previous exercise to the variable models
+models <- map(cyl, ~ lm(mpg ~ wt, data = .))
+
+# Use map and coef to get the coefficients for each model: coefs
+coefs <- map (models, coef)
+
+# Use string shortcut to extract the wt coefficient 
+map (coefs, "wt")
 ```
