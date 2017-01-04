@@ -492,7 +492,7 @@ mtcars %>%
  
  For example it ca be written an exaple of pipes as
  
- ```
- summaires <- map(models, summary) %>%
+ ```R
+summaires <- map(models, summary) %>%
 map_dbl("r.squared")```
  ```
