@@ -314,3 +314,5 @@ replace_missings <- function(x, replacement) {
 # Check your new function by running on df$z
 replace_missings(df$z ,0)
 ```
+
+#### Functional programming in R 
