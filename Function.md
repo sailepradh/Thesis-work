@@ -404,13 +404,13 @@ map_chr() returns a character vector
 
 this was kinda of hard to understand but I think i got it
 
-# Find the columns that are numeric
+###### Find the columns that are numeric
 map_lgl(df3, is.numeric)
 
-# Find the type of each column
+###### Find the type of each column
 map_chr(df3, typeof)
 
-# Find a summary of each column
+###### Find a summary of each column
 map(df3, summary)
 
 
@@ -423,6 +423,7 @@ fit_reg <- function(df) {
 }
 ```
 
-Going with the anomyous function as this is done only once so we can give it as```R
+Going with the anomyous function as this is done only once so we can give it as
+```R
 map(cyl, function(df) lm (mpg ~ wt, data =df))
 ```
