@@ -427,3 +427,13 @@ Going with the anomyous function as this is done only once so we can give it as
 ```R
 map(cyl, function(df) lm (mpg ~ wt, data =df))
 ```
+
+Here now the lecture is more tailored to purr package and its utility in calling of function 
+for example if we want to find the mean displacement (from cyl package in R) we can write a function as
+```R
+ map_dbl(cyl, function(df) mean(df$disp))```
+```
+However if this has to be done with shortcuts in purr package we can do using less words as
+```R
+map_dbl(cyl, ~ mean(.$disp))
+```
