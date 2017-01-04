@@ -478,4 +478,4 @@ We split the data frame mtcars and save it as the variable cyl. We then pass cyl
 ```R
 split(mtcars, mtcars$cyl) %>% 
  map(~ lm(mpg ~ wt, data = .))
- ```
+ ```
