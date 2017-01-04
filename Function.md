@@ -494,5 +494,5 @@ mtcars %>%
  
  ```R
 summaires <- map(models, summary) %>%
-map_dbl("r.squared")```
+map_dbl("r.squared")
  ```
