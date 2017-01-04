@@ -479,3 +479,20 @@ We split the data frame mtcars and save it as the variable cyl. We then pass cyl
 split(mtcars, mtcars$cyl) %>% 
  map(~ lm(mpg ~ wt, data = .))
  ```
+
+This reminds of how pipe can be used in R such that it is similar to one in Unix
+```R
+mtcars %>% 
+  split(mtcars$cyl) %>%
+  map(~ lm(mpg ~ wt, data = .)) %>%
+  map(coef) %>% 
+  map_dbl("wt")
+ ```
+ 
+ 
+ For example it ca be written an exaple of pipes as
+ 
+ ```
+ summaires <- map(models, summary) %>%
+map_dbl("r.squared")```
+ ```
