@@ -382,11 +382,47 @@ f <- function(x,y) {
 So in the lecture we are taught how could the above all the col_means, col_median and col_sd function have same similarity and difference. Connecting the argument with the intial premise we can see that we have only diffrence in calling of function mean, median and sd. So if we are able to provide it as argument then we can easily change to function into argument
 ```R
 # Define col_sd() function
-col_sd <- function(df, fun) {
-  output <- numeric(length(df))
+col_summary <- function(df, fun) {
+  output <- vector("numeric", length(df))
   for (i in seq_along(df)) {
     output[[i]] <- fun(df[[i]])
   }
   output
 }
+```
+###### Lecture 3 Passing function as arguments
+
+
+talking about different map function in purr
+
+map() returns a list or data frame
+map_lgl() returns a logical vector
+map_int() returns a integer vector
+map_dbl() returns a double vector
+map_chr() returns a character vector
+
+
+this was kinda of hard to understand but I think i got it
+
+# Find the columns that are numeric
+map_lgl(df3, is.numeric)
+
+# Find the type of each column
+map_chr(df3, typeof)
+
+# Find a summary of each column
+map(df3, summary)
+
+
+Extra information
+
+Snippet of code that would do the linear regression in our dataset for example
+```R
+fit_reg <- function(df) {
+  lm(mpg ~ wt, data = df)
+}
+```
+
+Going with the anomyous function as this is done only once so we can give it as```R
+map(cyl, function(df) lm (mpg ~ wt, data =df))
 ```
