@@ -336,10 +336,56 @@ output
 Scaling up for different dataframe we can do the same while changing the dataframe. However a cleverer way is we could change it to function
 ```R
 # Turn this code into col_median()
-col_median <- function (x){
-  output <- vector("double", ncol(df))  
+col_median <- function (df){
+  output <- numeric(length(df)) 
   for (i in seq_along(df)) {            
     output[[i]] <- median(df[[i]])      
+  }
+  output
+}
+```
+
+Now lets compare it to the premise he made in the earlier lecture and calculate mean in earlier formulation
+```R
+# Create col_mean() function to find column means
+col_mean <- function(df) {
+  output <- numeric(length(df))
+  for (i in seq_along(df)) {
+    output[[i]] <- mean(df[[i]])
+  }
+  output
+}
+```
+
+Now when you compare the both functions it is clear that both have same formulation except for use of mean function
+```R
+# Define col_sd() function
+col_sd <- function(df) {
+  output <- numeric(length(df))
+  for (i in seq_along(df)) {
+    output[[i]] <- sd(df[[i]])
+  }
+  output
+}
+```
+
+Continuing with the slight recap of the function argument
+```R
+f <- function(x,y) {
+    # Edit the body to return absolute deviations raised to power
+    abs(x - mean(x))^y
+}
+```
+
+###### Lecture 2 Function can be argument as well
+
+So in the lecture we are taught how could the above all the col_means, col_median and col_sd function have same similarity and difference. Connecting the argument with the intial premise we can see that we have only diffrence in calling of function mean, median and sd. So if we are able to provide it as argument then we can easily change to function into argument
+```R
+# Define col_sd() function
+col_sd <- function(df, fun) {
+  output <- numeric(length(df))
+  for (i in seq_along(df)) {
+    output[[i]] <- fun(df[[i]])
   }
   output
 }
