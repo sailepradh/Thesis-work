@@ -316,3 +316,31 @@ replace_missings(df$z ,0)
 ```
 
 #### Functional programming in R 
+
+Functional programming is the concept that feeds on idea of using specific mathematical functions to be used in defining functions in a programming language. While giving an example of making a cup-cake the lecture have provided a scenaraio where for -loops are unefficient to loop throgh the problem. Although it is explict to use thr for loop in detailed way, howver doing the same thing again and again would not able to find the nitty gritty details.  Using purr package we will use functional programming.
+
+Providing a basic example of for loop
+```R
+# Initialize output vector
+output <- vector("double", ncol(df))  
+
+# Fill in the body of the for loop
+for (i in seq_along(df)) {            
+output[i] <- median(df[[i]])
+}
+
+# View the result
+output 
+```
+
+Scaling up for different dataframe we can do the same while changing the dataframe. However a cleverer way is we could change it to function
+```R
+# Turn this code into col_median()
+col_median <- function (x){
+  output <- vector("double", ncol(df))  
+  for (i in seq_along(df)) {            
+    output[[i]] <- median(df[[i]])      
+  }
+  output
+}
+```
