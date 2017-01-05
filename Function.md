@@ -496,3 +496,72 @@ mtcars %>%
 summaires <- map(models, summary) %>%
 map_dbl("r.squared")
  ```
+
+#### Advanced inputs and output in function
+
+
+It is essential to map over multiple dataset and function. For this purpose, purr package provides with pmap which can iterate over multiple arguments be it dataset of function. For generalized purpose of 2 it mave provided map2
+
+In the following examples, we use this principle to solve the problems
+```R
+# Create a list n containing the values: 5, 10, and 20
+n = list(5, 10, 20)
+
+# Call map() on n with rnorm() to simulate three samples
+map(n, rnorm)
+```
+
+Similarly, we would like to mapping for two arguments for example simulate different dataset with differnt elements and differnt mean
+```R
+# Initialize n
+n <- list(5, 10, 20)
+
+# Create a list mu containing the values: 1, 5, and 10
+mu <- list(1, 5, 10)
+
+# Edit to call map2() on n and mu with rnorm() to simulate three samples
+map2(n, mu, rnorm)
+```
+
+Again, if we consider rnorm function, it does take other arguments such as mean and standard deviations. However we can use pmap function in purr package to find the mean and standard deviations
+```R
+# Initialize n and mu
+n <- list(5, 10, 20)
+mu <- list(1, 5, 10)
+
+# Create a sd list with the values: 0.1, 1 and 0.1
+sd <- list(0.1, 1, 0.1)
+
+# Edit this call to pmap() to iterate over the sd list as well
+pmap(list(n, mu, sd), rnorm)
+
+## more clever way is done as follows
+pmap(list(mean = mu, n = n, sd = sd), rnorm)
+```
+
+Case : Next
+
+Sometimes it's not the arguments to a function you want to iterate over, but a set of functions themselves. Imagine that instead of varying the parameters to rnorm() we want to simulate from different distributions, say, using rnorm(), runif(), and rexp(). How do we iterate over calling these functions
+```R
+# Define list of functions
+f <- list("rnorm", "runif", "rexp")
+
+# Parameter list for rnorm()
+rnorm_params <- list(mean = 10)
+
+# Add a min element with value 0 and max element with value 5
+runif_params <- list(min = 0, max = 5)
+
+# Add a rate element with value 5
+rexp_params <- list(rate = 5)
+
+# Define params for each function
+params <- list(
+  rnorm_params,
+  runif_params,
+  rexp_params
+)
+
+# Call invoke_map() on f supplying params as the second argument
+invoke_map(f, n = 5, params)
+```
