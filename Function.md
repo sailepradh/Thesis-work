@@ -764,4 +764,111 @@ col_classes <- function(df) {
 # Check that our new function is type consistent
 df %>% col_classes() %>% str()
 df[3:4] %>% col_classes() %>% str()
-df[1:2] %>% col_classes() %>% str()```
+df[1:2] %>% col_classes() %>% str()
+```
+
+Some interesting observation from the exercise below. We came across a logical operator called any which checks given a set of logical vectors, is at least one of the values true? (cool na!!) Additionally we also used map_dbl to check whether there is any vector with logical operator.
+```R
+col_classes <- function(df) {
+  class_list <- map(df, class)
+  
+  # Add a check that no element of class_list has length > 1
+  if (any(map_dbl(class_list, length) > 1)) {
+    stop("Some columns have more than one class", call. = FALSE)
+  }
+  
+  # Use flatten_chr() to return a character vector
+  flatten_chr(class_list)
+}
+
+# Check that our new function is type consistent
+df %>% col_classes() %>% str()
+df[3:4] %>% col_classes() %>% str()
+df[1:2] %>% col_classes() %>% str()
+```
+
+#### Non standard evaluation
+
+These are another type of function in R which can cause problem in making function in R. As these function are premade, they are great in analysis as they would lessen the typing effort but problem occurs when you have to assign the exact names in the function whihc when you are writinga function, you are not sure of. Hence it is better to avoid this functions in function development.
+example : Cool use of dplyr package and respective function
+
+```R
+big_x <- function(df, threshold) {
+  dplyr::filter(df, x > threshold)
+}
+
+## use of the function in a dataset with threshold of 7
+big_x(diamonds_sub, 7)
+```
+the problem with non standard evaluation can be observed in the following codes
+```R
+ # Remove the x column from diamonds
+diamonds_sub$x <- NULL
+
+# Create variable x with value 1
+x <- 1
+
+# Use big_x() to find rows in diamonds_sub where x > 7
+big_x(diamonds_sub, 7)
+
+# Create a threshold column with value 100
+diamonds_sub$threshold <- 100
+
+# Use big_x() to find rows in diamonds_sub where x > 7
+big_x(diamonds_sub, 7)
+```
+
+This kinda of screwed me a lot.. one thing I learned was
+!"x" %in% names(df) --> not in names 
+```R
+big_x <- function(df, threshold) {
+  # Write a check for x not being in df
+  if (!"x" %in% names(df)) {
+    stop("df must contain variable called x", call. = FALSE)
+  }
+  
+
+  # Write a check for threshold being in df
+   if ("threshold" %in% names(df)) {
+    stop("df must not contain variable called threshold", call. = FALSE)
+  }
+  
+
+  
+  dplyr::filter(df, x > threshold)
+}
+```
+
+#### Use of options in R can help to find the global setting in R. The followund example sets the stage for the use of options in R
+```R
+# Read in the swimming_pools.csv to pools
+pools <- read.csv("swimming_pools.csv")
+
+# Examine the structure of pools
+str(pools)
+
+# Change the global stringsAsFactor option to FALSE
+options(stringsAsFactors = FALSE)
+
+# Read in the swimming_pools.csv to pools2
+pools2<- read.csv("swimming_pools.csv")
+
+# Examine the structure of pools2
+str(pools2)
+```
+
+Straight from the exercise
+"In general, you want to avoid having the return value of your own functions depend on any global options. That way, you and others can reason about your functions without needing to know the current state of the options."```R
+```R
+ # Fit a regression model
+fit <- lm(mpg ~ wt, data = mtcars)
+
+# Look at the summary of the model
+summary(fit)
+
+# Set the global digits option to 2
+options(digit = 2)
+
+# Take another look at the summary
+summary(fit)
+```
