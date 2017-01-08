@@ -880,11 +880,12 @@ mean (disaster_date - survivors$Birth, na.rm=TRUE)
           
           
           
-##### Lecture : map with side effects
 
-# Some function in R have return value which might be either saved in disk. SO in ordet to use map function in purr this might be undesirable so we can use walk function which handles these side effects. As have been explained in the lectures these are useful when we use them in pipleines such that they can handle the intermediate result and pipe them to map function
 
- # From thee exercise: walk() operates just like map() except it's designed for functions that don't return anything. You use walk() for functions with side effects like printing, plotting or saving.         
-  
+# Assign the simulated samples to sims
+sims <- invoke_map(f, params, n = 50)
+
+# Use walk() to make a histogram of each element in sims
+walk(sims, hist)
 
           
