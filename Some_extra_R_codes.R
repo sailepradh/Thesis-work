@@ -886,3 +886,5 @@ mean (disaster_date - survivors$Birth, na.rm=TRUE)
 
  # From thee exercise: walk() operates just like map() except it's designed for functions that don't return anything. You use walk() for functions with side effects like printing, plotting or saving.         
   
+
+          
