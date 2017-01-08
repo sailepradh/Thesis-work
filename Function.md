@@ -642,4 +642,126 @@ Piping the arguments of the previous results
 sims %>%
   walk(hist) %>%
   map(summary)
-  `
+```
+
+#### robust functions
+
+Robust function are interesting class as they help to find error in codes. In the lecture he talks about two kind of function that are present in R namely, interactive function and programming function. As interactiver function are useful they can cause error in pipleline of codes as they would except and give certian types of data input/output. 
+
+One common recepie for checking these errors are using stopifnot functions
+```R
+stopifnot(is.character(x))
+
+for example  could be
+ if (!is.charcter(x)) {
+ stop ("x should be character function" call.=FALSE)
+ }
+ ```
+ 
+ Example 1: Using stopifnot arrangment in previous function that we made to check whether length of vector we provide are of same length or not.
+ 
+ ```R
+ # Define troublesome x and y
+x <- c(NA, NA, NA)
+y <- c( 1, NA, NA, NA)
+
+both_na <- function(x, y) {
+  stopifnot (length(x)==length(y))
+  # Add stopifnot() to check length of x and y
+  sum(is.na(x) & is.na(y))
+}
+
+# Call both_na() on x and y
+both_na(x, y)
+```
+
+Another example of using good error messages in our function that we made
+```R
+# Define troublesome x and y
+x <- c(NA, NA, NA)
+y <- c( 1, NA, NA, NA)
+
+both_na <- function(x, y) {
+  # Replace condition with logical
+  if (length(x) != length (y)) {
+    # Replace "Error" with better message
+    stop("x and y must have same length", call. = FALSE)
+  }  
+  
+  sum(is.na(x) & is.na(y))
+}
+
+# Call both_na() 
+both_na(x, y)
+```
+
+
+'' straight from the exercise:
+Side effects describe the things that happen when you run a function that alters the state of your R session. If foo() is a function with no side effects (a.k.a. pure), then when we run x <- foo(), the only change we expect is that the variable x now has a new value. No other variables in the global environment should be changed or created, no output should be printed, no plots displayed, no files saved, no options changed. We know exactly the changes to the state of the session just by reading the call to the function.''
+```R
+replace_missings <- function(x, replacement) {
+  x[is.na(x)] <- replacement
+  x
+}
+```
+
+#### Unstable functions
+
+As going with the discussions, we are not into unstable function which upon calling would give ud different or maybe in conistent type of data structures. One of the example she talked was subsetting with [] function in R. However in most of cases it seems to work to get the vectore, problem ouccurs when we are trying to use in single column dataframe. we might except to get dataframe but due to its structure it might get us vector output. So in order to avoid these functions in programming would be a viable options to choose and additionally, we might have to work hard to get a vocabulary of functions that would behave consistently.
+
+sapply() is another common offender returning unstable types. The type of output returned from sapply() depends on the type of input.
+
+See the following example
+```R
+
+df <- data.frame(
+  a = 1L,
+  b = 1.5,
+  y = Sys.time(),
+  z = ordered(1)
+)
+
+A <- sapply(df[1:4], class) 
+B <- sapply(df[3:4], class)
+
+A --> list of all the elements
+B -->  character matrix of 3 and 4 
+```
+
+Using differnt function such as map would help somehow to eliminate the problem faced
+```R
+# sapply calls
+A <- sapply(df[1:4], class) 
+B <- sapply(df[3:4], class)
+C <- sapply(df[1:2], class) 
+
+# Demonstrate type inconsistency
+str(A)
+str(B)
+str(C)
+
+# Use map() to define X, Y and Z
+X <- map(df[1:4], class) 
+Y <- map(df[3:4], class)
+Z <- map(df[1:2], class) 
+
+# Use str() to check type consistency
+str(X)
+str(Y)
+str(Z)
+```
+
+This was something I didn't understood. I did almost the same except for subsetting with the []. thus my understanding was there was something theat subsetting mightt cause problem with thus it is better use this setting
+```R
+col_classes <- function(df) {
+  # Assign list output to class_list
+  class_list <- map(df, class)
+  
+  # Use map_chr() to extract first element in class_list
+  map_chr(class_list, 1)
+}
+
+# Check that our new function is type consistent
+df %>% col_classes() %>% str()
+df[3:4] %>% col_classes() %>% str()
+df[1:2] %>% col_classes() %>% str()```
