@@ -565,3 +565,81 @@ params <- list(
 # Call invoke_map() on f supplying params as the second argument
 invoke_map(f, n = 5, params)
 ```
+##### Lecture : map with side effects
+
+Some function in R have return value which might be either saved in disk. SO in ordet to use map function in purr this might be undesirable so we can use walk function which handles these side effects. As have been explained in the lectures these are useful when we use them in pipleines such that they can handle the intermediate result and pipe them to map function
+
+ From thee exercise: walk() operates just like map() except it's designed for functions that don't return anything. You use walk() for functions with side effects like printing, plotting or saving.         
+  
+ For example in following examples we have created a histogram of all the functions in R with the simulated data set.
+ ```R
+# Define list of functions
+f <- list(Normal = "rnorm", Uniform = "runif", Exp = "rexp")
+
+# Define params
+params <- list(
+  Normal = list(mean = 10),
+  Uniform = list(min = 0, max = 5),
+  Exp = list(rate = 5)
+)
+```
+
+use of walk2 with historam function however changing the breaks for diferent simulation
+```R
+# Replace "Sturges" with reasonable breaks for each sample
+breaks_list <- list(
+  Normal = seq(6, 16, 0.5),
+  Uniform = seq(0, 5, 0.25) ,
+  Exp = seq(0, 1.5, 0.1)
+)
+
+# Use walk2() to make histograms with the right breaks
+walk2 (sims, breaks_list, hist)
+```
+
+making a function and using it for our dataset
+```R
+# Turn this snippet into find_breaks()
+
+find_breaks <- function (x) {
+  rng <- range(x, na.rm = TRUE)
+  vec <- seq(rng[1], rng[2], length.out = 30)
+  return(vec)
+}
+
+# Call find_breaks() on sims[[1]]
+find_breaks(sims[[1]])
+```
+
+Using this customary breaks in our walk function
+```R
+# Use map() to iterate find_breaks() over sims: nice_breaks
+nice_breaks <- map (sims, find_breaks)
+
+# Use nice_breaks as the second argument to walk2()
+walk2 (sims, nice_breaks, hist)
+```
+
+use of pwalk function to iterate over list of function' argument and list
+```R
+ # Increase sample size to 1000
+sims <- invoke_map(f, params, n = 1000)
+
+# Compute nice_breaks (don't change this)
+nice_breaks <- map(sims, find_breaks)
+
+# Create a vector nice_titles
+nice_titles <- c("Normal(10, 1)" , "Uniform(0, 5)", "Exp(5)")
+
+
+# Use pwalk() instead of walk2()
+pwalk(list(x = sims, breaks = nice_breaks, main =nice_titles), hist,xlab="")
+```
+
+Piping the arguments of the previous results
+```R
+# Pipe this along to map(), using summary() as .f
+sims %>%
+  walk(hist) %>%
+  map(summary)
+  `
