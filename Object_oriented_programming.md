@@ -155,3 +155,100 @@ In order to get the complete list type
  methods(class = "lm")
  methods(class = "factor")
 methods(class = "POSIXct")
+```
+
+#### S3 and primitive function
+So the major point of the whole lecture is to give the impression that some of the function in R are written in C and called in C. These are called as primitive function and have their advantage of not being changed although some class i sassigned. One of the example of primitive function is  length which if not any class is called will invoke C function typeof to give the length,
+
+"Straight from exercise:  Some core functionality of R is defined using primitive functions, which use a special technique for accessing C-code, for performance reasons. Examples of primitive functions include language elements, like if and for, operators like + and $, and mathematical functions like exp and sin. Primitive functions include S3 generics; the complete list of S3 primitive generics can be found using .S3PrimitiveGenerics."
+
+see the usage of function exists that checks whether the data element is present of not.
+```R
+# View the structure of hair
+str(hair)
+
+# What primitive generics are available?
+.S3PrimitiveGenerics
+
+# Does length.hairstylist exist?
+exists("length.hairstylist")
+
+# What is the length of hair?
+length(hair)
+```
+
+#### Lecture: Too much class
+
+variables could have multiple classes. With decreasing specificity we can assign the class in the variables.  inherits function is used to check the class in variables. In making these function first, we have to define the generic class variables and then chain together in method using NextMethod("what_am_i") formulation.
+
+"Striaght from exercise ; Variables can have more than one class. In this case, class() returns a character vector of length greater than one.
+
+Likewise you can set multiple classes by assigning a character vector to class(). The classes should be ordered from more specific to more general as you move left to right, since you want to begin with the behavior most targetted to your object. For example:"
+```R
+x <- c("a", "e", "i", "o", "u")
+class(x) <- c("vowels", "letters", "character")
+
+### Checking for other variables
+inherits(x, "vowels")
+```
+```R
+# View the kitty
+kitty
+
+# Assign classes
+class(kitty) <- c("cat", "mammal", "character")
+
+# Does kitty inherit from cat/mammal/character vector?
+inherits(kitty,"cat" )
+inherits(kitty,"mammal" )
+inherits(kitty, "character" )
+
+# Is kitty a character vector?
+is.character(kitty)
+
+# Does kitty inherit from dog?
+inherits(kitty, "dog")
+```
+
+When objects have multiple classes, you may wish to call methods for several of these classes. This is done using NextMethod().
+
+The S3 methods now take the form:
+```R
+an_s3_method.some_class <- function(x, ...)
+{
+  # Act on some_class, then
+  NextMethod("an_s3_method")
+}
+```
+
+
+example of it
+```R
+# Inspect your workspace
+ls.str()
+
+# cat method
+what_am_i.cat <- function(x, ...)
+{
+  message("I'm a cat")
+  NextMethod("what_am_i")
+}
+
+# mammal method
+what_am_i.mammal <- function(x, ...)
+{
+  message("I'm a mammal")
+  NextMethod("what_am_i")
+}
+
+# character method
+what_am_i.character <- function(x, ...)
+{
+  # Write a message
+  message("I'm a character vector")
+}
+
+ what_am_i(kitty)
+ 
+ ```
+ 
