@@ -73,6 +73,7 @@ class(x) <- "some_class"
 This is particularly useful for lists, since lists can be used to combine other variables into more complex variables. (Remember the Lego analogy: individual variables are like Lego pieces, and you can use lists to build whatever you like.)
 
 Example below is nice visualization of how chess can be combined in list form and unlist to observe the number of pieces in chess
+
 ```R
 # Explore the structure of chess
 str(chess)
@@ -88,3 +89,69 @@ length(unlist(chess))
 
 typeof(chess)
 ```
+
+#### Creating a generic function with S3
+
+Usually in R while creating function for OOP there are two types of function in practise namely, geenric function and method functin which have their own naming convenction. Generally preferred names for the function are based on Simple_sample_convention with the use of _ while in other case caseSpecificFunction are also in use.
+
+The major receipe for creating a geenric function in R is
+```R
+an_s3_generic <- function(x, maybe = "some", other = "arguments", ...) {
+  UseMethod("an_s3_generic")
+}
+```
+The generic calls UseMethod() with its own name.
+
+Then there is another type of function call, namely method function in S3 which has receipe as
+```R
+generic.class <- function(some, arguments, ...) {
+  # Do something
+}
+```
+
+
+Use of this receipe to find the elements of data.frame
+```R
+# View get_n_elements
+get_n_elements
+
+# Create a data.frame method for get_n_elements
+get_n_elements.data.frame <- function(x, ...){
+  nrow(x) * ncol(x)
+}
+
+# Call the method on the sleep dataset
+n_elements_sleep <- get_n_elements.data.frame(sleep)
+
+# View the result
+n_elements_sleep
+
+```
+```R
+# View pre-defined objects
+ls.str()
+
+# Create a default method for get_n_elements
+get_n_elements.default <- function(x, ...){
+  length(unlist(x))
+}
+
+# Call the method on the ability.cov dataset
+n_elements_ability.cov <- get_n_elements.default(ability.cov)
+```
+
+#### Methodlogical thinking
+
+In order to find generic functiona and their methodical counter part it is sually method() with some argument is enough,
+```R
+# Find methods for print
+methods("print")
+```
+
+The methods() function can also find the number of methods available for variables with a given class.
+In order to get the complete list type 
+```R
+ methods(class = "data.frame")
+ methods(class = "lm")
+ methods(class = "factor")
+methods(class = "POSIXct")
