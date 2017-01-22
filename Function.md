@@ -872,3 +872,9 @@ options(digit = 2)
 # Take another look at the summary
 summary(fit)
 ```
+```R
+for (i in seq(1,nrow(Common_NC_LT_all_tox))){
+  Ref[i] <- ((Common_NC_LT_all_tox[i,4])*2)+(Common_NC_LT_all_tox[i,5])+(Common_NC_LT_all_tox[i,6]*2)+(Common_NC_LT_all_tox[i,7])+(Common_NC_LT_all_tox[i,8])+(Common_NC_LT_all_tox[i,9]*2)+(Common_NC_LT_all_tox[i,10])+(Common_NC_LT_all_tox[i,11])+(Common_NC_LT_all_tox[i,12]*2)
+  Alt[i] <- (Common_NC_LT_all_tox[i,5])+(Common_NC_LT_all_tox[i,6]*2)+(Common_NC_LT_all_tox[i,7])+(Common_NC_LT_all_tox[i,8])+(Common_NC_LT_all_tox[i,9]*2)+(Common_NC_LT_all_tox[i,10])+(Common_NC_LT_all_tox[i,11])+(Common_NC_LT_all_tox[i,12]*2)
+  output2[i] <- Alt[i]/Ref[i]
+}```
