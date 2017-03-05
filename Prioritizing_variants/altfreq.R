@@ -34,3 +34,10 @@ thres <- function (x){
   }
   return(score)
 }
+
+
+
+comb = function(n, x) {
+  return(factorial(n) / (factorial(x) * factorial(n-x)))
+}
+
