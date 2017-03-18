@@ -1,6 +1,8 @@
 #### Chapter 1:
 
 
+```R
+
 # Initialize total within sum of squares error: wss
 wss <- 0
 
@@ -26,7 +28,7 @@ using pokemon dataset to practise clustering with k
 
 # Initialize total within sum of squares error: wss
 
-```R
+
 wss <- 0
 
 # Look over 1 to 15 possible clusters
