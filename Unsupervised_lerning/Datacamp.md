@@ -62,3 +62,53 @@ plot(pokemon[, c("Defense", "Speed")],
      xlab = "Defense", ylab = "Speed")
 ```
 Learned
+
+
+
+
+##### Hierarchical clustering
+mean and stadndard variation of each features need to chaded 
+```R
+
+# Cluster using complete linkage: hclust.complete
+hclust.complete <- hclust(dist(x), method="complete")
+
+# Cluster using average linkage: hclust.average
+hclust.average <- hclust(dist(x), method="average")
+
+# Cluster using single linkage: hclust.single
+hclust.single <- hclust(dist(x), method="single")
+
+# Plot dendrogram of hclust.complete
+plot(hclust.complete, main ="Complete")
+
+# Plot dendrogram of hclust.average
+plot(hclust.average, main ="Average")
+
+# Plot dendrogram of hclust.single
+plot(hclust.single, main ="Single")
+
+
+#######################################################
+### Using complete linkage analysis in pokemon dataset
+# View column means
+colMeans(pokemon)
+
+# View column standard deviations
+apply(pokemon, 2, sd)
+
+# Scale the data
+pokemon.scaled <- scale(pokemon)
+
+# Create hierarchical clustering model: hclust.pokemon
+hclust.pokemon <- hclust(dist(pokemon.scaled), method="complete")
+```
+```R
+## comparing two methods
+
+# Apply cutree() to hclust.pokemon: cut.pokemon
+cut.pokemon <- cutree(hclust.pokemon, k =3)
+
+# Compare methods
+table(cut.pokemon, km.pokemon$cluster)
+```
