@@ -1,4 +1,6 @@
-##### Import data in 
+### Import data in R 
+
+#### Lec_1:
 
 From different files from different types
 
@@ -72,12 +74,11 @@ hotdogs2 <- read.delim("hotdogs.txt", header = FALSE,
 # Display structure of hotdogs2
 str(hotdogs2)
 
-
 ## read .table is the original files and read.csf files and read.delim are wrapper function of all
 ## read.csv2 and read.delim2 are used which are seperated by ","  than "." 
 
 ```
-
+#### Lec_2:
 
 
 
